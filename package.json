@@ -1,0 +1,36 @@
+{
+  "name": "@obsidize/rx-console",
+  "version": "0.0.1",
+  "description": "A logging library that uses rxjs as the foundation for log event handling.",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "",
+    "test": "test",
+    "build": "tsc",
+    "release:prepare": "",
+    "release:test": "",
+    "release:publish": "",
+    "bump": "npm run release:prepare -- --release-as patch && npm run release:test && npm run release:publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jospete/obsidize-rx-console.git"
+  },
+  "keywords": [
+    "rxjs",
+    "rx",
+    "console",
+    "logger",
+    "obsidize",
+    "log"
+  ],
+  "author": "Josh Noel <jpnoel618@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jospete/obsidize-rx-console/issues"
+  },
+  "homepage": "https://github.com/jospete/obsidize-rx-console#readme",
+  "devDependencies": {
+    "typescript": "^4.1.5"
+  }
+}
