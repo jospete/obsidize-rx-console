@@ -1,4 +1,4 @@
-import jsonStringifySafe from 'json-stringify-safe';
+import * as jsonStringifySafe from 'json-stringify-safe';
 
 import { ConsoleLike } from './console-like';
 import { LogEventLike } from './log-event-like';

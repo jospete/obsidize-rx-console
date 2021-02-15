@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "",
-    "test": "test",
+    "test": "karma start",
     "build": "tsc",
     "release:prepare": "",
     "release:test": "",
@@ -31,7 +31,16 @@
   },
   "homepage": "https://github.com/jospete/obsidize-rx-console#readme",
   "devDependencies": {
+    "@types/jasmine": "^3.6.3",
     "@types/json-stringify-safe": "^5.0.0",
+    "jasmine-core": "^3.6.0",
+    "karma": "^6.1.1",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-cli": "^2.0.0",
+    "karma-coverage": "^2.0.3",
+    "karma-jasmine": "^4.0.1",
+    "karma-jasmine-html-reporter": "^1.5.4",
+    "karma-typescript": "^5.4.0",
     "typescript": "^4.1.5"
   },
   "dependencies": {

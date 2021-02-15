@@ -1,3 +1,8 @@
+import { RxConsole } from '../src/index';
+
 describe('RxConsole', () => {
-	// TODO: implement
+
+	it('Has a main instance', () => {
+		expect(RxConsole.main).toBeTruthy();
+	});
 });
