@@ -4,13 +4,18 @@
   "description": "A logging library that uses rxjs as the foundation for log event handling.",
   "main": "dist/index.js",
   "scripts": {
-    "start": "",
     "test": "karma start",
+    "test:single": "karma start --single-run",
     "build": "tsc",
+    "clean": "rimraf ./dist ./coverage",
+    "rebuild": "run-s clean build",
+    "coverage:open": "open-cli ./coverage/*/index.html",
+    "coverage": "run-s test:single coverage:open",
     "release:prepare": "",
     "release:test": "",
     "release:publish": "",
-    "bump": "npm run release:prepare -- --release-as patch && npm run release:test && npm run release:publish"
+    "release:prepare:patch": "npm run release:prepare -- --release-as patch",
+    "bump": "run-s release:prepare:patch release:test release:publish"
   },
   "repository": {
     "type": "git",
@@ -32,19 +37,22 @@
   "homepage": "https://github.com/jospete/obsidize-rx-console#readme",
   "devDependencies": {
     "@types/jasmine": "^3.6.3",
-    "@types/json-stringify-safe": "^5.0.0",
     "jasmine-core": "^3.6.0",
     "karma": "^6.1.1",
     "karma-chrome-launcher": "^3.1.0",
     "karma-cli": "^2.0.0",
     "karma-coverage": "^2.0.3",
+    "karma-coverage-istanbul-reporter": "^3.0.3",
     "karma-jasmine": "^4.0.1",
     "karma-jasmine-html-reporter": "^1.5.4",
     "karma-typescript": "^5.4.0",
+    "npm-run-all": "^4.1.5",
+    "open": "^7.4.1",
+    "open-cli": "^6.0.1",
+    "rimraf": "^3.0.2",
     "typescript": "^4.1.5"
   },
   "dependencies": {
-    "json-stringify-safe": "^5.0.1",
     "rxjs": "^6.6.3"
   }
 }

@@ -1,5 +1,3 @@
-import * as jsonStringifySafe from 'json-stringify-safe';
-
 import { ConsoleLike } from './console-like';
 import { LogEventLike } from './log-event-like';
 import { getLogLevelName, LogLevel } from './log-level';
@@ -25,10 +23,18 @@ export class LogEvent implements LogEventLike {
 			: (safeStr.substring(0, targetLength) + '...');
 	}
 
+	public static stringifySafe(value: any): string {
+		try {
+			return JSON.stringify(value);
+		} catch (e) {
+			return value + '';
+		}
+	}
+
 	public static stringifyOptionalParams(optionalParams: any[]): string {
 		const joinStr = ' :: ';
 		const safeParams = [].slice.call(optionalParams)
-			.map(p => LogEvent.truncate(jsonStringifySafe(p), 250));
+			.map(p => LogEvent.truncate(LogEvent.stringifySafe(p), 250));
 		return (safeParams.length > 0)
 			? (joinStr + safeParams.join(joinStr))
 			: '';
