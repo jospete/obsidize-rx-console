@@ -1,0 +1,3 @@
+describe('RxConsole', () => {
+	// TODO: implement
+});
