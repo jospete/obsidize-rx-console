@@ -14,11 +14,18 @@ export class LogEventSubject<T extends LogEvent> extends LogEventObservable<T> i
 	public static readonly ERR_DESTROYED = 'LogEventSubject_ERR_DESTROYED';
 
 	private readonly mSourceSubject: Subject<T>;
+	public readonly name: string;
 
-	constructor(name: string) {
+	constructor(
+		name: string
+	) {
+
 		const source = new Subject<T>();
 		const events = source.asObservable().pipe(share());
-		super(name, events);
+
+		super(events);
+
+		this.name = name;
 		this.mSourceSubject = source;
 	}
 
@@ -38,6 +45,10 @@ export class LogEventSubject<T extends LogEvent> extends LogEventObservable<T> i
 		this.emit(LogLevel.DEBUG, message, params);
 	}
 
+	info(message: string, ...params: any[]): void {
+		this.emit(LogLevel.INFO, message, params);
+	}
+
 	warn(message: string, ...params: any[]): void {
 		this.emit(LogLevel.WARN, message, params);
 	}
@@ -50,8 +61,12 @@ export class LogEventSubject<T extends LogEvent> extends LogEventObservable<T> i
 		this.emit(LogLevel.FATAL, message, params);
 	}
 
+	emitEvent(ev: T): void {
+		this.mSourceSubject.next(ev);
+	}
+
 	emit(level: number, message: string, params: any[]): void {
-		this.mSourceSubject.next(this.createEvent(level, message, params));
+		this.emitEvent(this.createEvent(level, message, params));
 	}
 
 	toEventObservable(): LogEventObservable<T> {

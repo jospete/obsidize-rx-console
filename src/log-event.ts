@@ -1,7 +1,8 @@
 import jsonStringifySafe from 'json-stringify-safe';
 
+import { ConsoleLike } from './console-like';
 import { LogEventLike } from './log-event-like';
-import { getLogLevelName } from './log-level';
+import { getLogLevelName, LogLevel } from './log-level';
 
 /**
  * Single event instance, typically spawned by a LogEventSubject.
@@ -39,6 +40,25 @@ export class LogEvent implements LogEventLike {
 		const levelStr = getLogLevelName(level);
 		const paramStr = LogEvent.stringifyOptionalParams(params);
 		return `${timestampJson} [${levelStr}] [${tag}] ${message}${paramStr}`;
+	}
+
+	public static broadcast(ev: LogEventLike, console: ConsoleLike): void {
+		switch (ev.level) {
+			case LogLevel.FATAL:
+			case LogLevel.ERROR:
+				console.error(ev.message, ...ev.params);
+				break;
+			case LogLevel.WARN:
+				console.warn(ev.message, ...ev.params);
+				break;
+			default:
+				console.log(ev.message, ...ev.params);
+				break;
+		}
+	}
+
+	public broadcastTo(console: ConsoleLike): void {
+		LogEvent.broadcast(this, console);
 	}
 
 	public toString(): string {
