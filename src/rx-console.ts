@@ -57,15 +57,15 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 	/**
 	 * Override this to provide a custom data-type implementation.
 	 */
-	protected createEntryLogger(name: string, options: RxConsoleEntryOptions): LoggerType {
+	protected createEntryLogger(name: string, _options?: RxConsoleEntryOptions): LoggerType {
 		return new LogEventSubject(name) as LoggerType;
 	}
 
-	protected createEntry(name: string, options: RxConsoleEntryOptions = {}): RxConsoleEntry<T, LoggerType> {
+	protected createEntry(name: string, options?: RxConsoleEntryOptions): RxConsoleEntry<T, LoggerType> {
 		return new RxConsoleEntry(this.createEntryLogger(name, options), this, options);
 	}
 
-	public getLogger(name: string, options: RxConsoleEntryOptions = {}): LogEventSubject<T> {
+	public getLogger(name: string, options?: RxConsoleEntryOptions): LogEventSubject<T> {
 		return this.getEntry(name, options).logger;
 	}
 
@@ -77,6 +77,10 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 		super.setLevel(value);
 		this.mOnLevelChange.next(value);
 		return this;
+	}
+
+	public isDestroyed(): boolean {
+		return !!this.mEventSubject.closed;
 	}
 
 	public destroy(): void {

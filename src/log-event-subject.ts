@@ -29,54 +29,58 @@ export class LogEventSubject<T extends LogEvent> extends LogEventObservable<T> i
 		this.mSourceSubject = source;
 	}
 
-	verbose(message: string, ...params: any[]): void {
+	public verbose(message: string, ...params: any[]): void {
 		this.emit(LogLevel.VERBOSE, message, params);
 	}
 
-	trace(message: string, ...params: any[]): void {
+	public trace(message: string, ...params: any[]): void {
 		this.emit(LogLevel.TRACE, message, params);
 	}
 
-	debug(message: string, ...params: any[]): void {
+	public debug(message: string, ...params: any[]): void {
 		this.emit(LogLevel.DEBUG, message, params);
 	}
 
-	log(message: string, ...params: any[]): void {
+	public log(message: string, ...params: any[]): void {
 		this.emit(LogLevel.DEBUG, message, params);
 	}
 
-	info(message: string, ...params: any[]): void {
+	public info(message: string, ...params: any[]): void {
 		this.emit(LogLevel.INFO, message, params);
 	}
 
-	warn(message: string, ...params: any[]): void {
+	public warn(message: string, ...params: any[]): void {
 		this.emit(LogLevel.WARN, message, params);
 	}
 
-	error(message: string, ...params: any[]): void {
+	public error(message: string, ...params: any[]): void {
 		this.emit(LogLevel.ERROR, message, params);
 	}
 
-	fatal(message: string, ...params: any[]): void {
+	public fatal(message: string, ...params: any[]): void {
 		this.emit(LogLevel.FATAL, message, params);
 	}
 
-	emitEvent(ev: T): void {
+	public emitEvent(ev: T): void {
 		this.mSourceSubject.next(ev);
 	}
 
-	emit(level: number, message: string, params: any[]): void {
+	public emit(level: number, message: string, params: any[]): void {
 		this.emitEvent(this.createEvent(level, message, params));
 	}
 
 	// Creates a read-only version of this subject.
 	// This is akin to Subject.asObservable()
-	toEventObservable(): LogEventObservable<T> {
+	public toEventObservable(): LogEventObservable<T> {
 		return this.copy();
 	}
 
+	public isDestroyed(): boolean {
+		return !!this.mSourceSubject.closed;
+	}
+
 	// NOTE: this should not be called directly - it is a utility for RxConsole cleanup.
-	destroy(): void {
+	public destroy(): void {
 		this.mSourceSubject.error(LogEventSubject.ERR_DESTROYED);
 		this.mSourceSubject.unsubscribe();
 	}

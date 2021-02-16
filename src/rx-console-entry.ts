@@ -19,7 +19,7 @@ export interface RxConsoleEntryHooks {
  * Configuration options for an entry - note that these can also update pre-existing instances.
  */
 export interface RxConsoleEntryOptions {
-	logEvents?: LogEventObservableConfig;
+	logEvents?: Partial<LogEventObservableConfig>;
 }
 
 /**
@@ -52,5 +52,6 @@ export class RxConsoleEntry<T extends LogEvent, LoggerType extends LogEventSubje
 
 	public destroy(): void {
 		this.unsubscribe();
+		this.logger.destroy();
 	}
 }
