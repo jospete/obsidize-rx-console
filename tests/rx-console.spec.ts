@@ -1,6 +1,6 @@
 import { take } from 'rxjs/operators';
 
-import { RxConsole, getLogger, LogLevel, LogEvent, getLogLevelName } from '../src/index';
+import { RxConsole, getLogger, LogLevel, LogEvent, getLogLevelName } from '../src';
 
 describe('RxConsole', () => {
 

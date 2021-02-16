@@ -1,4 +1,4 @@
-import { LogEvent, LogLevel, RxConsole } from '../src/index';
+import { LogEvent, LogLevel, RxConsole } from '../src';
 
 describe('LogEvent', () => {
 

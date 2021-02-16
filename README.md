@@ -23,6 +23,8 @@ The goal of this library is simple: create a single-source, runtime-configurable
 **zero assumptions about where the data is being routed to**.
 
 
+## Usage
+
 This module uses RxJS for event streaming, and exposes a single entry point for generating logger instances:
 
 ```typescript
@@ -51,13 +53,13 @@ RxConsole.main
 
 ```
 
-> "Well that was unnecessary, I could have just used _console.log('test');_ right...?"
+> "Well that was unnecessary, we could have just used _console.log('test');_ right ...?"
 
-Yes, but now in addition to logging to the browser, you can _also_ route events 
-to a **file in cordova**, or to an **http server**, or just **buffer them in memory**.
+Not exactly -- while this approach is a bit more round-about, the advantage is now that you can _also_ route events 
+to a **file in cordova**, or to an **http server**, or just **buffer log events in memory**.
 
-All of these logger events are now being passed through RxJS, which means we now have 
-the unbelievable power of RxJS Observables at our disposal.
+All of these log events are now being passed through RxJS, which means we now have 
+the _nearly unlimited_ power of RxJS Observables at our disposal.
 
 ```typescript
 import { RxConsole, LogLevel } from '@obsidize/rx-console';
@@ -80,7 +82,9 @@ RxConsole.main.events.pipe(
 
 ```
 
-Furthermore, this module is customizable at _each level_:
+## Custom Extensions
+
+This module is customizable at each level thanks to generics:
 
 ```typescript
 import { LogEvent, LogEventSubject, RxConsole } from '@obsidize/rx-console';
@@ -116,3 +120,8 @@ logger.events.subscribe(ev => {
 logger.info('custom log');
 
 ```
+
+It is important to note that this module is only creating and emitting the log data.
+Any logic that has to do with _transporting_ the data (AKA to a file or server) should be considered a separate entity.
+
+I plan on making a transport for this module to route logs to the cordova file plugin in the near future.
