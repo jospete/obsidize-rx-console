@@ -12,7 +12,7 @@
     "coverage:open": "open-cli \".\\coverage\\*\\html\\index.html\"",
     "coverage": "run-s test:single coverage:open",
     "release:prepare": "node ./scripts/release-prepare.js",
-    "release:test": "",
+    "release:test": "run-s rebuild coverage",
     "release:publish": "",
     "release:prepare:patch": "npm run release:prepare -- --release-as patch",
     "bump": "run-s release:prepare:patch release:test release:publish"
