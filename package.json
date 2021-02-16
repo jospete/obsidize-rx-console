@@ -11,7 +11,7 @@
     "rebuild": "run-s clean build",
     "coverage:open": "open-cli \".\\coverage\\*\\html\\index.html\"",
     "coverage": "run-s test:single coverage:open",
-    "release:prepare": "",
+    "release:prepare": "node ./scripts/release-prepare.js",
     "release:test": "",
     "release:publish": "",
     "release:prepare:patch": "npm run release:prepare -- --release-as patch",
@@ -50,7 +50,8 @@
     "open": "^7.4.1",
     "open-cli": "^6.0.1",
     "rimraf": "^3.0.2",
-    "typescript": "^4.1.5"
+    "typescript": "^4.1.5",
+    "yargs": "^16.2.0"
   },
   "dependencies": {
     "rxjs": "^6.6.3"
