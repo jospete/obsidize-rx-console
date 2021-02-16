@@ -33,14 +33,14 @@ export class RxConsoleEntry<T extends LogEvent, LoggerType extends LogEventSubje
 	constructor(
 		public readonly logger: LoggerType,
 		hooks: RxConsoleEntryHooks,
-		options?: RxConsoleEntryOptions
+		options: RxConsoleEntryOptions = {}
 	) {
 		this.mLevelChangeSubscription = hooks.onLevelChange.subscribe(v => this.logger.setLevel(v));
 		this.mLoggerSubscription = this.logger.events.subscribe(ev => hooks.emit(ev));
 		this.configure(options);
 	}
 
-	public configure(options: RxConsoleEntryOptions = {}): this {
+	public configure(options: RxConsoleEntryOptions): this {
 		if (options.logEvents) this.logger.configure(options.logEvents);
 		return this;
 	}

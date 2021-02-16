@@ -1,4 +1,6 @@
-import { RxConsole, getLogger, LogLevel, LogEvent } from '../src/index';
+import { take } from 'rxjs/operators';
+
+import { RxConsole, getLogger, LogLevel, LogEvent, getLogLevelName } from '../src/index';
 
 describe('RxConsole', () => {
 
@@ -16,6 +18,20 @@ describe('RxConsole', () => {
 		expect(mockConsole.warn).not.toThrowError();
 		expect(mockConsole.error).not.toThrowError();
 		expect(mockConsole.fatal).not.toThrowError();
+	});
+
+	it('emits emits child logger events on the parent RxConsole instance', async () => {
+
+		const console = new RxConsole();
+		const testMessage = 'a sample log message';
+		const logger = console.getLogger('MyCustomLogger', { logEvents: { level: LogLevel.VERBOSE } });
+		const eventPromise = console.events.pipe(take(1)).toPromise();
+
+		logger.debug(testMessage);
+		const ev = await eventPromise;
+		expect(ev.tag).toBe(logger.name);
+		expect(ev.level).toBe(LogLevel.DEBUG);
+		expect(ev.message).toBe(testMessage);
 	});
 
 	describe('getLogger()', () => {
@@ -76,6 +92,27 @@ describe('RxConsole', () => {
 			expect(RxConsole.main.isDestroyed()).toBe(false);
 			expect(() => RxConsole.main.destroy()).not.toThrowError();
 			expect(() => RxConsole.main.emit(sampleEvent)).not.toThrowError();
+		});
+	});
+
+	describe('getLogLevelName()', () => {
+
+		it('is a convenience for converting numeric levels to their associated name', () => {
+
+			const targets: { level: number, value: string }[] = [
+				{ level: LogLevel.VERBOSE, value: 'VERBOSE' },
+				{ level: LogLevel.TRACE, value: 'TRACE' },
+				{ level: LogLevel.DEBUG, value: 'DEBUG' },
+				{ level: LogLevel.INFO, value: 'INFO' },
+				{ level: LogLevel.WARN, value: 'WARN' },
+				{ level: LogLevel.ERROR, value: 'ERROR' },
+				{ level: LogLevel.FATAL, value: 'FATAL' },
+				{ level: 1234, value: 'CUSTOM-LEVEL-1234' }
+			];
+
+			targets.forEach(target => {
+				expect(getLogLevelName(target.level)).toBe(target.value);
+			});
 		});
 	});
 });

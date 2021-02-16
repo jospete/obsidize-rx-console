@@ -65,7 +65,7 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 		return new RxConsoleEntry(this.createEntryLogger(name, options), this, options);
 	}
 
-	public getLogger(name: string, options?: RxConsoleEntryOptions): LogEventSubject<T> {
+	public getLogger(name: string, options: RxConsoleEntryOptions = {}): LoggerType {
 		return this.getEntry(name, options).logger;
 	}
 
@@ -94,7 +94,7 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 		this.mOnLevelChange.unsubscribe();
 	}
 
-	private getEntry(name: string, options: RxConsoleEntryOptions = {}): RxConsoleEntry<T, LoggerType> {
+	private getEntry(name: string, options: RxConsoleEntryOptions): RxConsoleEntry<T, LoggerType> {
 
 		let entry = this.mLogMap.get(name);
 
