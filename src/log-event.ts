@@ -8,11 +8,11 @@ import { getLogLevelName, LogLevel } from './log-level';
 export class LogEvent implements LogEventLike {
 
 	constructor(
-		public readonly timestamp: number,
 		public readonly level: number,
-		public readonly tag: string,
 		public readonly message: string,
 		public readonly params: any[],
+		public readonly tag: string,
+		public readonly timestamp: number = Date.now()
 	) {
 	}
 

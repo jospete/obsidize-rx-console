@@ -79,6 +79,6 @@ export class LogEventSubject<T extends LogEvent> extends LogEventObservable<T> i
 	}
 
 	protected createEvent(level: number, message: string, params: any[]): T {
-		return new LogEvent(Date.now(), level, this.name, message, params) as T;
+		return new LogEvent(level, message, params, this.name) as T;
 	}
 }

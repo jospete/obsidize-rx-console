@@ -2,10 +2,10 @@ import { Observable, Subject } from 'rxjs';
 import { distinct, share } from 'rxjs/operators';
 
 import { LogEvent } from './log-event';
+import { ConsoleLike } from './console-like';
 import { LogEventSubject } from './log-event-subject';
 import { LogEventObservable } from './log-event-observable';
-import { LogEventSource, RxConsoleEntry, RxConsoleEntryOptions, RxConsoleEntryHooks } from './rx-console-entry';
-import { ConsoleLike } from './console-like';
+import { RxConsoleEntry, RxConsoleEntryOptions, RxConsoleEntryHooks, LogEventSource } from './rx-console-entry';
 
 /**
  * Core entry point for a collection of loggers.
@@ -13,10 +13,12 @@ import { ConsoleLike } from './console-like';
  * this instance's level is updated, and all LogEvent instances will be funnelled back to
  * this instance's 'events' Observable.
  */
-export class RxConsole extends LogEventObservable<LogEvent> implements RxConsoleEntryHooks {
+export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>>
+	extends LogEventObservable<T>
+	implements RxConsoleEntryHooks {
 
 	public static readonly ERR_DESTROYED: string = 'RxConsole_ERR_DESTROYED';
-	public static readonly main: RxConsole = new RxConsole();
+	public static readonly main: RxConsole<LogEvent, LogEventSource> = new RxConsole();
 
 	public static readonly mockConsole: ConsoleLike = {
 		verbose: () => { },
@@ -29,15 +31,15 @@ export class RxConsole extends LogEventObservable<LogEvent> implements RxConsole
 		fatal: () => { }
 	};
 
-	private readonly mEventSubject: Subject<LogEvent>;
+	private readonly mEventSubject: Subject<T>;
 	private readonly mOnLevelChange: Subject<number>;
-	private readonly mLogMap: Map<string, RxConsoleEntry>;
+	private readonly mLogMap: Map<string, RxConsoleEntry<T, LoggerType>>;
 
 	public readonly onLevelChange: Observable<number>;
 
 	constructor() {
 
-		const source = new Subject<LogEvent>();
+		const source = new Subject<T>();
 		const events = source.asObservable().pipe(share());
 
 		super(events);
@@ -52,15 +54,22 @@ export class RxConsole extends LogEventObservable<LogEvent> implements RxConsole
 		);
 	}
 
-	protected createEntry(name: string, options: RxConsoleEntryOptions = {}): RxConsoleEntry {
-		return new RxConsoleEntry(new LogEventSubject(name), this, options);
+	/**
+	 * Override this to provide a custom data-type implementation.
+	 */
+	protected createEntryLogger(name: string, options: RxConsoleEntryOptions): LoggerType {
+		return new LogEventSubject(name) as LoggerType;
 	}
 
-	public getLogger(name: string, options: RxConsoleEntryOptions = {}): LogEventSource {
+	protected createEntry(name: string, options: RxConsoleEntryOptions = {}): RxConsoleEntry<T, LoggerType> {
+		return new RxConsoleEntry(this.createEntryLogger(name, options), this, options);
+	}
+
+	public getLogger(name: string, options: RxConsoleEntryOptions = {}): LogEventSubject<T> {
 		return this.getEntry(name, options).logger;
 	}
 
-	public emit(ev: LogEvent): void {
+	public emit(ev: T): void {
 		this.mEventSubject.next(ev);
 	}
 
@@ -79,7 +88,7 @@ export class RxConsole extends LogEventObservable<LogEvent> implements RxConsole
 		this.mOnLevelChange.unsubscribe();
 	}
 
-	public getEntry(name: string, options: RxConsoleEntryOptions = {}): RxConsoleEntry {
+	public getEntry(name: string, options: RxConsoleEntryOptions = {}): RxConsoleEntry<T, LoggerType> {
 
 		let entry = this.mLogMap.get(name);
 

@@ -25,13 +25,13 @@ export interface RxConsoleEntryOptions {
 /**
  * Metadata instance for loggers created by an RxConsole.
  */
-export class RxConsoleEntry implements Unsubscribable {
+export class RxConsoleEntry<T extends LogEvent, LoggerType extends LogEventSubject<T>> implements Unsubscribable {
 
 	private readonly mLevelChangeSubscription: Subscription;
 	private readonly mLoggerSubscription: Subscription;
 
 	constructor(
-		public readonly logger: LogEventSource,
+		public readonly logger: LoggerType,
 		hooks: RxConsoleEntryHooks,
 		options?: RxConsoleEntryOptions
 	) {
