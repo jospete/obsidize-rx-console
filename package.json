@@ -1,6 +1,6 @@
 {
   "name": "@obsidize/rx-console",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A logging library that uses rxjs as the foundation for log event handling.",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -17,9 +17,10 @@
     "copy:package": "cpy ./package.json ./dist/",
     "copy:readme": "cpy ./README.md ./dist/",
     "copy:assets": "run-p copy:package copy:readme",
+    "dist:publish": "npm publish ./dist",
     "release:prepare": "node ./scripts/release-prepare.js",
-    "release:test": "NODE_ENV=production run-s rebuild coverage copy:assets",
-    "release:publish": "",
+    "release:test": "run-s rebuild coverage copy:assets",
+    "release:publish": "run-s dist:publish",
     "release:prepare:patch": "npm run release:prepare -- --release-as patch",
     "bump": "run-s release:prepare:patch release:test release:publish"
   },
@@ -54,7 +55,6 @@
     "karma-jasmine-html-reporter": "^1.5.4",
     "karma-typescript": "^5.4.0",
     "npm-run-all": "^4.1.5",
-    "open": "^7.4.1",
     "open-cli": "^6.0.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.1.5",
