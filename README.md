@@ -1,27 +1,21 @@
 # @obsidize/rx-console
 
-
 This is yet another logging library in an attempt to strip away unnecessary dependencies that break
 interoperability between browser and node environments.
-
 
 For some reason, Winston and Bunyan have (completely unnecessary) mandatory dependencies to
 node-specific things like fs and stream utilities. This may lead people down the rabbit-hole of
 trying to shim or "fake" these dependencies in order to get all the other benefits of using these logging modules, which
 in turn leads to bundling pain and misery.
 
-
 Another approach is the debug and loglevel modules, which are super-light-weight browser variants.
 (Honestly if size is an issue for you, just use one of these)
-
 
 debug and loglevel work fine for debugging locally, but don't seem to scale well if you want to, for example, 
 route logger traffic to a file on a cordova app or adjust the global log level in real-time.
 
-
 The goal of this library is simple: create a single-source, runtime-configurable aggregator for multiple log streams, and make
 **zero assumptions about where the data is being routed to**.
-
 
 ## Usage
 
@@ -57,11 +51,12 @@ RxConsole.main
 
 > "Well that was unnecessary, we could have just used _console.log('test');_ right ...?"
 
-Not exactly -- while this approach is a bit more round-about, the advantage is now that you can _also_ route events 
-to a **file in cordova**, or to an **http server**, or just **buffer log events in memory**.
+Not exactly -- the RxJS approach offers a few advantages:
 
-All of these log events are now being passed through RxJS, which means we now have 
-the _nearly unlimited_ power of RxJS Observables at our disposal.
+1. Unlike ```console.log()```, LogEvent instances carry _context_ about where the log came from, so 
+we can infer more useful data in the output like what time the event happened and what class (AKA "logger name") it came from.
+2. Now you can _also_ route events to a **file in cordova**, or to an **http server**, or just **buffer log events in memory**.
+3. All of these log events are now being passed through Observables, which means we now have the _nearly unlimited_ power of RxJS Observables at our disposal.
 
 ```typescript
 import { RxConsole, LogLevel } from '@obsidize/rx-console';
