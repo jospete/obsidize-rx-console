@@ -35,7 +35,7 @@ export class MyServiceThing {
 
 // ... in your main startup routine ...
 
-import { RxConsole, LogLevel } from '@obsidize/rx-console';
+import { RxConsole, LogLevel, LogEvent } from '@obsidize/rx-console';
 
 // You can use the main instance, or make your own with:
 // export const myCustomConsole = new RxConsole();
@@ -44,7 +44,7 @@ RxConsole.main
 	.events
 	.subscribe(ev => {
 		// send log to standard browser console
-		console.log(ev.toString()); // 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!
+		LogEvent.broadcast(ev, console); // 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!
 	});
 
 ```
