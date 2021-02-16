@@ -28,7 +28,7 @@ The goal of this library is simple: create a single-source, runtime-configurable
 This module uses RxJS for event streaming, and exposes a utility function ```getLogger()``` for generating logger instances:
 
 ```typescript
-import { getLogger, LogEventSource, RxConsole, LogLevel } from '@obsidize/rx-console';
+import { getLogger, LogEventSource } from '@obsidize/rx-console';
 
 export class MyServiceThing {
 	
@@ -39,7 +39,9 @@ export class MyServiceThing {
 	}
 }
 
-// ... in your main startup routine ...'
+// ... in your main startup routine ...
+
+import { RxConsole, LogLevel } from '@obsidize/rx-console';
 
 // You can use the main instance, or make your own with:
 // export const myCustomConsole = new RxConsole();
