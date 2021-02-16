@@ -69,10 +69,13 @@ export class LogEventSubject<T extends LogEvent> extends LogEventObservable<T> i
 		this.emitEvent(this.createEvent(level, message, params));
 	}
 
+	// Creates a read-only version of this subject.
+	// This is akin to Subject.asObservable()
 	toEventObservable(): LogEventObservable<T> {
 		return this.copy();
 	}
 
+	// NOTE: this should not be called directly - it is a utility for RxConsole cleanup.
 	destroy(): void {
 		this.mSourceSubject.error(LogEventSubject.ERR_DESTROYED);
 		this.mSourceSubject.unsubscribe();

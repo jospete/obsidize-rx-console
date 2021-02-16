@@ -80,6 +80,8 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 	}
 
 	public destroy(): void {
+		// Don't allow the main instance to be destroyed
+		if (RxConsole.main === (this as any)) return;
 		this.mLogMap.forEach(entry => entry.destroy());
 		this.mLogMap.clear();
 		this.mEventSubject.error(RxConsole.ERR_DESTROYED);
@@ -88,7 +90,7 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 		this.mOnLevelChange.unsubscribe();
 	}
 
-	public getEntry(name: string, options: RxConsoleEntryOptions = {}): RxConsoleEntry<T, LoggerType> {
+	private getEntry(name: string, options: RxConsoleEntryOptions = {}): RxConsoleEntry<T, LoggerType> {
 
 		let entry = this.mLogMap.get(name);
 
