@@ -7,13 +7,16 @@ interoperability between browser and node environments.
 
 For some reason, Winston and Bunyan have (completely unnecessary) mandatory dependencies to
 node-specific things like fs and stream utilities. This may lead people down the rabbit-hole of
-trying to shim or "fake" these modules to get all the other benefits of using these modules, which
+trying to shim or "fake" these dependencies in order to get all the other benefits of using these logging modules, which
 in turn leads to bundling pain and misery.
 
 
 Another approach is the debug and loglevel modules, which are super-light-weight browser variants.
-These work fine for debugging locally, but don't seem to scale well if you want to, for example, route logger
-traffic to a file on a cordova app or adjust the global log level in real-time.
+(Honestly if size is an issue for you, just use one of these)
+
+
+debug and loglevel work fine for debugging locally, but don't seem to scale well if you want to, for example, 
+route logger traffic to a file on a cordova app or adjust the global log level in real-time.
 
 
 The goal of this library is simple: create a single-source, runtime-configurable aggregator for multiple log streams, and make
