@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "A logging library that uses rxjs as the foundation for log event handling.",
   "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "test": "karma start",
     "test:single": "karma start --single-run",
