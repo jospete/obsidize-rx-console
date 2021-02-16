@@ -46,7 +46,7 @@ RxConsole.main
 	.events
 	.subscribe(ev => {
 		// send log to standard browser console
-		console.log(ev.toString());
+		console.log(ev.toString()); // 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!
 	});
 
 ```
