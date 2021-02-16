@@ -25,7 +25,7 @@ The goal of this library is simple: create a single-source, runtime-configurable
 
 ## Usage
 
-This module uses RxJS for event streaming, and exposes a single entry point for generating logger instances:
+This module uses RxJS for event streaming, and exposes a utility function ```getLogger()``` for generating logger instances:
 
 ```typescript
 import { getLogger, LogEventSource, RxConsole, LogLevel } from '@obsidize/rx-console';
