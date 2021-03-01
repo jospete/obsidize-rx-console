@@ -4,6 +4,10 @@ import { RxConsole, getLogger, LogLevel, LogEvent, getLogLevelName } from '../sr
 
 describe('RxConsole', () => {
 
+	afterEach(() => {
+		RxConsole.main.destroyAllLoggers();
+	});
+
 	it('Has a static main instance', () => {
 		expect(RxConsole.main).toBeTruthy();
 	});
@@ -32,6 +36,23 @@ describe('RxConsole', () => {
 		expect(ev.tag).toBe(logger.name);
 		expect(ev.level).toBe(LogLevel.DEBUG);
 		expect(ev.message).toBe(testMessage);
+	});
+
+	it('can route custom RxConsole instances to other instances', async () => {
+
+		const console = new RxConsole();
+		const testMessage = 'a sample log message';
+		const logger = console.getLogger('MyCustomLogger', { logEvents: { level: LogLevel.VERBOSE } });
+
+		const sub = console.pipeEventsTo(RxConsole.main);
+		const eventPromise = RxConsole.main.events.pipe(take(1)).toPromise();
+
+		logger.debug(testMessage);
+		const ev = await eventPromise;
+		expect(ev.tag).toBe(logger.name);
+		expect(ev.level).toBe(LogLevel.DEBUG);
+		expect(ev.message).toBe(testMessage);
+		sub.unsubscribe();
 	});
 
 	describe('getLogger()', () => {

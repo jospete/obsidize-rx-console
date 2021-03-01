@@ -44,7 +44,7 @@ RxConsole.main
 	.events
 	.subscribe(ev => {
 		// send log to standard browser console
-		LogEvent.broadcast(ev, console); // 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!
+		ev.broadcastTo(console); // 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!
 	});
 
 ```
@@ -85,8 +85,11 @@ This module is customizable at each level thanks to generics:
 
 ```typescript
 import { LogEvent, LogEventSubject, RxConsole } from '@obsidize/rx-console';
+import { map } from 'rxjs/operators';
 
 class MyCustomEvent extends LogEvent {
+
+	// Add some special sauce to your custom event instances.
 	specialSauceData: number = 42;
 }
 
@@ -116,7 +119,12 @@ logger.events.subscribe(ev => {
 
 logger.info('custom log');
 
+// NOTE: You can also wire your custom console back into the main instance
+myConsoleInstance.pipeEventsTo(RxConsole.main);
+
 ```
+
+## Supplemental Notes
 
 It is important to note that this module is only creating and emitting the log data.
 Any logic that has to do with _transporting_ the data (AKA to a file or server) should be considered a separate entity.

@@ -1,4 +1,4 @@
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { distinct, share } from 'rxjs/operators';
 
 import { LogEvent } from './log-event';
@@ -55,6 +55,10 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 		);
 	}
 
+	public get isMainInstance(): boolean {
+		return RxConsole.main === (this as any);
+	}
+
 	/**
 	 * Override this to provide a custom data-type implementation.
 	 */
@@ -74,6 +78,14 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 		this.mEventSubject.next(ev);
 	}
 
+	/**
+	 * NOTE: this does not restrict circular subscriptions. 
+	 * It is up to the caller to use this responsibly, lest ye fall into the hell hole of stack overflow.
+	 */
+	public pipeEventsTo(otherConsole: RxConsole<T, LoggerType>): Subscription {
+		return this.events.subscribe(ev => otherConsole.emit(ev));
+	}
+
 	public setLevel(value: number): this {
 		super.setLevel(value);
 		this.mOnLevelChange.next(value);
@@ -84,11 +96,19 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 		return !!this.mEventSubject.closed;
 	}
 
-	public destroy(): void {
-		// Don't allow the main instance to be destroyed
-		if (RxConsole.main === (this as any)) throw new Error(RxConsole.ERR_CANNOT_DESTROY_MAIN_INSTANCE);
+	/**
+	 * IMPORTANT - this is mostly a debugging tool for tests, do not use this 
+	 * unless you want to hit the entire logging system with a sledgehammer.
+	 */
+	public destroyAllLoggers(): void {
 		this.mLogMap.forEach(entry => entry.destroy());
 		this.mLogMap.clear();
+	}
+
+	public destroy(): void {
+		// Don't allow the main instance to be destroyed
+		if (this.isMainInstance) throw new Error(RxConsole.ERR_CANNOT_DESTROY_MAIN_INSTANCE);
+		this.destroyAllLoggers();
 		this.mEventSubject.error(RxConsole.ERR_DESTROYED);
 		this.mEventSubject.unsubscribe();
 		this.mOnLevelChange.error(RxConsole.ERR_DESTROYED);
