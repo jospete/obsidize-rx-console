@@ -1,4 +1,5 @@
-import { LogEvent, LogLevel, RxConsole } from '../src';
+import { LogEvent, LogLevel, RxConsole, RxConsoleUtility } from '../src';
+const { truncate, stringifySafe } = RxConsoleUtility;
 
 describe('LogEvent', () => {
 
@@ -45,18 +46,18 @@ describe('LogEvent', () => {
 	describe('truncate', () => {
 
 		it('shortens the length of strings that exceed the given target length', () => {
-			expect(LogEvent.truncate('hello', 5)).toBe('hello');
-			expect(LogEvent.truncate('hello', 4)).toBe('hell...');
+			expect(truncate('hello', 5)).toBe('hello');
+			expect(truncate('hello', 4)).toBe('hell...');
 		});
 	});
 
 	describe('stringifySafe', () => {
 
 		it('attempts to stringify an object, but does not explode on error', () => {
-			expect(LogEvent.stringifySafe({ hello: 'test' })).toBe('{"hello":"test"}');
+			expect(stringifySafe({ hello: 'test' })).toBe('{"hello":"test"}');
 			const circularObject = { parent: null };
 			circularObject.parent = circularObject;
-			expect(LogEvent.stringifySafe(circularObject)).toBe('[object Object]');
+			expect(stringifySafe(circularObject)).toBe('[object Object]');
 		});
 	});
 });

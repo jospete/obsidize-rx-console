@@ -2,7 +2,7 @@ import { ConsoleLike } from './console-like';
 import { LogEventLike } from './log-event-like';
 import { RxConsoleUtility } from './rx-console-utility';
 
-const { broadcast, toDefaultStringFormat } = RxConsoleUtility;
+const { pipeLogEventToConsole, toDefaultStringFormat, toDefaultStringFormatBase } = RxConsoleUtility;
 
 /**
  * Single event instance, typically spawned by a LogEventSubject.
@@ -19,7 +19,11 @@ export class LogEvent implements LogEventLike {
 	}
 
 	public broadcastTo(console: ConsoleLike): void {
-		broadcast(this, console);
+		pipeLogEventToConsole(this, console);
+	}
+
+	public toBaseString(): string {
+		return toDefaultStringFormatBase(this);
 	}
 
 	public toString(): string {

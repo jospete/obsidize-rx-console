@@ -16,6 +16,10 @@ export namespace RxConsoleUtility {
 		return (value || {} as T);
 	}
 
+	export function sliceArray<T>(value: T[]): T[] {
+		return [].slice.call(value);
+	}
+
 	export function truncate(str: string, targetLength: number): string {
 		const safeStr = str + '';
 		return (safeStr.length <= targetLength)
@@ -31,13 +35,9 @@ export namespace RxConsoleUtility {
 		}
 	}
 
-	export function stringifyOptionalParams(optionalParams: any[]): string {
-		const joinStr = ' :: ';
-		const safeParams = [].slice.call(optionalParams)
-			.map(p => truncate(stringifySafe(p), 250));
-		return (safeParams.length > 0)
-			? (joinStr + safeParams.join(joinStr))
-			: '';
+	export function stringifyOptionalParams(optionalParams: any[], joinStr: string = ' :: '): string {
+		const safeParams = sliceArray(optionalParams).map(p => truncate(stringifySafe(p), 250));
+		return (safeParams.length > 0) ? (joinStr + safeParams.join(joinStr)) : '';
 	}
 
 	export function toDefaultStringFormatBase(ev: LogEventLike): string {
@@ -48,24 +48,29 @@ export namespace RxConsoleUtility {
 	}
 
 	export function toDefaultStringFormat(ev: LogEventLike): string {
-		const { timestamp, level, tag, message, params } = ev;
-		const timestampJson = new Date(timestamp).toJSON();
-		const levelStr = getLogLevelName(level);
-		const paramStr = stringifyOptionalParams(params);
-		return `${timestampJson} [${levelStr}] [${tag}] ${message}${paramStr}`;
+		const { params } = optObject(ev);
+		const baseMessage = toDefaultStringFormatBase(ev);
+		const paramsStr = stringifyOptionalParams(params);
+		return baseMessage + paramsStr;
 	}
 
-	export function broadcast(ev: LogEventLike, console: ConsoleLike): void {
-		switch (ev.level) {
+	export function pipeLogEventToConsole(ev: LogEventLike, console: ConsoleLike): void {
+
+		if (!ev || !console) return;
+
+		const normalizedMessage = toDefaultStringFormatBase(ev);
+		const { params, level } = ev;
+
+		switch (level) {
 			case LogLevel.FATAL:
 			case LogLevel.ERROR:
-				console.error(ev.message, ...ev.params);
+				console.error(normalizedMessage, ...params);
 				break;
 			case LogLevel.WARN:
-				console.warn(ev.message, ...ev.params);
+				console.warn(normalizedMessage, ...params);
 				break;
 			default:
-				console.log(ev.message, ...ev.params);
+				console.log(normalizedMessage, ...params);
 				break;
 		}
 	}
