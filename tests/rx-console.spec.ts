@@ -88,9 +88,8 @@ describe('RxConsole', () => {
 			expect(() => console.destroy()).toThrowError();
 			expect(() => console.emit(sampleEvent)).toThrowError();
 
-			RxConsole.main.destroy();
+			expect(() => RxConsole.main.destroy()).toThrowError();
 			expect(RxConsole.main.isDestroyed()).toBe(false);
-			expect(() => RxConsole.main.destroy()).not.toThrowError();
 			expect(() => RxConsole.main.emit(sampleEvent)).not.toThrowError();
 		});
 	});

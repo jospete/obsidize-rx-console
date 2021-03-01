@@ -40,38 +40,34 @@ export namespace RxConsoleUtility {
 		return (safeParams.length > 0) ? (joinStr + safeParams.join(joinStr)) : '';
 	}
 
-	export function toDefaultStringFormatBase(ev: LogEventLike): string {
+	export function stringifyLogEventBaseValues(ev: LogEventLike): string {
 		const { timestamp, level, tag, message } = ev;
 		const timestampJson = new Date(timestamp).toJSON();
 		const levelStr = getLogLevelName(level);
 		return `${timestampJson} [${levelStr}] [${tag}] ${message}`;
 	}
 
-	export function toDefaultStringFormat(ev: LogEventLike): string {
+	export function stringifyLogEvent(ev: LogEventLike): string {
 		const { params } = optObject(ev);
-		const baseMessage = toDefaultStringFormatBase(ev);
+		const baseMessage = stringifyLogEventBaseValues(ev);
 		const paramsStr = stringifyOptionalParams(params);
 		return baseMessage + paramsStr;
 	}
 
-	export function pipeLogEventToConsole(ev: LogEventLike, console: ConsoleLike): void {
+	export function callConsoleDynamic(console: ConsoleLike, level: number, message: string, params: any[]): void {
 
-		if (!ev || !console) return;
+		// ** This waters down the levels to ones that are definitely defined on 99% of clients.
 
-		const normalizedMessage = toDefaultStringFormatBase(ev);
-		const { params, level } = ev;
-
-		switch (level) {
-			case LogLevel.FATAL:
-			case LogLevel.ERROR:
-				console.error(normalizedMessage, ...params);
-				break;
-			case LogLevel.WARN:
-				console.warn(normalizedMessage, ...params);
-				break;
-			default:
-				console.log(normalizedMessage, ...params);
-				break;
+		if (level >= LogLevel.ERROR) {
+			console.error(message, ...params);
+			return;
 		}
+
+		if (level >= LogLevel.WARN) {
+			console.warn(message, ...params);
+			return;
+		}
+
+		console.log(message, ...params);
 	}
 }

@@ -29,17 +29,17 @@ describe('LogEvent', () => {
 			const sampleEvent1 = new LogEvent(LogLevel.DEBUG, 'test message', [], 'custom-tag', now.getTime());
 			spyOn(mockConsole, 'log').and.callThrough();
 			sampleEvent1.broadcastTo(mockConsole);
-			expect(mockConsole.log).toHaveBeenCalledWith(sampleEvent1.message);
+			expect(mockConsole.log).toHaveBeenCalledWith(sampleEvent1.getBroadcastMessage());
 
 			const sampleEvent2 = new LogEvent(LogLevel.WARN, 'test warning', [], 'custom-tag', now.getTime());
 			spyOn(mockConsole, 'warn').and.callThrough();
 			sampleEvent2.broadcastTo(mockConsole);
-			expect(mockConsole.warn).toHaveBeenCalledWith(sampleEvent2.message);
+			expect(mockConsole.warn).toHaveBeenCalledWith(sampleEvent2.getBroadcastMessage());
 
 			const sampleEvent3 = new LogEvent(LogLevel.FATAL, 'test error', [], 'custom-tag', now.getTime());
 			spyOn(mockConsole, 'error').and.callThrough();
 			sampleEvent3.broadcastTo(mockConsole);
-			expect(mockConsole.error).toHaveBeenCalledWith(sampleEvent3.message);
+			expect(mockConsole.error).toHaveBeenCalledWith(sampleEvent3.getBroadcastMessage());
 		});
 	});
 
