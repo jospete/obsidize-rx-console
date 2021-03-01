@@ -105,6 +105,10 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 		this.mLogMap.clear();
 	}
 
+	/**
+	 * Permanently kills this console instance and its event streams.
+	 * The instance should be disposed of after this is called.
+	 */
 	public destroy(): void {
 		// Don't allow the main instance to be destroyed
 		if (this.isMainInstance) throw new Error(RxConsole.ERR_CANNOT_DESTROY_MAIN_INSTANCE);

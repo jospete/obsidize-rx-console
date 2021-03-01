@@ -4,12 +4,9 @@ import { RxConsole, getLogger, LogLevel, LogEvent, getLogLevelName } from '../sr
 
 describe('RxConsole', () => {
 
-	afterEach(() => {
-		RxConsole.main.destroyAllLoggers();
-	});
-
 	it('Has a static main instance', () => {
 		expect(RxConsole.main).toBeTruthy();
+		expect(RxConsole.main.isMainInstance).toBe(true);
 	});
 
 	it('has a static mock console instance', () => {
@@ -27,6 +24,8 @@ describe('RxConsole', () => {
 	it('emits emits child logger events on the parent RxConsole instance', async () => {
 
 		const console = new RxConsole();
+		expect(console.isMainInstance).toBe(false);
+
 		const testMessage = 'a sample log message';
 		const logger = console.getLogger('MyCustomLogger', { logEvents: { level: LogLevel.VERBOSE } });
 		const eventPromise = console.events.pipe(take(1)).toPromise();
@@ -41,18 +40,22 @@ describe('RxConsole', () => {
 	it('can route custom RxConsole instances to other instances', async () => {
 
 		const console = new RxConsole();
+		const console2 = new RxConsole();
 		const testMessage = 'a sample log message';
 		const logger = console.getLogger('MyCustomLogger', { logEvents: { level: LogLevel.VERBOSE } });
 
-		const sub = console.pipeEventsTo(RxConsole.main);
-		const eventPromise = RxConsole.main.events.pipe(take(1)).toPromise();
+		const sub = console.pipeEventsTo(console2);
+		const eventPromise = console2.events.pipe(take(1)).toPromise();
 
 		logger.debug(testMessage);
 		const ev = await eventPromise;
 		expect(ev.tag).toBe(logger.name);
 		expect(ev.level).toBe(LogLevel.DEBUG);
 		expect(ev.message).toBe(testMessage);
+
 		sub.unsubscribe();
+		console2.destroy();
+		console.destroy();
 	});
 
 	describe('getLogger()', () => {
@@ -68,27 +71,6 @@ describe('RxConsole', () => {
 			const logger2 = getLogger(logger1.name, { logEvents: { level: LogLevel.INFO } });
 			expect(RxConsole.main.getLogger).toHaveBeenCalledTimes(2);
 			expect(logger1).toBe(logger2);
-		});
-	});
-
-	describe('setLevel()', () => {
-
-		it('sets the global level among all log entry instances', () => {
-
-			const logger1 = getLogger('LogSourceOne');
-			const logger2 = getLogger('LogSourceTwo');
-			expect(logger1).not.toBe(logger2);
-
-			logger1.setLevel(LogLevel.DEBUG);
-			logger2.setLevel(LogLevel.WARN);
-
-			expect(logger1.getLevel()).toBe(LogLevel.DEBUG);
-			expect(logger2.getLevel()).toBe(LogLevel.WARN);
-
-			RxConsole.main.setLevel(LogLevel.INFO);
-
-			expect(logger1.getLevel()).toBe(LogLevel.INFO);
-			expect(logger2.getLevel()).toBe(LogLevel.INFO);
 		});
 	});
 
@@ -111,7 +93,30 @@ describe('RxConsole', () => {
 
 			expect(() => RxConsole.main.destroy()).toThrowError();
 			expect(RxConsole.main.isDestroyed()).toBe(false);
-			expect(() => RxConsole.main.emit(sampleEvent)).not.toThrowError();
+		});
+	});
+
+	describe('setLevel()', () => {
+
+		it('sets the global level among all log entry instances', () => {
+
+			const console = new RxConsole();
+			const logger1 = console.getLogger('LogSourceOne');
+			const logger2 = console.getLogger('LogSourceTwo');
+			expect(logger1).not.toBe(logger2);
+
+			logger1.setLevel(LogLevel.DEBUG);
+			logger2.setLevel(LogLevel.WARN);
+
+			expect(logger1.getLevel()).toBe(LogLevel.DEBUG);
+			expect(logger2.getLevel()).toBe(LogLevel.WARN);
+
+			console.setLevel(LogLevel.INFO);
+
+			expect(logger1.getLevel()).toBe(LogLevel.INFO);
+			expect(logger2.getLevel()).toBe(LogLevel.INFO);
+
+			console.destroy();
 		});
 	});
 

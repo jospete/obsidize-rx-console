@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 
 const { argv } = require('yargs');
 const { execSync } = require('child_process');
