@@ -16,10 +16,9 @@ const releaseBranchName = 'release/' + versionTag;
 const gitStatusOutput = execSync('git status').toString();
 const currentBranchNameMatch = /On branch (\S+)/.exec(gitStatusOutput);
 
-console.log('gitStatusOutput = ', gitStatusOutput);
-console.log('currentBranchNameMatch = ', currentBranchNameMatch);
-
 if (!currentBranchNameMatch) {
+	console.error('failed to match current branch from gitStatusOutput = ', gitStatusOutput);
+	console.log('currentBranchNameMatch = ', currentBranchNameMatch);
 	process.exit(1);
 }
 
