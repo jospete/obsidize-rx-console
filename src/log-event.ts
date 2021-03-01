@@ -1,6 +1,8 @@
 import { ConsoleLike } from './console-like';
 import { LogEventLike } from './log-event-like';
-import { getLogLevelName, LogLevel } from './log-level';
+import { RxConsoleUtility } from './rx-console-utility';
+
+const { broadcast, toDefaultStringFormat } = RxConsoleUtility;
 
 /**
  * Single event instance, typically spawned by a LogEventSubject.
@@ -16,58 +18,11 @@ export class LogEvent implements LogEventLike {
 	) {
 	}
 
-	public static truncate(str: string, targetLength: number): string {
-		const safeStr = str + '';
-		return (safeStr.length <= targetLength)
-			? safeStr
-			: (safeStr.substring(0, targetLength) + '...');
-	}
-
-	public static stringifySafe(value: any): string {
-		try {
-			return JSON.stringify(value);
-		} catch (e) {
-			return value + '';
-		}
-	}
-
-	public static stringifyOptionalParams(optionalParams: any[]): string {
-		const joinStr = ' :: ';
-		const safeParams = [].slice.call(optionalParams)
-			.map(p => LogEvent.truncate(LogEvent.stringifySafe(p), 250));
-		return (safeParams.length > 0)
-			? (joinStr + safeParams.join(joinStr))
-			: '';
-	}
-
-	public static toDefaultStringFormat(ev: LogEventLike): string {
-		const { timestamp, level, tag, message, params } = ev;
-		const timestampJson = new Date(timestamp).toJSON();
-		const levelStr = getLogLevelName(level);
-		const paramStr = LogEvent.stringifyOptionalParams(params);
-		return `${timestampJson} [${levelStr}] [${tag}] ${message}${paramStr}`;
-	}
-
-	public static broadcast(ev: LogEventLike, console: ConsoleLike): void {
-		switch (ev.level) {
-			case LogLevel.FATAL:
-			case LogLevel.ERROR:
-				console.error(ev.message, ...ev.params);
-				break;
-			case LogLevel.WARN:
-				console.warn(ev.message, ...ev.params);
-				break;
-			default:
-				console.log(ev.message, ...ev.params);
-				break;
-		}
-	}
-
 	public broadcastTo(console: ConsoleLike): void {
-		LogEvent.broadcast(this, console);
+		broadcast(this, console);
 	}
 
 	public toString(): string {
-		return LogEvent.toDefaultStringFormat(this);
+		return toDefaultStringFormat(this);
 	}
 }

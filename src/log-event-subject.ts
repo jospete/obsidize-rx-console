@@ -85,6 +85,9 @@ export class LogEventSubject<T extends LogEvent> extends LogEventObservable<T> i
 		this.mSourceSubject.unsubscribe();
 	}
 
+	/**
+	 * Override this to provide a custom data-type implementation.
+	 */
 	protected createEvent(level: number, message: string, params: any[]): T {
 		return new LogEvent(level, message, params, this.name) as T;
 	}

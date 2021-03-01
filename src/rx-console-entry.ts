@@ -41,17 +41,17 @@ export class RxConsoleEntry<T extends LogEvent, LoggerType extends LogEventSubje
 	}
 
 	public configure(options: RxConsoleEntryOptions): this {
-		if (options.logEvents) this.logger.configure(options.logEvents);
+		if (options && options.logEvents) this.logger.configure(options.logEvents);
 		return this;
 	}
 
 	public unsubscribe(): void {
 		this.mLevelChangeSubscription.unsubscribe();
 		this.mLoggerSubscription.unsubscribe();
+		this.logger.destroy();
 	}
 
 	public destroy(): void {
 		this.unsubscribe();
-		this.logger.destroy();
 	}
 }

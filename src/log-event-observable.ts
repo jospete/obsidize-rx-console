@@ -3,6 +3,8 @@ import { skipWhile, filter } from 'rxjs/operators';
 
 import { LogEvent } from './log-event';
 import { LogLevel } from './log-level';
+import { RxConsoleUtility } from './rx-console-utility';
+const { isNumber, isBoolean, optObject } = RxConsoleUtility;
 
 /**
  * Configurable options for a LogEventObservable instance.
@@ -110,11 +112,11 @@ export class LogEventObservable<T extends LogEvent> {
 	}
 
 	public configure(config: Partial<LogEventObservableConfig>): this {
-		const { minLevel, maxLevel, level, enabled } = config;
-		if (typeof minLevel === 'number') this.setMinLevel(minLevel);
-		if (typeof maxLevel === 'number') this.setMaxLevel(maxLevel);
-		if (typeof level === 'number') this.setLevel(level);
-		if (typeof enabled === 'boolean') this.setEnabled(enabled);
+		const { minLevel, maxLevel, level, enabled } = optObject(config);
+		if (isNumber(minLevel)) this.setMinLevel(minLevel as number);
+		if (isNumber(maxLevel)) this.setMaxLevel(maxLevel as number);
+		if (isNumber(level)) this.setLevel(level as number);
+		if (isBoolean(enabled)) this.setEnabled(!!enabled);
 		return this;
 	}
 }

@@ -18,6 +18,7 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 	implements RxConsoleEntryHooks {
 
 	public static readonly ERR_DESTROYED: string = 'RxConsole_ERR_DESTROYED';
+	public static readonly ERR_CANNOT_DESTROY_MAIN_INSTANCE: string = 'RxConsole_ERR_CANNOT_DESTROY_MAIN_INSTANCE';
 	public static readonly main: RxConsole<LogEvent, LogEventSource> = new RxConsole();
 
 	public static readonly mockConsole: ConsoleLike = {
@@ -85,7 +86,7 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 
 	public destroy(): void {
 		// Don't allow the main instance to be destroyed
-		if (RxConsole.main === (this as any)) return;
+		if (RxConsole.main === (this as any)) throw new Error(RxConsole.ERR_CANNOT_DESTROY_MAIN_INSTANCE);
 		this.mLogMap.forEach(entry => entry.destroy());
 		this.mLogMap.clear();
 		this.mEventSubject.error(RxConsole.ERR_DESTROYED);
