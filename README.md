@@ -129,4 +129,5 @@ myConsoleInstance.pipeEventsTo(RxConsole.main);
 It is important to note that this module is only creating and emitting the log data.
 Any logic that has to do with _transporting_ the data (AKA to a file or server) should be considered a separate entity.
 
-I plan on making a transport for this module to route logs to the cordova file plugin in the near future.
+Available Transports
+- [@obsidize/rotating-file-stream](https://github.com/jospete/obsidize-rotating-file-stream) - spreads data seamlessly across multiple files in a rotating fashion
