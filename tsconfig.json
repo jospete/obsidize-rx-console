@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "outDir": "dist/",
     "module": "commonjs",
-    "outDir": "./dist",
-    "declaration": true,
+    "moduleResolution": "node",
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
     "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
     "lib": [
-      "es2015"
+      "esnext",
+      "dom"
     ]
   },
   "include": [
