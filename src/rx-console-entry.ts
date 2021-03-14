@@ -4,6 +4,7 @@ import { LogEvent } from './log-event';
 import { LogEventSubject } from './log-event-subject';
 import { LogEventObservable, LogEventObservableConfig } from './log-event-observable';
 
+// Simplified types for when generics are not explicitly used.
 export type LogEventSource = LogEventSubject<LogEvent>;
 export type ReadOnlyLogEventSource = LogEventObservable<LogEvent>;
 

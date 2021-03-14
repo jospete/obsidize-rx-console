@@ -22,10 +22,16 @@ export class LogEvent implements LogEventLike {
 		callConsoleDynamic(console, this.level, this.getBroadcastMessage(), this.params);
 	}
 
+	/**
+	 * Override this in a sub-class to cusotmize output data.
+	 */
 	public getBroadcastMessage(): string {
 		return stringifyLogEventBaseValues(this);
 	}
 
+	/**
+	 * Override this in a sub-class to cusotmize output data.
+	 */
 	public toString(): string {
 		return stringifyLogEvent(this);
 	}
