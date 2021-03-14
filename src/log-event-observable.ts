@@ -81,7 +81,7 @@ export class LogEventObservable<T extends LogEvent> {
 	}
 
 	public setMaxLevel(value: number): this {
-		// the minimum possible value will always be hard-capped to 1 to prevent negatives
+		// the maximum possible value will always be hard-capped to 1 to prevent negatives
 		this.mMaxLevel = Math.max(1, this.getMinLevel() + 1, value);
 		this.syncLevel();
 		return this;
