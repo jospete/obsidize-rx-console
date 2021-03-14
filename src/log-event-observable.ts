@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { skipWhile, filter } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
 import { LogEvent } from './log-event';
 import { LogLevel } from './log-level';
@@ -42,8 +42,7 @@ export class LogEventObservable<T extends LogEvent> {
 		public readonly source: Observable<T>
 	) {
 		this.events = this.source.pipe(
-			skipWhile(() => !this.isEnabled()),
-			filter(ev => !!ev && this.accepts(ev))
+			filter(ev => this.isEnabled() && !!ev && this.accepts(ev))
 		);
 	}
 
