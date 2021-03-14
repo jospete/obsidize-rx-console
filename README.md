@@ -22,7 +22,7 @@ The goal of this library is simple: create a single-source, runtime-configurable
 - npm:
 
 ```bash
-npm install --save @obisidize/rx-console
+npm install --save @obsidize/rx-console
 ```
 
 - git:
