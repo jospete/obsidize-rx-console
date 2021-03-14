@@ -17,6 +17,20 @@ route logger traffic to a file on a cordova app or adjust the global log level i
 The goal of this library is simple: create a single-source, runtime-configurable aggregator for multiple log streams, and make
 **zero assumptions about where the data is being routed to**.
 
+## Installation
+
+- npm:
+
+```bash
+npm install --save @obisidize/rx-console
+```
+
+- git:
+
+```bash
+npm install --save git+https://github.com/jospete/obsidize-rx-console.git
+```
+
 ## Usage
 
 This module uses RxJS for event streaming, and exposes a utility function ```getLogger()``` for generating logger instances:
