@@ -16,7 +16,7 @@ module.exports = {
 		extensions: ['.tsx', '.ts', '.js'],
 	},
 	output: {
-		filename: 'index.es5.js',
+		filename: 'es5.js',
 		path: path.resolve(__dirname, 'dist'),
 	},
 };
