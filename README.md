@@ -31,7 +31,7 @@ npm install --save @obsidize/rx-console
 npm install --save git+https://github.com/jospete/obsidize-rx-console.git
 ```
 
-## Usage
+## Usage (TypeScript)
 
 This module uses RxJS for event streaming, and exposes a utility function ```getLogger()``` for generating logger instances:
 
@@ -91,6 +91,27 @@ RxConsole.main.events.pipe(
 	writeToFile(outputString);
 });
 
+```
+
+## Usage (NodeJS / Vanilla JavaScript)
+
+The same concepts in the TypeScript example also apply to NodeJS / vanilla JS usage.
+
+The below snippet can be tested with runkit on NPM.
+
+```javascript
+require("rxjs"); // rxjs is a peer dependency. 
+const rxConsole = require("@obsidize/rx-console");
+const first = require('rxjs/operators').first;
+
+const logger = rxConsole.getLogger('TestLog');
+const eventPromise = rxConsole.RxConsole.main.events.pipe(first()).toPromise();
+
+logger.debug('test!');
+
+const logEvent = await eventPromise;
+logEvent.toString();
+// "2021-03-15T20:51:55.845Z [DEBUG] [TestLog] test!"
 ```
 
 ## Custom Extensions
