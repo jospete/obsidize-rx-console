@@ -100,18 +100,30 @@ The same concepts in the TypeScript example also apply to NodeJS / vanilla JS us
 The below snippet can be tested with runkit on NPM.
 
 ```javascript
-require("rxjs"); // rxjs is a peer dependency. 
-const rxConsole = require("@obsidize/rx-console");
-const first = require('rxjs/operators').first;
+require("rxjs/package.json"); // rxjs is a peer dependency. 
+var rxConsole = require("@obsidize/rx-console");
+const {RxConsole, LogLevel, getLogger} = rxConsole;
 
-const logger = rxConsole.getLogger('TestLog');
-const eventPromise = rxConsole.RxConsole.main.events.pipe(first()).toPromise();
+const eventSubscription = RxConsole
+	.main
+	.setLevel(LogLevel.DEBUG)
+	.events
+	.subscribe(ev => ev.broadcastTo(console));
 
-logger.debug('test!');
+const logger = getLogger('RunKitLogger');
 
-const logEvent = await eventPromise;
-logEvent.toString();
-// "2021-03-15T20:51:55.845Z [DEBUG] [TestLog] test!"
+logger.debug('test');
+// "2021-03-15T21:13:42.356Z [DEBUG] [RunKitLogger] test"
+
+logger.info('some object info: ', {myValueIs: 42, isOptionalParam: true, someOtherValue: 'yep'});
+// "2021-03-15T21:13:42.360Z [INFO] [RunKitLogger] some object info: "
+// Object {myValueIs: 42, isOptionalParam: true, someOtherValue: "yep"}
+
+logger.fatal('EXPLOSIONS?!?!?!');
+// "2021-03-15T21:13:42.363Z [FATAL] [RunKitLogger] EXPLOSIONS?!?!?!"
+
+logger.verbose('im obnoxious');
+// Does not log anything because VERBOSE < DEBUG
 ```
 
 ## Custom Extensions
