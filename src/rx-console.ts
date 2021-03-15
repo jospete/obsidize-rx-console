@@ -134,3 +134,10 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 		return entry;
 	}
 }
+
+/**
+ * Conveinence for generating loggers via the standard 'main' RxConsole instance. 
+ */
+export const getLogger = (name: string, options?: RxConsoleEntryOptions): LogEventSource => {
+	return RxConsole.main.getLogger(name, options);
+};
