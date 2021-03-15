@@ -5,16 +5,16 @@
     "stripInternal": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "module": "es2015",
+    "module": "ES2015",
     "moduleResolution": "node",
     "outDir": "./dist",
     "rootDir": "src",
-    "target": "es5",
+    "target": "ES5",
     "strict": true,
     "skipLibCheck": true,
     "lib": [
-      "es2017",
-      "dom"
+      "ES2017",
+      "DOM"
     ],
     "inlineSources": true,
     "sourceMap": true

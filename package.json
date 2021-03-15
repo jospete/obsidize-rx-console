@@ -9,7 +9,7 @@
   "scripts": {
     "test": "karma start",
     "test:single": "karma start --single-run",
-    "build:webpack": "webpack",
+    "build:webpack": "webpack --config webpack.config.js",
     "build:tsc": "tsc",
     "build": "run-s build:tsc build:webpack copy:assets",
     "clean": "rimraf ./dist ./coverage",
