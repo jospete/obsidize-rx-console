@@ -4,7 +4,7 @@ module.exports = {
 	entry: './src/index.ts',
 	mode: 'production',
 	target: 'node',
-	externals: ['rxjs'],
+	externals: ['tslib', 'rxjs'],
 	module: {
 		rules: [
 			{
