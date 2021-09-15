@@ -21,10 +21,12 @@
     "copy:assets": "run-p copy:package copy:readme",
     "git:publish": "node ./scripts/release-publish.js",
     "release:prepare": "node ./scripts/release-prepare.js",
-    "release:test": "run-s rebuild coverage",
+    "release:test": "run-s rebuild coverage docs",
     "release:publish": "run-s git:publish",
     "release:prepare:patch": "npm run release:prepare -- --release-as patch",
-    "bump": "run-s release:prepare:patch release:test release:publish"
+    "bump": "run-s release:prepare:patch release:test release:publish",
+    "docs": "typedoc ./src/index.ts --out ./docs",
+    "docs:open": "open-cli \".\\docs\\index.html\""
   },
   "repository": {
     "type": "git",
@@ -64,6 +66,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.3",
     "ts-loader": "^8.0.18",
+    "typedoc": "0.21.4",
     "typescript": "^4.1.5",
     "webpack": "^5.25.0",
     "webpack-cli": "^4.5.0",
