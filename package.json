@@ -1,6 +1,6 @@
 {
   "name": "@obsidize/rx-console",
-  "version": "1.1.11",
+  "version": "1.1.12",
   "description": "A logging library that uses rxjs as the foundation for log event handling.",
   "main": "es5.js",
   "module": "index.js",
