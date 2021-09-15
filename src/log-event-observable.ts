@@ -4,6 +4,7 @@ import { filter } from 'rxjs/operators';
 import { LogEvent } from './log-event';
 import { LogLevel } from './log-level';
 import { RxConsoleUtility } from './rx-console-utility';
+
 const { isNumber, isBoolean, optObject } = RxConsoleUtility;
 
 /**

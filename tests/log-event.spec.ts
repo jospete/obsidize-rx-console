@@ -1,4 +1,5 @@
 import { LogEvent, LogLevel, RxConsole, RxConsoleUtility } from '../src';
+
 const { truncate, stringifySafe } = RxConsoleUtility;
 
 describe('LogEvent', () => {

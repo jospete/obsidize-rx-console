@@ -5,7 +5,10 @@ import { LogEvent } from './log-event';
 import { ConsoleLike } from './console-like';
 import { LogEventSubject } from './log-event-subject';
 import { LogEventObservable } from './log-event-observable';
+import { RxConsoleUtility } from './rx-console-utility';
 import { RxConsoleEntry, RxConsoleEntryOptions, RxConsoleEntryHooks, LogEventSource } from './rx-console-entry';
+
+const { identity } = RxConsoleUtility;
 
 /**
  * Core entry point for a collection of loggers.
@@ -22,14 +25,14 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 	public static readonly main: RxConsole<LogEvent, LogEventSource> = new RxConsole();
 
 	public static readonly mockConsole: ConsoleLike = {
-		verbose: () => { },
-		trace: () => { },
-		debug: () => { },
-		log: () => { },
-		info: () => { },
-		warn: () => { },
-		error: () => { },
-		fatal: () => { }
+		verbose: identity,
+		trace: identity,
+		debug: identity,
+		log: identity,
+		info: identity,
+		warn: identity,
+		error: identity,
+		fatal: identity
 	};
 
 	private readonly mEventSubject: Subject<T>;

@@ -2,7 +2,14 @@ import { ConsoleLike } from './console-like';
 import { LogEventLike } from './log-event-like';
 import { getLogLevelName, LogLevel } from './log-level';
 
+/**
+ * Helper functions for common checks and data transformation.
+ */
 export namespace RxConsoleUtility {
+
+	export function identity(value: any): any {
+		return value;
+	}
 
 	export function isNumber(value: any): boolean {
 		return typeof value === 'number';
@@ -30,13 +37,13 @@ export namespace RxConsoleUtility {
 	export function stringifySafe(value: any): string {
 		try {
 			return JSON.stringify(value);
-		} catch (e) {
+		} catch (_) {
 			return value + '';
 		}
 	}
 
-	export function stringifyOptionalParams(optionalParams: any[], joinStr: string = ' :: '): string {
-		const safeParams = sliceArray(optionalParams).map(p => truncate(stringifySafe(p), 250));
+	export function stringifyOptionalParams(optionalParams: any[], joinStr: string = ' :: ', maxLength: number = 250): string {
+		const safeParams = sliceArray(optionalParams).map(p => truncate(stringifySafe(p), maxLength));
 		return (safeParams.length > 0) ? (joinStr + safeParams.join(joinStr)) : '';
 	}
 
@@ -48,8 +55,9 @@ export namespace RxConsoleUtility {
 	}
 
 	export function stringifyLogEvent(ev: LogEventLike): string {
-		const { params } = optObject(ev);
-		const baseMessage = stringifyLogEventBaseValues(ev);
+		const safeEvent = optObject(ev);
+		const { params } = safeEvent;
+		const baseMessage = stringifyLogEventBaseValues(safeEvent);
 		const paramsStr = stringifyOptionalParams(params);
 		return baseMessage + paramsStr;
 	}

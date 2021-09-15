@@ -5,19 +5,19 @@
     "stripInternal": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "importHelpers": true,
     "module": "ES2015",
     "moduleResolution": "node",
     "outDir": "./dist",
     "rootDir": "src",
-    "target": "ES5",
-    "strict": true,
-    "skipLibCheck": true,
+    "target": "ES6",
     "lib": [
+      "ES6",
       "ES2017",
       "DOM"
-    ],
-    "inlineSources": true,
-    "sourceMap": true
+    ]
   },
   "include": [
     "src"
