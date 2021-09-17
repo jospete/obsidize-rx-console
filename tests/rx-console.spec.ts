@@ -1,4 +1,4 @@
-import { take } from 'rxjs/operators';
+import { take, toArray } from 'rxjs/operators';
 
 import { RxConsole, getLogger, LogLevel, LogEvent, getLogLevelName } from '../src';
 
@@ -55,6 +55,46 @@ describe('RxConsole', () => {
 
 		sub.unsubscribe();
 		console2.destroy();
+		console.destroy();
+	});
+
+	it('can solo a target logger and silence all others', async () => {
+
+		const console = new RxConsole();
+		const testMessage = 'a sample log message';
+		const loggerA = console.getLogger('CustomLoggerA');
+		const loggerB = console.getLogger('CustomLoggerB');
+		const eventPromise = console.events.pipe(take(5), toArray()).toPromise();
+
+		expect(console.hasSoloLogger()).toBe(false);
+		expect(console.getSoloLogger()).not.toBeDefined();
+
+		loggerA.debug(testMessage);
+		loggerB.debug(testMessage);
+
+		console.setSoloLogger(loggerB);
+
+		expect(console.hasSoloLogger()).toBe(true);
+		expect(console.getSoloLogger()).toBe(loggerB);
+
+		loggerA.debug(testMessage);
+		loggerB.debug(testMessage);
+
+		console.setSoloLogger(null);
+
+		expect(console.hasSoloLogger()).toBe(false);
+		expect(console.getSoloLogger()).not.toBeDefined();
+
+		loggerA.debug(testMessage);
+		loggerB.debug(testMessage);
+
+		const events: LogEvent[] = await eventPromise;
+		const loggerACount = events.filter(ev => ev.tag === loggerA.name).length;
+		const loggerBCount = events.filter(ev => ev.tag === loggerB.name).length;
+
+		expect(loggerACount).toBe(2);
+		expect(loggerBCount).toBe(3);
+
 		console.destroy();
 	});
 

@@ -8,7 +8,7 @@ import { LogEventObservable } from './log-event-observable';
 import { RxConsoleUtility } from './rx-console-utility';
 import { RxConsoleEntry, RxConsoleEntryOptions, RxConsoleEntryHooks, LogEventSource } from './rx-console-entry';
 
-const { identity } = RxConsoleUtility;
+const { identity, isPopulatedString } = RxConsoleUtility;
 
 /**
  * Core entry point for a collection of loggers.
@@ -38,6 +38,8 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 	private readonly mEventSubject: Subject<T>;
 	private readonly mOnLevelChange: Subject<number>;
 	private readonly mLogMap: Map<string, RxConsoleEntry<T, LoggerType>>;
+	private readonly mParentAcceptDelegate: (ev: T) => boolean;
+	private mSoloName: string | undefined;
 
 	public readonly onLevelChange: Observable<number>;
 
@@ -51,6 +53,8 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 		this.mEventSubject = source;
 		this.mOnLevelChange = new Subject();
 		this.mLogMap = new Map();
+		this.mParentAcceptDelegate = this.accepts;
+		this.mSoloName = undefined;
 
 		this.onLevelChange = this.mOnLevelChange.asObservable().pipe(
 			distinct(),
@@ -62,15 +66,19 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 		return RxConsole.main === (this as any);
 	}
 
-	/**
-	 * Override this to provide a custom data-type implementation.
-	 */
-	protected createEntryLogger(name: string, _options?: RxConsoleEntryOptions): LoggerType {
-		return new LogEventSubject(name) as LoggerType;
+	public getSoloLogger(): LoggerType | undefined | null {
+		return isPopulatedString(this.mSoloName) ? this.getLogger(this.mSoloName!) : undefined;
 	}
 
-	protected createEntry(name: string, options?: RxConsoleEntryOptions): RxConsoleEntry<T, LoggerType> {
-		return new RxConsoleEntry(this.createEntryLogger(name, options), this, options);
+	public hasSoloLogger(): boolean {
+		return !!this.getSoloLogger();
+	}
+
+	public setSoloLogger(value: LoggerType | undefined | null) {
+		this.mSoloName = value ? value.name : undefined;
+		this.accepts = this.hasSoloLogger()
+			? (ev: T) => this.acceptsSoloEvent(ev)
+			: this.mParentAcceptDelegate;
 	}
 
 	public getLogger(name: string, options: RxConsoleEntryOptions = {}): LoggerType {
@@ -120,6 +128,21 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 		this.mEventSubject.unsubscribe();
 		this.mOnLevelChange.error(RxConsole.ERR_DESTROYED);
 		this.mOnLevelChange.unsubscribe();
+	}
+
+	/**
+	 * Override this to provide a custom data-type implementation.
+	 */
+	protected createEntryLogger(name: string, _options?: RxConsoleEntryOptions): LoggerType {
+		return new LogEventSubject(name) as LoggerType;
+	}
+
+	protected createEntry(name: string, options?: RxConsoleEntryOptions): RxConsoleEntry<T, LoggerType> {
+		return new RxConsoleEntry(this.createEntryLogger(name, options), this, options);
+	}
+
+	protected acceptsSoloEvent(ev: T): boolean {
+		return !!ev && ev.tag === this.mSoloName;
 	}
 
 	private getEntry(name: string, options: RxConsoleEntryOptions): RxConsoleEntry<T, LoggerType> {

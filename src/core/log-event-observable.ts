@@ -36,15 +36,15 @@ export class LogEventObservable<T extends LogEvent> {
 	private mLevel: number = LogEventObservable.configDefaults.level;
 	private mEnabled: boolean = LogEventObservable.configDefaults.enabled;
 
-	public readonly events: Observable<T>;
 	public accepts: (ev: T) => boolean = (ev: T) => this.acceptsLevel(ev.level);
+
+	public readonly events: Observable<T> = this.source.pipe(
+		filter(ev => this.isEnabled() && !!ev && this.accepts(ev))
+	);
 
 	constructor(
 		public readonly source: Observable<T>
 	) {
-		this.events = this.source.pipe(
-			filter(ev => this.isEnabled() && !!ev && this.accepts(ev))
-		);
 	}
 
 	public isEnabled(): boolean {

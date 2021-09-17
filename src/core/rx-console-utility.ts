@@ -19,6 +19,14 @@ export namespace RxConsoleUtility {
 		return typeof value === 'boolean';
 	}
 
+	export function isString(value: any): boolean {
+		return typeof value === 'string';
+	}
+
+	export function isPopulatedString(value: any): boolean {
+		return isString(value) && value.length > 0;
+	}
+
 	export function optObject<T>(value: T): T {
 		return (value || {} as T);
 	}
