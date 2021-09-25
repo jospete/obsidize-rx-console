@@ -63,16 +63,27 @@
 				</a>
 				<p>This is yet another logging library in an attempt to strip away unnecessary dependencies that break
 				interoperability between browser and node environments.</p>
-				<p>For some reason, Winston and Bunyan have (completely unnecessary) mandatory dependencies to
-					node-specific things like fs and stream utilities. This may lead people down the rabbit-hole of
-					trying to shim or &quot;fake&quot; these dependencies in order to get all the other benefits of using these logging modules, which
-				in turn leads to bundling pain and misery.</p>
-				<p>Another approach is the debug and loglevel modules, which are super-light-weight browser variants.
-				(Honestly if size is an issue for you, just use one of these)</p>
-				<p>debug and loglevel work fine for debugging locally, but don&#39;t seem to scale well if you want to, for example,
-				route logger traffic to a file on a cordova app or adjust the global log level in real-time.</p>
-				<p>The goal of this library is simple: create a single-source, runtime-configurable aggregator for multiple log streams, and make
-				<strong>zero assumptions about where the data is being routed to</strong>.</p>
+				<p>The goals of this module are:</p>
+				<ul>
+					<li>Allow runtime configuration of log levels</li>
+					<li>Ability to intercept log events, so they can be transported to a persistence source</li>
+					<li>Make no assumptions about the persistence layer (i.e. no dependency declarations that lock this module to node or the browser, like node fs)</li>
+					<li>Configurability at each abstraction level, from the root <code>RxConsole</code> class all the way down to the <code>LogEvent</code> class.</li>
+				</ul>
+				<a href="#why-did-i-make-this-module" id="why-did-i-make-this-module" style="color: inherit; text-decoration: none;">
+					<h4>Why Did I Make This Module?</h4>
+				</a>
+				<p><a href="https://www.npmjs.com/package/winston">Winston</a>
+					and <a href="https://www.npmjs.com/package/bunyan">Bunyan</a>
+					are excellent tools for creating a complex logger heirarchy and routing log traffic to external transports.
+					However, they have (completely unnecessary) mandatory dependencies to node-specific things like fs and stream utilities.
+					This may lead one down the rabbit-hole of trying to shim or &quot;fake&quot; these dependencies in order to get all the other
+				benefits of using these logging modules, which in turn leads to bundling pain and misery.</p>
+				<p>On the other side of the spectrum we have the
+					<a href="https://www.npmjs.com/package/debug">debug</a>
+					and <a href="https://www.npmjs.com/package/loglevel">loglevel</a> modules, which are super-light-weight browser-compatible loggers with no concept of transports.
+				(Honestly if you don&#39;t need transport abstractions, consider using one of these)</p>
+				<p>I needed a middle ground between these two types of modules, and this is the result.</p>
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
 				</a>
@@ -312,10 +323,6 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>

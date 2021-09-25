@@ -3,19 +3,28 @@
 This is yet another logging library in an attempt to strip away unnecessary dependencies that break
 interoperability between browser and node environments.
 
-For some reason, Winston and Bunyan have (completely unnecessary) mandatory dependencies to
-node-specific things like fs and stream utilities. This may lead people down the rabbit-hole of
-trying to shim or "fake" these dependencies in order to get all the other benefits of using these logging modules, which
-in turn leads to bundling pain and misery.
+The goals of this module are:
 
-Another approach is the debug and loglevel modules, which are super-light-weight browser variants.
-(Honestly if size is an issue for you, just use one of these)
+- Allow runtime configuration of log levels
+- Ability to intercept log events, so they can be transported to a persistence source
+- Make no assumptions about the persistence layer (i.e. no dependency declarations that lock this module to node or the browser, like node fs)
+- Configurability at each abstraction level, from the root ```RxConsole``` class all the way down to the ```LogEvent``` class.
 
-debug and loglevel work fine for debugging locally, but don't seem to scale well if you want to, for example, 
-route logger traffic to a file on a cordova app or adjust the global log level in real-time.
+#### Why Did I Make This Module?
 
-The goal of this library is simple: create a single-source, runtime-configurable aggregator for multiple log streams, and make
-**zero assumptions about where the data is being routed to**.
+[Winston](https://www.npmjs.com/package/winston) 
+and [Bunyan](https://www.npmjs.com/package/bunyan)
+are excellent tools for creating a complex logger heirarchy and routing log traffic to external transports.
+However, they have (completely unnecessary) mandatory dependencies to node-specific things like fs and stream utilities. 
+This may lead one down the rabbit-hole of trying to shim or "fake" these dependencies in order to get all the other 
+benefits of using these logging modules, which in turn leads to bundling pain and misery.
+
+On the other side of the spectrum we have the
+[debug](https://www.npmjs.com/package/debug) 
+and [loglevel](https://www.npmjs.com/package/loglevel) modules, which are super-light-weight browser-compatible loggers with no concept of transports.
+(Honestly if you don't need transport abstractions, consider using one of these)
+
+I needed a middle ground between these two types of modules, and this is the result.
 
 ## Installation
 
