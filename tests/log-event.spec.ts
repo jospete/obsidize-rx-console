@@ -1,4 +1,5 @@
-import { LogEvent, LogLevel, RxConsole, RxConsoleUtility } from '../src';
+import { LogEvent, LogLevel, RxConsoleUtility } from '../src';
+import { mockConsole } from './util';
 
 const { truncate, stringifySafe } = RxConsoleUtility;
 
@@ -25,8 +26,6 @@ describe('LogEvent', () => {
 		it('routes the given LogEvent to its nearest ConsoleLike equivalent', () => {
 
 			const now = new Date();
-			const { mockConsole } = RxConsole;
-
 			const sampleEvent1 = new LogEvent(LogLevel.DEBUG, 'test message', [], 'custom-tag', now.getTime());
 			spyOn(mockConsole, 'log').and.callThrough();
 			sampleEvent1.broadcastTo(mockConsole);

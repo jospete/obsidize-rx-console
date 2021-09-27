@@ -2,13 +2,10 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { distinct, share } from 'rxjs/operators';
 
 import { LogEvent } from './log-event';
-import { ConsoleLike } from './console-like';
 import { LogEventSubject } from './log-event-subject';
 import { LogEventObservable } from './log-event-observable';
 import { RxConsoleUtility } from './rx-console-utility';
 import { RxConsoleEntry, RxConsoleEntryOptions, RxConsoleEntryHooks, LogEventSource } from './rx-console-entry';
-
-const { identity, isPopulatedString } = RxConsoleUtility;
 
 /**
  * Core entry point for a collection of loggers.
@@ -23,17 +20,6 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 	public static readonly ERR_DESTROYED: string = 'RxConsole_ERR_DESTROYED';
 	public static readonly ERR_CANNOT_DESTROY_MAIN_INSTANCE: string = 'RxConsole_ERR_CANNOT_DESTROY_MAIN_INSTANCE';
 	public static readonly main: RxConsole<LogEvent, LogEventSource> = new RxConsole();
-
-	public static readonly mockConsole: ConsoleLike = {
-		verbose: identity,
-		trace: identity,
-		debug: identity,
-		log: identity,
-		info: identity,
-		warn: identity,
-		error: identity,
-		fatal: identity
-	};
 
 	private readonly mEventSubject: Subject<T>;
 	private readonly mOnLevelChange: Subject<number>;
@@ -67,13 +53,19 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 	}
 
 	public getSoloLogger(): LoggerType | undefined | null {
-		return isPopulatedString(this.mSoloName) ? this.getLogger(this.mSoloName!) : undefined;
+		return RxConsoleUtility.isPopulatedString(this.mSoloName)
+			? this.getLogger(this.mSoloName!)
+			: undefined;
 	}
 
 	public hasSoloLogger(): boolean {
 		return !!this.getSoloLogger();
 	}
 
+	/**
+	 * Set a logger to debug in isolation.
+	 * Set to null to clear the current solo logger.
+	 */
 	public setSoloLogger(value: LoggerType | undefined | null) {
 		this.mSoloName = value ? value.name : undefined;
 		this.accepts = this.hasSoloLogger()
@@ -164,6 +156,6 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 /**
  * Conveinence for generating loggers via the standard 'main' RxConsole instance. 
  */
-export const getLogger = (name: string, options?: RxConsoleEntryOptions): LogEventSource => {
+export function getLogger(name: string, options?: RxConsoleEntryOptions): LogEventSource {
 	return RxConsole.main.getLogger(name, options);
-};
+}

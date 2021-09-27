@@ -150,7 +150,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/log-event-observable.ts#L45">core/log-event-observable.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L43">core/log-event-observable.ts:43</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -178,7 +178,7 @@
 					<div class="tsd-signature tsd-kind-icon">accepts<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>ev<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/log-event-observable.ts#L39">core/log-event-observable.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L37">core/log-event-observable.ts:37</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -209,7 +209,7 @@
 					<div class="tsd-signature tsd-kind-icon">events<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/log-event-observable.ts#L41">core/log-event-observable.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L39">core/log-event-observable.ts:39</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -226,7 +226,7 @@
 					<div class="tsd-signature tsd-kind-icon">config<wbr>Defaults<span class="tsd-signature-symbol">:</span> <a href="../interfaces/LogEventObservableConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LogEventObservableConfig</a><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/log-event-observable.ts#L27">core/log-event-observable.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L25">core/log-event-observable.ts:25</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -243,9 +243,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/log-event-observable.ts#L90">core/log-event-observable.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L116">core/log-event-observable.ts:116</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns true if the currently set level is less than or equal to the given level.</p>
+								</div>
+								<p>For example, if the current level is DEBUG (default) and the given level is FATAL, this will return true.
+								If the current Level is DEBUG and the given level is TRACE, this will return false.</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -266,7 +273,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/log-event-observable.ts#L114">core/log-event-observable.ts:114</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L144">core/log-event-observable.ts:144</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -289,9 +296,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/log-event-observable.ts#L108">core/log-event-observable.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L138">core/log-event-observable.ts:138</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Generates a deep clone of this instance.
+									NOTE: does not generate sub-class instances.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <a href="LogEventObservable.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventObservable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -306,9 +319,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/log-event-observable.ts#L59">core/log-event-observable.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L64">core/log-event-observable.ts:64</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the minimum required level for output events in the &#39;events&#39; stream.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
 						</li>
 					</ul>
@@ -323,7 +341,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/log-event-observable.ts#L79">core/log-event-observable.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L94">core/log-event-observable.ts:94</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -340,7 +358,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/log-event-observable.ts#L68">core/log-event-observable.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L78">core/log-event-observable.ts:78</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -357,7 +375,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/log-event-observable.ts#L50">core/log-event-observable.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L48">core/log-event-observable.ts:48</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -374,9 +392,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/log-event-observable.ts#L54">core/log-event-observable.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L56">core/log-event-observable.ts:56</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set the enabled state of this emitter.
+									When disabled, the &#39;events&#39; stream will not emit any values, regardless of the set level.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -397,9 +421,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/log-event-observable.ts#L63">core/log-event-observable.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L73">core/log-event-observable.ts:73</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set the minimum required level for output events in the &#39;events&#39; stream.
+										Any events below this level will be omitted from the stream.
+									NOTE: this value will be clamped between the minLevel and maxLevel values.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -420,9 +451,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/log-event-observable.ts#L83">core/log-event-observable.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L104">core/log-event-observable.ts:104</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set the max possible level for this stream.
+									See setLevel() for more info.</p>
+								</div>
+								<p>NOTE: the maximum possible value will always be hard-capped to 1 to prevent negatives and/or minLevel conflicts.</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -443,9 +481,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/log-event-observable.ts#L72">core/log-event-observable.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L88">core/log-event-observable.ts:88</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set the min possible level for this stream.
+									See setLevel() for more info.</p>
+								</div>
+								<p>NOTE: the minimum possible value will always be hard-capped to 0 to prevent negatives and/or maxLevel conflicts.</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -466,7 +511,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/log-event-observable.ts#L94">core/log-event-observable.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L120">core/log-event-observable.ts:120</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="LogEventObservable.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventObservable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -483,7 +528,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/log-event-observable.ts#L99">core/log-event-observable.ts:99</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L125">core/log-event-observable.ts:125</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/LogEventObservableConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LogEventObservableConfig</a></h4>

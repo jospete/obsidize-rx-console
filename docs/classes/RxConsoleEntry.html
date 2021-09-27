@@ -91,12 +91,6 @@
 					</li>
 				</ul>
 			</section>
-			<section class="tsd-panel">
-				<h3>Implements</h3>
-				<ul class="tsd-hierarchy">
-					<li><span class="tsd-signature-type">Unsubscribable</span></li>
-				</ul>
-			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -118,7 +112,6 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="RxConsoleEntry.html#configure" class="tsd-kind-icon">configure</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="RxConsoleEntry.html#destroy" class="tsd-kind-icon">destroy</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="RxConsoleEntry.html#unsubscribe" class="tsd-kind-icon">unsubscribe</a></li>
 							</ul>
 						</section>
 					</div>
@@ -136,7 +129,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/rx-console-entry.ts#L34">core/rx-console-entry.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console-entry.ts#L40">core/rx-console-entry.ts:40</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -157,7 +150,7 @@
 									<h5>hooks: <a href="../interfaces/RxConsoleEntryHooks.html" class="tsd-signature-type" data-tsd-kind="Interface">RxConsoleEntryHooks</a></h5>
 								</li>
 								<li>
-									<h5>options: <a href="../interfaces/RxConsoleEntryOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">RxConsoleEntryOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/RxConsoleEntryOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">RxConsoleEntryOptions</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="RxConsoleEntry.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsoleEntry</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LoggerType</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -187,7 +180,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/rx-console-entry.ts#L44">core/rx-console-entry.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console-entry.ts#L50">core/rx-console-entry.ts:50</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -210,27 +203,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/rx-console-entry.ts#L55">core/rx-console-entry.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console-entry.ts#L59">core/rx-console-entry.ts:59</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="unsubscribe" class="tsd-anchor"></a>
-					<h3>unsubscribe</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">unsubscribe<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Implementation of Unsubscribable.unsubscribe</p>
-								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4cc5c9b/src/core/rx-console-entry.ts#L49">core/rx-console-entry.ts:49</a></li>
-								</ul>
-							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Permanently destroys this entry and its associated logger instance.
+									Use with caution.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -278,9 +259,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="RxConsoleEntry.html#destroy" class="tsd-kind-icon">destroy</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="RxConsoleEntry.html#unsubscribe" class="tsd-kind-icon">unsubscribe</a>
 							</li>
 						</ul>
 					</li>

@@ -1,5 +1,6 @@
 /**
  * Default levels for convenience.
+ * These values are spaced out in such a way that you can add more granularity as needed.
  */
 export enum LogLevel {
 	VERBOSE = 100,
