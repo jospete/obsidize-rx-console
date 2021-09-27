@@ -1,4 +1,4 @@
-import { Observable, Subscription, Unsubscribable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { LogEvent } from './log-event';
 import { LogEventSubject } from './log-event-subject';
@@ -32,9 +32,7 @@ export interface RxConsoleEntryOptions {
 /**
  * Metadata instance for loggers created by an RxConsole.
  */
-export class RxConsoleEntry<T extends LogEvent, LoggerType
-	extends LogEventSubject<T>>
-	implements Unsubscribable {
+export class RxConsoleEntry<T extends LogEvent, LoggerType extends LogEventSubject<T>> {
 
 	private readonly mLevelChangeSubscription: Subscription;
 	private readonly mLoggerSubscription: Subscription;
@@ -42,23 +40,16 @@ export class RxConsoleEntry<T extends LogEvent, LoggerType
 	constructor(
 		public readonly logger: LoggerType,
 		hooks: RxConsoleEntryHooks,
-		options: RxConsoleEntryOptions = {}
+		options?: RxConsoleEntryOptions
 	) {
 		this.mLevelChangeSubscription = hooks.onLevelChange.subscribe(v => this.logger.setLevel(v));
 		this.mLoggerSubscription = this.logger.events.subscribe(ev => hooks.emit(ev));
-		this.configure(options);
+		this.configure(options!);
 	}
 
 	public configure(options: RxConsoleEntryOptions): this {
 		if (options && options.logEvents) this.logger.configure(options.logEvents);
 		return this;
-	}
-
-	/**
-	 * Alias of destroy, required to implement the Unsubscribable interface.
-	 */
-	public unsubscribe(): void {
-		this.destroy();
 	}
 
 	/**
