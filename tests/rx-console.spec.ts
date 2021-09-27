@@ -9,18 +9,6 @@ describe('RxConsole', () => {
 		expect(RxConsole.main.isMainInstance).toBe(true);
 	});
 
-	it('has a static mock console instance', () => {
-		const { mockConsole } = RxConsole;
-		expect(mockConsole.verbose).not.toThrowError();
-		expect(mockConsole.trace).not.toThrowError();
-		expect(mockConsole.debug).not.toThrowError();
-		expect(mockConsole.log).not.toThrowError();
-		expect(mockConsole.info).not.toThrowError();
-		expect(mockConsole.warn).not.toThrowError();
-		expect(mockConsole.error).not.toThrowError();
-		expect(mockConsole.fatal).not.toThrowError();
-	});
-
 	it('emits emits child logger events on the parent RxConsole instance', async () => {
 
 		const console = new RxConsole();

@@ -9,7 +9,9 @@ import { LogEventObservable } from './log-event-observable';
 /**
  * Special kind of LogEventObservable that can spawn its own events via the createEvent() method.
  */
-export class LogEventSubject<T extends LogEvent> extends LogEventObservable<T> implements ConsoleLike {
+export class LogEventSubject<T extends LogEvent>
+	extends LogEventObservable<T>
+	implements ConsoleLike {
 
 	public static readonly ERR_DESTROYED = 'LogEventSubject_ERR_DESTROYED';
 
@@ -69,8 +71,10 @@ export class LogEventSubject<T extends LogEvent> extends LogEventObservable<T> i
 		this.emitEvent(this.createEvent(level, message, params));
 	}
 
-	// Creates a read-only version of this subject.
-	// This is akin to Subject.asObservable()
+	/**
+	 * Creates a read-only version of this subject.
+	 * This is akin to Subject.asObservable().
+	 */
 	public toEventObservable(): LogEventObservable<T> {
 		return this.copy();
 	}
@@ -79,13 +83,17 @@ export class LogEventSubject<T extends LogEvent> extends LogEventObservable<T> i
 		return !!this.mSourceSubject.closed;
 	}
 
-	// NOTE: this should not be called directly - it is a utility for RxConsole cleanup.
+	/**
+	 * Destroys and permanently silences this logger.
+	 * Use with caution.
+	 */
 	public destroy(): void {
 		this.mSourceSubject.error(LogEventSubject.ERR_DESTROYED);
 		this.mSourceSubject.unsubscribe();
 	}
 
 	/**
+	 * Generates a LogEvent (or sub-class equivalent) instance to be emitted in the source stream.
 	 * Override this to provide a custom data-type implementation.
 	 */
 	protected createEvent(level: number, message: string, params: any[]): T {

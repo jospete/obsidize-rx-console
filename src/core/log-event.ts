@@ -2,8 +2,6 @@ import { ConsoleLike } from './console-like';
 import { LogEventLike } from './log-event-like';
 import { RxConsoleUtility } from './rx-console-utility';
 
-const { callConsoleDynamic, stringifyLogEvent, stringifyLogEventBaseValues } = RxConsoleUtility;
-
 /**
  * Single event instance, typically spawned by a LogEventSubject.
  */
@@ -18,21 +16,33 @@ export class LogEvent implements LogEventLike {
 	) {
 	}
 
+	/**
+	 * Send this event to a ConsoleLike structure to be printed to some stdout stream.
+	 * 
+	 * Override this in a sub-class to cusotmize output data.
+	 */
 	public broadcastTo(console: ConsoleLike): void {
-		callConsoleDynamic(console, this.level, this.getBroadcastMessage(), this.params);
+		RxConsoleUtility.callConsoleDynamic(console, this.level, this.getBroadcastMessage(), this.params);
 	}
 
 	/**
+	 * Generates a message string based on the constructor inputs.
+	 * Does NOT include 'params' values in the output - this is the prefix string
+	 * to be given as the first argument to ConsoleLike structures.
+	 * 
 	 * Override this in a sub-class to cusotmize output data.
 	 */
 	public getBroadcastMessage(): string {
-		return stringifyLogEventBaseValues(this);
+		return RxConsoleUtility.stringifyLogEventBaseValues(this);
 	}
 
 	/**
+	 * Generates a loggable string based on the constructor inputs.
+	 * Includes 'params' values in the output.
+	 * 
 	 * Override this in a sub-class to cusotmize output data.
 	 */
 	public toString(): string {
-		return stringifyLogEvent(this);
+		return RxConsoleUtility.stringifyLogEvent(this);
 	}
 }

@@ -4,8 +4,14 @@ import { LogEvent } from './log-event';
 import { LogEventSubject } from './log-event-subject';
 import { LogEventObservable, LogEventObservableConfig } from './log-event-observable';
 
-// Simplified types for when generics are not explicitly used.
+/**
+ * Simplified type for when generics are not explicitly used.
+ */
 export type LogEventSource = LogEventSubject<LogEvent>;
+
+/**
+ * Simplified type for when generics are not explicitly used.
+ */
 export type ReadOnlyLogEventSource = LogEventObservable<LogEvent>;
 
 /**
@@ -26,7 +32,9 @@ export interface RxConsoleEntryOptions {
 /**
  * Metadata instance for loggers created by an RxConsole.
  */
-export class RxConsoleEntry<T extends LogEvent, LoggerType extends LogEventSubject<T>> implements Unsubscribable {
+export class RxConsoleEntry<T extends LogEvent, LoggerType
+	extends LogEventSubject<T>>
+	implements Unsubscribable {
 
 	private readonly mLevelChangeSubscription: Subscription;
 	private readonly mLoggerSubscription: Subscription;
@@ -46,13 +54,20 @@ export class RxConsoleEntry<T extends LogEvent, LoggerType extends LogEventSubje
 		return this;
 	}
 
+	/**
+	 * Alias of destroy, required to implement the Unsubscribable interface.
+	 */
 	public unsubscribe(): void {
+		this.destroy();
+	}
+
+	/**
+	 * Permanently destroys this entry and its associated logger instance.
+	 * Use with caution.
+	 */
+	public destroy(): void {
 		this.mLevelChangeSubscription.unsubscribe();
 		this.mLoggerSubscription.unsubscribe();
 		this.logger.destroy();
-	}
-
-	public destroy(): void {
-		this.unsubscribe();
 	}
 }

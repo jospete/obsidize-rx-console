@@ -5,8 +5,6 @@ import { LogEvent } from './log-event';
 import { LogLevel } from './log-level';
 import { RxConsoleUtility } from './rx-console-utility';
 
-const { isNumber, isBoolean, optObject } = RxConsoleUtility;
-
 /**
  * Configurable options for a LogEventObservable instance.
  */
@@ -51,15 +49,27 @@ export class LogEventObservable<T extends LogEvent> {
 		return this.mEnabled;
 	}
 
+	/**
+	 * Set the enabled state of this emitter.
+	 * When disabled, the 'events' stream will not emit any values, regardless of the set level.
+	 */
 	public setEnabled(value: boolean): this {
 		this.mEnabled = !!value;
 		return this;
 	}
 
+	/**
+	 * Get the minimum required level for output events in the 'events' stream.
+	 */
 	public getLevel(): number {
 		return this.mLevel;
 	}
 
+	/**
+	 * Set the minimum required level for output events in the 'events' stream.
+	 * Any events below this level will be omitted from the stream.
+	 * NOTE: this value will be clamped between the minLevel and maxLevel values.
+	 */
 	public setLevel(value: number): this {
 		this.mLevel = Math.max(this.getMinLevel(), Math.min(value, this.getMaxLevel()));
 		return this;
@@ -69,8 +79,13 @@ export class LogEventObservable<T extends LogEvent> {
 		return this.mMinLevel;
 	}
 
+	/**
+	 * Set the min possible level for this stream.
+	 * See setLevel() for more info.
+	 * 
+	 * NOTE: the minimum possible value will always be hard-capped to 0 to prevent negatives and/or maxLevel conflicts.
+	 */
 	public setMinLevel(value: number): this {
-		// the minimum possible value will always be hard-capped to 0 to prevent negatives
 		this.mMinLevel = Math.max(0, Math.min(this.getMaxLevel() - 1, value));
 		this.syncLevel();
 		return this;
@@ -80,13 +95,24 @@ export class LogEventObservable<T extends LogEvent> {
 		return this.mMaxLevel;
 	}
 
+	/**
+	 * Set the max possible level for this stream.
+	 * See setLevel() for more info.
+	 * 
+	 * NOTE: the maximum possible value will always be hard-capped to 1 to prevent negatives and/or minLevel conflicts.
+	 */
 	public setMaxLevel(value: number): this {
-		// the maximum possible value will always be hard-capped to 1 to prevent negatives
 		this.mMaxLevel = Math.max(1, this.getMinLevel() + 1, value);
 		this.syncLevel();
 		return this;
 	}
 
+	/**
+	 * Returns true if the currently set level is less than or equal to the given level.
+	 * 
+	 * For example, if the current level is DEBUG (default) and the given level is FATAL, this will return true.
+	 * If the current Level is DEBUG and the given level is TRACE, this will return false.
+	 */
 	public acceptsLevel(level: number): boolean {
 		return this.getLevel() <= level;
 	}
@@ -105,6 +131,10 @@ export class LogEventObservable<T extends LogEvent> {
 		};
 	}
 
+	/**
+	 * Generates a deep clone of this instance.
+	 * NOTE: does not generate sub-class instances.
+	 */
 	public copy(): LogEventObservable<T> {
 		const result = new LogEventObservable(this.source);
 		result.configure(this.toConfig());
@@ -112,11 +142,11 @@ export class LogEventObservable<T extends LogEvent> {
 	}
 
 	public configure(config: Partial<LogEventObservableConfig>): this {
-		const { minLevel, maxLevel, level, enabled } = optObject(config);
-		if (isNumber(minLevel)) this.setMinLevel(minLevel as number);
-		if (isNumber(maxLevel)) this.setMaxLevel(maxLevel as number);
-		if (isNumber(level)) this.setLevel(level as number);
-		if (isBoolean(enabled)) this.setEnabled(!!enabled);
+		const { minLevel, maxLevel, level, enabled } = RxConsoleUtility.optObject(config);
+		if (RxConsoleUtility.isNumber(minLevel)) this.setMinLevel(minLevel as number);
+		if (RxConsoleUtility.isNumber(maxLevel)) this.setMaxLevel(maxLevel as number);
+		if (RxConsoleUtility.isNumber(level)) this.setLevel(level as number);
+		if (RxConsoleUtility.isBoolean(enabled)) this.setEnabled(!!enabled);
 		return this;
 	}
 }

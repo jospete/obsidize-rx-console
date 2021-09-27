@@ -31,10 +31,6 @@ export namespace RxConsoleUtility {
 		return (value || {} as T);
 	}
 
-	export function sliceArray<T>(value: T[]): T[] {
-		return [].slice.call(value);
-	}
-
 	export function truncate(str: string, targetLength: number): string {
 		const safeStr = str + '';
 		return (safeStr.length <= targetLength)
@@ -51,7 +47,7 @@ export namespace RxConsoleUtility {
 	}
 
 	export function stringifyOptionalParams(optionalParams: any[], joinStr: string = ' :: ', maxLength: number = 250): string {
-		const safeParams = sliceArray(optionalParams).map(p => truncate(stringifySafe(p), maxLength));
+		const safeParams = Array.from(optionalParams).map(p => truncate(stringifySafe(p), maxLength));
 		return (safeParams.length > 0) ? (joinStr + safeParams.join(joinStr)) : '';
 	}
 
