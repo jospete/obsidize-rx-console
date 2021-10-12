@@ -1,11 +1,8 @@
-import { Observable, Subject, Subscription } from 'rxjs';
-import { distinct, share } from 'rxjs/operators';
-
 import { LogEvent } from './log-event';
-import { LogEventSubject } from './log-event-subject';
-import { LogEventObservable } from './log-event-observable';
 import { RxConsoleUtility } from './rx-console-utility';
-import { RxConsoleEntry, RxConsoleEntryOptions, RxConsoleEntryHooks, LogEventSource } from './rx-console-entry';
+import { LogEventDelegate, LogEventEmitterBase } from './log-event-emitter-base';
+import { ConsoleEventEmitter, LogEventSource } from './console-event-emitter';
+import { LogEventEmitterConfig } from './log-event-emitter-config';
 
 /**
  * Core entry point for a collection of loggers.
@@ -13,43 +10,42 @@ import { RxConsoleEntry, RxConsoleEntryOptions, RxConsoleEntryHooks, LogEventSou
  * this instance's level is updated, and all LogEvent instances will be funnelled back to
  * this instance's 'events' Observable.
  */
-export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>>
-	extends LogEventObservable<T>
-	implements RxConsoleEntryHooks {
+export class RxConsole<T extends LogEvent, LoggerType extends ConsoleEventEmitter<T>>
+	extends LogEventEmitterBase<T> {
 
-	public static readonly ERR_DESTROYED: string = 'RxConsole_ERR_DESTROYED';
-	public static readonly ERR_CANNOT_DESTROY_MAIN_INSTANCE: string = 'RxConsole_ERR_CANNOT_DESTROY_MAIN_INSTANCE';
 	public static readonly main: RxConsole<LogEvent, LogEventSource> = new RxConsole();
 
-	private readonly mEventSubject: Subject<T>;
-	private readonly mOnLevelChange: Subject<number>;
-	private readonly mLogMap: Map<string, RxConsoleEntry<T, LoggerType>>;
-	private readonly mParentAcceptDelegate: (ev: T) => boolean;
-	private mSoloName: string | undefined;
-
-	public readonly onLevelChange: Observable<number>;
-
-	constructor() {
-
-		const source = new Subject<T>();
-		const events = source.asObservable().pipe(share());
-
-		super(events);
-
-		this.mEventSubject = source;
-		this.mOnLevelChange = new Subject();
-		this.mLogMap = new Map();
-		this.mParentAcceptDelegate = this.accepts;
-		this.mSoloName = undefined;
-
-		this.onLevelChange = this.mOnLevelChange.asObservable().pipe(
-			distinct(),
-			share()
-		);
-	}
+	private readonly mLoggerMap: Map<string, LoggerType> = new Map();
+	private mDelegate: LogEventDelegate<T> = RxConsoleUtility.noop;
+	private mSoloName: string | undefined = undefined;
 
 	public get isMainInstance(): boolean {
 		return RxConsole.main === (this as any);
+	}
+
+	public get delegate(): LogEventDelegate<T> {
+		return this.mDelegate;
+	}
+
+	public set delegate(value: LogEventDelegate<T>) {
+		this.mDelegate = RxConsoleUtility.isFunction(value)
+			? value
+			: RxConsoleUtility.noop;
+	}
+
+	protected acceptsSoloEvent(ev: T): boolean {
+		return !!ev && ev.tag === this.mSoloName;
+	}
+
+	/**
+	 * Override this to provide a custom data-type implementation.
+	 */
+	protected createLogger(name: string, _options?: Partial<LogEventEmitterConfig>): LoggerType {
+		return new ConsoleEventEmitter(this, name) as LoggerType;
+	}
+
+	public emit(ev: T): void {
+		this.delegate(ev);
 	}
 
 	public getSoloLogger(): LoggerType | undefined | null {
@@ -70,92 +66,49 @@ export class RxConsole<T extends LogEvent, LoggerType extends LogEventSubject<T>
 		this.mSoloName = value ? value.name : undefined;
 		this.accepts = this.hasSoloLogger()
 			? (ev: T) => this.acceptsSoloEvent(ev)
-			: this.mParentAcceptDelegate;
-	}
-
-	public getLogger(name: string, options: RxConsoleEntryOptions = {}): LoggerType {
-		return this.getEntry(name, options).logger;
-	}
-
-	public emit(ev: T): void {
-		this.mEventSubject.next(ev);
+			: this.getDefaultAcceptanceDelegate();
 	}
 
 	/**
 	 * NOTE: this does not restrict circular subscriptions. 
 	 * It is up to the caller to use this responsibly, lest ye fall into the hell hole of stack overflow.
 	 */
-	public pipeEventsTo(otherConsole: RxConsole<T, LoggerType>): Subscription {
-		return this.events.subscribe(ev => otherConsole.emit(ev));
+	public pipeEventsTo(otherConsole: RxConsole<T, LoggerType>): void {
+		this.delegate = ev => otherConsole.emit(ev);
 	}
 
 	public setLevel(value: number): this {
+
+		const previousLevel = this.getLevel();
 		super.setLevel(value);
-		this.mOnLevelChange.next(value);
+		const updatedLevel = this.getLevel();
+
+		if (previousLevel !== updatedLevel) {
+			this.mLoggerMap.forEach(logger => logger.setLevel(updatedLevel));
+		}
+
 		return this;
 	}
 
-	public isDestroyed(): boolean {
-		return !!this.mEventSubject.closed;
-	}
+	public getLogger(name: string, options: Partial<LogEventEmitterConfig> = {}): LoggerType {
 
-	/**
-	 * IMPORTANT - this is mostly a debugging tool for tests, do not use this 
-	 * unless you want to hit the entire logging system with a sledgehammer.
-	 */
-	public destroyAllLoggers(): void {
-		this.mLogMap.forEach(entry => entry.destroy());
-		this.mLogMap.clear();
-	}
+		let logger = this.mLoggerMap.get(name);
 
-	/**
-	 * Permanently kills this console instance and its event streams.
-	 * The instance should be disposed of after this is called.
-	 */
-	public destroy(): void {
-		// Don't allow the main instance to be destroyed
-		if (this.isMainInstance) throw new Error(RxConsole.ERR_CANNOT_DESTROY_MAIN_INSTANCE);
-		this.destroyAllLoggers();
-		this.mEventSubject.error(RxConsole.ERR_DESTROYED);
-		this.mEventSubject.unsubscribe();
-		this.mOnLevelChange.error(RxConsole.ERR_DESTROYED);
-		this.mOnLevelChange.unsubscribe();
-	}
-
-	/**
-	 * Override this to provide a custom data-type implementation.
-	 */
-	protected createEntryLogger(name: string, _options?: RxConsoleEntryOptions): LoggerType {
-		return new LogEventSubject(name) as LoggerType;
-	}
-
-	protected createEntry(name: string, options?: RxConsoleEntryOptions): RxConsoleEntry<T, LoggerType> {
-		return new RxConsoleEntry(this.createEntryLogger(name, options), this, options);
-	}
-
-	protected acceptsSoloEvent(ev: T): boolean {
-		return !!ev && ev.tag === this.mSoloName;
-	}
-
-	private getEntry(name: string, options: RxConsoleEntryOptions): RxConsoleEntry<T, LoggerType> {
-
-		let entry = this.mLogMap.get(name);
-
-		if (entry) {
-			entry.configure(options);
+		if (logger) {
+			logger.configure(options);
 
 		} else {
-			entry = this.createEntry(name, options);
-			this.mLogMap.set(name, entry);
+			logger = this.createLogger(name, options);
+			this.mLoggerMap.set(name, logger);
 		}
 
-		return entry;
+		return logger;
 	}
 }
 
 /**
  * Conveinence for generating loggers via the standard 'main' RxConsole instance. 
  */
-export function getLogger(name: string, options?: RxConsoleEntryOptions): LogEventSource {
+export function getLogger(name: string, options?: Partial<LogEventEmitterConfig>): LogEventSource {
 	return RxConsole.main.getLogger(name, options);
 }

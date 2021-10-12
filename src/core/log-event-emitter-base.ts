@@ -1,48 +1,45 @@
-import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
-
 import { LogEvent } from './log-event';
-import { LogLevel } from './log-level';
 import { RxConsoleUtility } from './rx-console-utility';
+import { LogEventEmitterLike } from './log-event-emitter-like';
+import { LogEventEmitterConfig, LogEventEmitterConfigDefaults } from './log-event-emitter-config';
 
 /**
- * Configurable options for a LogEventObservable instance.
+ * Standard callback for handling emitted events
  */
-export interface LogEventObservableConfig {
-	level: number;
-	minLevel: number;
-	maxLevel: number;
-	enabled: boolean;
-}
+export type LogEventDelegate<T extends LogEvent> = (ev: T) => void;
+
+/**
+ * Predicate that will dictate whether or not an event should be emitted.
+ */
+export type LogEventPredicate<T extends LogEvent> = (ev: T) => boolean;
 
 /**
  * A read-only event stream of LogEvent instances.
  * Exposes the input source stream, as well as an 'events' stream that
  * only emits filtered values which meet the 'enabled' and 'level' requirements.
  */
-export class LogEventObservable<T extends LogEvent> {
+export abstract class LogEventEmitterBase<T extends LogEvent> implements LogEventEmitterLike<T> {
 
-	public static readonly configDefaults: LogEventObservableConfig = {
-		minLevel: LogLevel.VERBOSE,
-		maxLevel: LogLevel.FATAL,
-		level: LogLevel.VERBOSE,
-		enabled: true
-	};
+	private mMinLevel: number = LogEventEmitterConfigDefaults.minLevel;
+	private mMaxLevel: number = LogEventEmitterConfigDefaults.maxLevel;
+	private mLevel: number = LogEventEmitterConfigDefaults.level;
+	private mEnabled: boolean = LogEventEmitterConfigDefaults.enabled;
+	private mAccepts: LogEventPredicate<T> = this.getDefaultAcceptanceDelegate();
 
-	private mMinLevel: number = LogEventObservable.configDefaults.minLevel;
-	private mMaxLevel: number = LogEventObservable.configDefaults.maxLevel;
-	private mLevel: number = LogEventObservable.configDefaults.level;
-	private mEnabled: boolean = LogEventObservable.configDefaults.enabled;
+	public abstract emit(ev: T): void;
 
-	public accepts: (ev: T) => boolean = (ev: T) => this.acceptsLevel(ev.level);
+	protected getDefaultAcceptanceDelegate(): LogEventPredicate<T> {
+		return (ev: T) => this.acceptsLevel(ev.level);
+	}
 
-	public readonly events: Observable<T> = this.source.pipe(
-		filter(ev => this.isEnabled() && !!ev && this.accepts(ev))
-	);
+	public get accepts(): LogEventPredicate<T> {
+		return this.mAccepts;
+	}
 
-	constructor(
-		public readonly source: Observable<T>
-	) {
+	public set accepts(value: LogEventPredicate<T>) {
+		this.mAccepts = RxConsoleUtility.isFunction(value)
+			? value
+			: this.getDefaultAcceptanceDelegate();
 	}
 
 	public isEnabled(): boolean {
@@ -122,7 +119,7 @@ export class LogEventObservable<T extends LogEvent> {
 		return this;
 	}
 
-	public toConfig(): LogEventObservableConfig {
+	public toConfig(): LogEventEmitterConfig {
 		return {
 			enabled: this.isEnabled(),
 			level: this.getLevel(),
@@ -131,17 +128,7 @@ export class LogEventObservable<T extends LogEvent> {
 		};
 	}
 
-	/**
-	 * Generates a deep clone of this instance.
-	 * NOTE: does not generate sub-class instances.
-	 */
-	public copy(): LogEventObservable<T> {
-		const result = new LogEventObservable(this.source);
-		result.configure(this.toConfig());
-		return result;
-	}
-
-	public configure(config: Partial<LogEventObservableConfig>): this {
+	public configure(config: Partial<LogEventEmitterConfig>): this {
 		const { minLevel, maxLevel, level, enabled } = RxConsoleUtility.optObject(config);
 		if (RxConsoleUtility.isNumber(minLevel)) this.setMinLevel(minLevel as number);
 		if (RxConsoleUtility.isNumber(maxLevel)) this.setMaxLevel(maxLevel as number);

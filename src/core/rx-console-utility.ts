@@ -7,6 +7,9 @@ import { getLogLevelName, LogLevel } from './log-level';
  */
 export namespace RxConsoleUtility {
 
+	export function noop(..._args: any[]): any {
+	}
+
 	export function identity(value: any): any {
 		return value;
 	}
@@ -21,6 +24,10 @@ export namespace RxConsoleUtility {
 
 	export function isString(value: any): boolean {
 		return typeof value === 'string';
+	}
+
+	export function isFunction(value: any): boolean {
+		return typeof value === 'function';
 	}
 
 	export function isPopulatedString(value: any): boolean {

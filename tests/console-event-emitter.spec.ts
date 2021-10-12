@@ -2,7 +2,7 @@ import { bufferCount, take } from 'rxjs/operators';
 
 import { LogLevel, RxConsole } from '../src';
 
-describe('LogEventSubject', () => {
+describe('ConsoleEventEmitter', () => {
 
 	it('has the standard ConsoleLike methods implemented', async () => {
 

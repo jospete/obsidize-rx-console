@@ -1,15 +1,12 @@
-import { Subject } from 'rxjs';
+import { LogEventEmitter, RxConsoleUtility } from '../src';
 
-import { LogEvent, LogEventObservable } from '../src';
-
-describe('LogEventObservable', () => {
+describe('LogEventEmitter', () => {
 
 	describe('configure()', () => {
 
 		it('gracefully handles partial configuration objects', () => {
 
-			const source = new Subject<LogEvent>();
-			const logEvents = new LogEventObservable(source);
+			const logEvents = new LogEventEmitter({ emit: RxConsoleUtility.noop });
 
 			expect(() => logEvents.configure(null)).not.toThrowError();
 			expect(() => logEvents.configure({ level: -1 })).not.toThrowError();
