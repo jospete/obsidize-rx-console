@@ -2,7 +2,7 @@ import { LogLevel } from './log-level';
 import { LogEvent } from './log-event';
 import { ConsoleLike } from './console-like';
 import { LogEventEmitter } from './log-event-emitter';
-import { LogEventEmitterLike } from './log-event-emitter-like';
+import { EventEmitterLike } from './event-emitter';
 
 /**
  * Simplified type import type for explicit declarations.
@@ -15,7 +15,7 @@ export type LogEventSource = ConsoleEventEmitter<LogEvent>;
 export class ConsoleEventEmitter<T extends LogEvent = LogEvent> extends LogEventEmitter<T> implements ConsoleLike {
 
 	constructor(
-		aggregator: LogEventEmitterLike<T>,
+		aggregator: EventEmitterLike<T>,
 		public readonly name: string
 	) {
 		super(aggregator);

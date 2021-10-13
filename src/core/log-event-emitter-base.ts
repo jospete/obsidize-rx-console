@@ -1,15 +1,15 @@
 import { LogEvent } from './log-event';
 import { RxConsoleUtility } from './rx-console-utility';
-import { LogEventEmitterLike } from './log-event-emitter-like';
-import { LogEventEmitterConfig, LogEventEmitterConfigDefaults } from './log-event-emitter-config';
 import { LogEventPredicate } from './log-event-like';
+import { EventEmitterLike } from './event-emitter';
+import { LogEventEmitterConfig, LogEventEmitterConfigDefaults } from './log-event-emitter-config';
 
 /**
  * A read-only event stream of LogEvent instances.
  * Exposes the input source stream, as well as an 'events' stream that
  * only emits filtered values which meet the 'enabled' and 'level' requirements.
  */
-export abstract class LogEventEmitterBase<T extends LogEvent = LogEvent> implements LogEventEmitterLike<T> {
+export abstract class LogEventEmitterBase<T extends LogEvent = LogEvent> implements EventEmitterLike<T> {
 
 	private mMinLevel: number = LogEventEmitterConfigDefaults.minLevel;
 	private mMaxLevel: number = LogEventEmitterConfigDefaults.maxLevel;

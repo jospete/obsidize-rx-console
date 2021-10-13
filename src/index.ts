@@ -1,8 +1,8 @@
 export { ConsoleEventEmitter, LogEventSource } from './core/console-event-emitter';
 export { ConsoleLike } from './core/console-like';
+export { EventEmitter, EventEmitterDelegate, EventEmitterLike } from './core/event-emitter';
 export { LogEventEmitterBase } from './core/log-event-emitter-base';
 export { LogEventEmitterConfig, LogEventEmitterConfigDefaults } from './core/log-event-emitter-config';
-export { LogEventEmitterLike } from './core/log-event-emitter-like';
 export { LogEventEmitter } from './core/log-event-emitter';
 export { LogEventLike, LogEventDelegate, LogEventPredicate } from './core/log-event-like';
 export { LogEvent } from './core/log-event';

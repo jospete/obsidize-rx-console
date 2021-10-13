@@ -1,4 +1,4 @@
-import { LogEvent, LogEventEmitter, LogEventEmitterLike, LogLevel } from '../src';
+import { EventEmitterLike, LogEvent, LogEventEmitter, LogLevel } from '../src';
 import { noopAggregator } from './util';
 
 describe('LogEventEmitter', () => {
@@ -41,7 +41,7 @@ describe('LogEventEmitter', () => {
 
 		it('overrides the acceptance delegate as a kill switch for a logger instance', () => {
 
-			const aggregator: LogEventEmitterLike = {
+			const aggregator: EventEmitterLike<any> = {
 				emit: jasmine.createSpy('fakeAggregatorEmit')
 			};
 
@@ -67,7 +67,7 @@ describe('LogEventEmitter', () => {
 
 		it('defines the acceptance predicate which dictates when events will be emitted', () => {
 
-			const aggregator: LogEventEmitterLike = {
+			const aggregator: EventEmitterLike<any> = {
 				emit: jasmine.createSpy('fakeAggregatorEmit')
 			};
 

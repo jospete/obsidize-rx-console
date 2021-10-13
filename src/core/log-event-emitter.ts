@@ -1,6 +1,6 @@
 import { LogEvent } from './log-event';
+import { EventEmitterLike } from './event-emitter';
 import { LogEventEmitterBase } from './log-event-emitter-base';
-import { LogEventEmitterLike } from './log-event-emitter-like';
 
 /**
  * A read-only event stream of LogEvent instances.
@@ -10,7 +10,7 @@ import { LogEventEmitterLike } from './log-event-emitter-like';
 export class LogEventEmitter<T extends LogEvent = LogEvent> extends LogEventEmitterBase<T> {
 
 	constructor(
-		protected readonly aggregator: LogEventEmitterLike<T>
+		protected readonly aggregator: EventEmitterLike<T>
 	) {
 		super();
 	}

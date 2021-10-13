@@ -1,8 +1,8 @@
-import { RxConsoleUtility, ConsoleLike, LogEventEmitterLike } from '../src';
+import { RxConsoleUtility, ConsoleLike, EventEmitterLike } from '../src';
 
 const { identity } = RxConsoleUtility;
 
-export const noopAggregator: LogEventEmitterLike = { emit: identity };
+export const noopAggregator: EventEmitterLike<any> = { emit: identity };
 
 export const mockConsole: ConsoleLike = {
 	verbose: identity,

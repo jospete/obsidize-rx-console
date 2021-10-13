@@ -35,7 +35,7 @@ describe('RxConsole', () => {
 		const logger = console.getLogger('MyCustomLogger');
 		const events = console2.asObservable<Observable<LogEvent>>(fromEventPattern);
 
-		console.addEventListener(console2.proxy);
+		console.listeners.add(console2.proxy);
 		const eventPromise = events.pipe(take(1)).toPromise();
 
 		logger.debug(testMessage);
@@ -45,9 +45,6 @@ describe('RxConsole', () => {
 		expect(ev.tag).toBe(logger.name);
 		expect(ev.level).toBe(LogLevel.DEBUG);
 		expect(ev.message).toBe(testMessage);
-
-		expect(() => console.removeAllListeners()).not.toThrowError();
-		expect(() => console.removeAllListeners()).not.toThrowError();
 	});
 
 	it('can solo a target logger and silence all others', async () => {

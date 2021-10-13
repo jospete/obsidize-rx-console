@@ -4,6 +4,7 @@ import { LogEventEmitterBase } from './log-event-emitter-base';
 import { ConsoleEventEmitter, LogEventSource } from './console-event-emitter';
 import { LogEventEmitterConfig } from './log-event-emitter-config';
 import { LogEventDelegate } from './log-event-like';
+import { EventEmitter } from './event-emitter';
 
 /**
  * Alias for a generator function similar to (or equal to) the rxjs fromEventPattern() function.
@@ -27,10 +28,10 @@ export class RxConsole<T extends LogEvent = LogEvent, LoggerType extends Console
 
 	public static readonly main: RxConsole<LogEvent, LogEventSource> = new RxConsole();
 
+	public readonly listeners: EventEmitter<T> = new EventEmitter();
 	public readonly proxy: LogEventDelegate<T> = this.emit.bind(this);
 
 	private readonly mLoggerMap: Map<string, LoggerType> = new Map();
-	private readonly mListeners: Set<LogEventDelegate<T>> = new Set();
 	private mSoloName: string | undefined = undefined;
 
 	public get isMainInstance(): boolean {
@@ -38,7 +39,7 @@ export class RxConsole<T extends LogEvent = LogEvent, LoggerType extends Console
 	}
 
 	protected onWillEmit(ev: T): void {
-		this.mListeners.forEach(listener => listener(ev));
+		this.listeners.emit(ev);
 	}
 
 	protected acceptsSoloEvent(ev: T): boolean {
@@ -52,25 +53,10 @@ export class RxConsole<T extends LogEvent = LogEvent, LoggerType extends Console
 		return new ConsoleEventEmitter(this, name) as LoggerType;
 	}
 
-	public addEventListener(listener: LogEventDelegate<T>): this {
-		if (RxConsoleUtility.isFunction(listener)) this.mListeners.add(listener);
-		return this;
-	}
-
-	public removeEventListener(listener: LogEventDelegate<T>): this {
-		this.mListeners.delete(listener);
-		return this;
-	}
-
-	public removeAllListeners(): this {
-		this.mListeners.clear();
-		return this;
-	}
-
 	public asObservable<T>(generator: ObservableEventPatternGenerator<T>): T {
 		return generator(
-			listener => this.addEventListener(listener),
-			listener => this.removeEventListener(listener)
+			listener => this.listeners.add(listener),
+			listener => this.listeners.remove(listener)
 		);
 	}
 
