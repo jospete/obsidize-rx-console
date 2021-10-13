@@ -107,7 +107,6 @@ The same concepts in the TypeScript example also apply to NodeJS / vanilla JS us
 The below snippet can be tested with runkit on NPM.
 
 ```javascript
-rxjs = require("rxjs/package.json"); // rxjs is a peer dependency. 
 var rxConsole = require("@obsidize/rx-console");
 const {RxConsole, LogLevel, getLogger} = rxConsole;
 
