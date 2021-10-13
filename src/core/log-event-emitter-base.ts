@@ -1,13 +1,14 @@
 import { LogEvent } from './log-event';
-import { RxConsoleUtility } from './rx-console-utility';
-import { LogEventPredicate } from './log-event-like';
 import { EventEmitterLike } from './event-emitter';
+import { LogEventPredicate } from './log-event-like';
+import { RxConsoleUtility } from './rx-console-utility';
 import { LogEventEmitterConfig, LogEventEmitterConfigDefaults } from './log-event-emitter-config';
 
 /**
- * A read-only event stream of LogEvent instances.
- * Exposes the input source stream, as well as an 'events' stream that
- * only emits filtered values which meet the 'enabled' and 'level' requirements.
+ * Base class for event filtration and emission.
+ * 
+ * Events will be emitted or suppressed based on the instance's 
+ * configuration parameters and the assigned accepts() delegate.
  */
 export abstract class LogEventEmitterBase<T extends LogEvent = LogEvent> implements EventEmitterLike<T> {
 

@@ -1,7 +1,7 @@
 import { LogLevel } from './log-level';
 
 /**
- * Configurable options for a LogEventObservable instance.
+ * Configurable options for a LogEventEmitter instance.
  */
 export interface LogEventEmitterConfig {
 	level: number;

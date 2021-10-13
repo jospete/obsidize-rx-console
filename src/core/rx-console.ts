@@ -1,10 +1,10 @@
 import { LogEvent } from './log-event';
+import { EventEmitter } from './event-emitter';
+import { LogEventDelegate } from './log-event-like';
 import { RxConsoleUtility } from './rx-console-utility';
 import { LogEventEmitterBase } from './log-event-emitter-base';
-import { ConsoleEventEmitter, LogEventSource } from './console-event-emitter';
+import { LogEventEmitter, LogEventSource } from './log-event-emitter';
 import { LogEventEmitterConfig } from './log-event-emitter-config';
-import { LogEventDelegate } from './log-event-like';
-import { EventEmitter } from './event-emitter';
 
 /**
  * Alias for a generator function similar to (or equal to) the rxjs fromEventPattern() function.
@@ -24,7 +24,7 @@ export type ObservableEventPatternGenerator<T> = (
  * 
  * To route events into an rxjs-like observable, use asObservable().
  */
-export class RxConsole<T extends LogEvent = LogEvent, LoggerType extends ConsoleEventEmitter<T> = ConsoleEventEmitter<T>> extends LogEventEmitterBase<T> {
+export class RxConsole<T extends LogEvent = LogEvent, LoggerType extends LogEventEmitter<T> = LogEventEmitter<T>> extends LogEventEmitterBase<T> {
 
 	public static readonly main: RxConsole<LogEvent, LogEventSource> = new RxConsole();
 
@@ -50,7 +50,7 @@ export class RxConsole<T extends LogEvent = LogEvent, LoggerType extends Console
 	 * Override this to provide a custom data-type implementation.
 	 */
 	protected createLogger(name: string, _options?: Partial<LogEventEmitterConfig>): LoggerType {
-		return new ConsoleEventEmitter(this, name) as LoggerType;
+		return new LogEventEmitter(this, name) as LoggerType;
 	}
 
 	public asObservable<T>(generator: ObservableEventPatternGenerator<T>): T {
