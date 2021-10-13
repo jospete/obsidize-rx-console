@@ -18,15 +18,4 @@ export class LogEventEmitter<T extends LogEvent> extends LogEventEmitterBase<T> 
 	protected onWillEmit(ev: T): void {
 		this.aggregator.emit(ev);
 	}
-
-	/**
-	 * Generates a deep clone of this instance.
-	 * NOTE: does not generate sub-class instances.
-	 */
-	public copy(): LogEventEmitter<T> {
-		const result = new LogEventEmitter<T>(this.aggregator);
-		result.configure(this.toConfig());
-		result.accepts = this.accepts;
-		return result;
-	}
 }

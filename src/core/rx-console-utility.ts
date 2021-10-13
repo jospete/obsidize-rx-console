@@ -7,9 +7,6 @@ import { getLogLevelName, LogLevel } from './log-level';
  */
 export namespace RxConsoleUtility {
 
-	export function noop(..._args: any[]): any {
-	}
-
 	export function identity(value: any): any {
 		return value;
 	}
@@ -32,6 +29,10 @@ export namespace RxConsoleUtility {
 
 	export function isPopulatedString(value: any): boolean {
 		return isString(value) && value.length > 0;
+	}
+
+	export function clamp(value: number, min: number, max: number): number {
+		return Math.max(min, Math.min(value, max));
 	}
 
 	export function optObject<T>(value: T): T {

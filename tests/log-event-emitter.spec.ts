@@ -1,4 +1,4 @@
-import { LogEventEmitter, RxConsoleUtility } from '../src';
+import { LogEventEmitter } from '../src';
 
 describe('LogEventEmitter', () => {
 
@@ -6,7 +6,8 @@ describe('LogEventEmitter', () => {
 
 		it('gracefully handles partial configuration objects', () => {
 
-			const logEvents = new LogEventEmitter({ emit: RxConsoleUtility.noop });
+			const noopAggregator = { emit: () => { } };
+			const logEvents = new LogEventEmitter(noopAggregator);
 
 			expect(() => logEvents.configure(null)).not.toThrowError();
 			expect(() => logEvents.configure({ level: -1 })).not.toThrowError();

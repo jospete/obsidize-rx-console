@@ -74,7 +74,7 @@ export abstract class LogEventEmitterBase<T extends LogEvent> implements LogEven
 	 * NOTE: this value will be clamped between the minLevel and maxLevel values.
 	 */
 	public setLevel(value: number): this {
-		this.mLevel = Math.max(this.getMinLevel(), Math.min(value, this.getMaxLevel()));
+		this.mLevel = RxConsoleUtility.clamp(value, this.getMinLevel(), this.getMaxLevel());
 		return this;
 	}
 
@@ -89,7 +89,7 @@ export abstract class LogEventEmitterBase<T extends LogEvent> implements LogEven
 	 * NOTE: the minimum possible value will always be hard-capped to 0 to prevent negatives and/or maxLevel conflicts.
 	 */
 	public setMinLevel(value: number): this {
-		this.mMinLevel = Math.max(0, Math.min(this.getMaxLevel() - 1, value));
+		this.mMinLevel = RxConsoleUtility.clamp(value, 0, this.getMaxLevel() - 1);
 		this.syncLevel();
 		return this;
 	}
