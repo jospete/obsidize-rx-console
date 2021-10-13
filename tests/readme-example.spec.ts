@@ -50,6 +50,30 @@ describe('README Examples', () => {
 		});
 	});
 
+	it('can execute the vanilla JS example', () => {
+
+		RxConsole
+			.main
+			.setLevel(LogLevel.DEBUG)
+			.listeners
+			.add(ev => ev.broadcastTo(console));
+
+		const logger = getLogger('RunKitLogger');
+
+		logger.debug('test');
+		// "2021-03-15T21:13:42.356Z [DEBUG] [RunKitLogger] test"
+
+		logger.info('some object info: ', { myValueIs: 42, isOptionalParam: true, someOtherValue: 'yep' });
+		// "2021-03-15T21:13:42.360Z [INFO] [RunKitLogger] some object info: "
+		// Object {myValueIs: 42, isOptionalParam: true, someOtherValue: "yep"}
+
+		logger.fatal('EXPLOSIONS?!?!?!');
+		// "2021-03-15T21:13:42.363Z [FATAL] [RunKitLogger] EXPLOSIONS?!?!?!"
+
+		logger.verbose('im obnoxious');
+		// Does not log anything because VERBOSE < DEBUG
+	});
+
 	it('can execute the custom extensions example', () => {
 
 		class MyCustomLogEvent extends LogEvent {
@@ -76,9 +100,8 @@ describe('README Examples', () => {
 
 		const myConsoleInstance = new MyCustomConsole();
 		const logger = myConsoleInstance.getLogger('TestLogger');
-		const rootLogEvents = myConsoleInstance.asObservable<Observable<MyCustomLogEvent>>(fromEventPattern);
 
-		rootLogEvents.subscribe(ev => {
+		myConsoleInstance.listeners.add(ev => {
 			console.log(ev.message); // 'custom log'
 			console.log(ev.specialSauceData); // 42
 		});
