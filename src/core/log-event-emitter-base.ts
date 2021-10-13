@@ -26,7 +26,7 @@ export abstract class LogEventEmitterBase<T extends LogEvent> implements LogEven
 	private mEnabled: boolean = LogEventEmitterConfigDefaults.enabled;
 	private mAccepts: LogEventPredicate<T> = this.getDefaultAcceptanceDelegate();
 
-	public abstract emit(ev: T): void;
+	protected abstract onWillEmit(ev: T): void;
 
 	protected getDefaultAcceptanceDelegate(): LogEventPredicate<T> {
 		return (ev: T) => this.acceptsLevel(ev.level);
@@ -40,6 +40,12 @@ export abstract class LogEventEmitterBase<T extends LogEvent> implements LogEven
 		this.mAccepts = RxConsoleUtility.isFunction(value)
 			? value
 			: this.getDefaultAcceptanceDelegate();
+	}
+
+	public emit(ev: T): void {
+		if (this.isEnabled() || !!ev && this.accepts(ev)) {
+			this.onWillEmit(ev);
+		}
 	}
 
 	public isEnabled(): boolean {

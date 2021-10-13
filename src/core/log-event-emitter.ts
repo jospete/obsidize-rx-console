@@ -15,10 +15,8 @@ export class LogEventEmitter<T extends LogEvent> extends LogEventEmitterBase<T> 
 		super();
 	}
 
-	public emit(ev: T): void {
-		if (this.isEnabled() || !!ev && this.accepts(ev)) {
-			this.aggregator.emit(ev);
-		}
+	protected onWillEmit(ev: T): void {
+		this.aggregator.emit(ev);
 	}
 
 	/**

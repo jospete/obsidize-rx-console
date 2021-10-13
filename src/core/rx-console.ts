@@ -5,6 +5,14 @@ import { ConsoleEventEmitter, LogEventSource } from './console-event-emitter';
 import { LogEventEmitterConfig } from './log-event-emitter-config';
 
 /**
+ * Alias for a generator function similar to (or equal to) the rxjs fromEventPattern() function.
+ */
+export type ObservableEventPatternGenerator<T> = (
+	addHandler: (listener: any) => any,
+	removeHandler: (listener: any) => any
+) => T;
+
+/**
  * Core entry point for a collection of loggers.
  * All loggers created from here via getLogger() will have their level updated when
  * this instance's level is updated, and all LogEvent instances will be funnelled back to
@@ -15,22 +23,18 @@ export class RxConsole<T extends LogEvent, LoggerType extends ConsoleEventEmitte
 
 	public static readonly main: RxConsole<LogEvent, LogEventSource> = new RxConsole();
 
+	public readonly emitProxy: LogEventDelegate<T> = this.emit.bind(this);
+
 	private readonly mLoggerMap: Map<string, LoggerType> = new Map();
-	private mDelegate: LogEventDelegate<T> = RxConsoleUtility.noop;
+	private readonly mListeners: Set<LogEventDelegate<T>> = new Set();
 	private mSoloName: string | undefined = undefined;
 
 	public get isMainInstance(): boolean {
 		return RxConsole.main === (this as any);
 	}
 
-	public get delegate(): LogEventDelegate<T> {
-		return this.mDelegate;
-	}
-
-	public set delegate(value: LogEventDelegate<T>) {
-		this.mDelegate = RxConsoleUtility.isFunction(value)
-			? value
-			: RxConsoleUtility.noop;
+	protected onWillEmit(ev: T): void {
+		this.mListeners.forEach(listener => listener(ev));
 	}
 
 	protected acceptsSoloEvent(ev: T): boolean {
@@ -44,8 +48,30 @@ export class RxConsole<T extends LogEvent, LoggerType extends ConsoleEventEmitte
 		return new ConsoleEventEmitter(this, name) as LoggerType;
 	}
 
-	public emit(ev: T): void {
-		this.delegate(ev);
+	public addEventListener(listener: LogEventDelegate<T>): this {
+		if (RxConsoleUtility.isFunction(listener)) this.mListeners.add(listener);
+		return this;
+	}
+
+	public removeEventListener(listener: LogEventDelegate<T>): this {
+		this.mListeners.delete(listener);
+		return this;
+	}
+
+	public removeAllListeners(): this {
+		this.mListeners.clear();
+		return this;
+	}
+
+	public asObservable<T>(generator: ObservableEventPatternGenerator<T>): T {
+		return generator(
+			listener => this.addEventListener(listener),
+			listener => this.removeEventListener(listener)
+		);
+	}
+
+	public hasSoloLogger(): boolean {
+		return !!this.getSoloLogger();
 	}
 
 	public getSoloLogger(): LoggerType | undefined | null {
@@ -54,27 +80,16 @@ export class RxConsole<T extends LogEvent, LoggerType extends ConsoleEventEmitte
 			: undefined;
 	}
 
-	public hasSoloLogger(): boolean {
-		return !!this.getSoloLogger();
-	}
-
 	/**
 	 * Set a logger to debug in isolation.
 	 * Set to null to clear the current solo logger.
 	 */
-	public setSoloLogger(value: LoggerType | undefined | null) {
+	public setSoloLogger(value: LoggerType | undefined | null): this {
 		this.mSoloName = value ? value.name : undefined;
 		this.accepts = this.hasSoloLogger()
 			? (ev: T) => this.acceptsSoloEvent(ev)
 			: this.getDefaultAcceptanceDelegate();
-	}
-
-	/**
-	 * NOTE: this does not restrict circular subscriptions. 
-	 * It is up to the caller to use this responsibly, lest ye fall into the hell hole of stack overflow.
-	 */
-	public pipeEventsTo(otherConsole: RxConsole<T, LoggerType>): void {
-		this.delegate = ev => otherConsole.emit(ev);
+		return this;
 	}
 
 	public setLevel(value: number): this {

@@ -1,6 +1,7 @@
+import { fromEventPattern, Observable } from 'rxjs';
 import { take, toArray } from 'rxjs/operators';
 
-import { RxConsole, getLogger, LogLevel, LogEvent, getLogLevelName } from '../src';
+import { RxConsole, getLogger, LogLevel, LogEvent } from '../src';
 
 describe('RxConsole', () => {
 
@@ -15,8 +16,9 @@ describe('RxConsole', () => {
 		expect(console.isMainInstance).toBe(false);
 
 		const testMessage = 'a sample log message';
-		const logger = console.getLogger('MyCustomLogger', { logEvents: { level: LogLevel.VERBOSE } });
-		const eventPromise = console.events.pipe(take(1)).toPromise();
+		const logger = console.getLogger('MyCustomLogger', { level: LogLevel.VERBOSE });
+		const events = console.asObservable<Observable<LogEvent>>(fromEventPattern);
+		const eventPromise = events.pipe(take(1)).toPromise();
 
 		logger.debug(testMessage);
 		const ev = await eventPromise;
@@ -30,20 +32,19 @@ describe('RxConsole', () => {
 		const console = new RxConsole();
 		const console2 = new RxConsole();
 		const testMessage = 'a sample log message';
-		const logger = console.getLogger('MyCustomLogger', { logEvents: { level: LogLevel.VERBOSE } });
+		const logger = console.getLogger('MyCustomLogger', { level: LogLevel.VERBOSE });
+		const events = console2.asObservable<Observable<LogEvent>>(fromEventPattern);
 
-		const sub = console.pipeEventsTo(console2);
-		const eventPromise = console2.events.pipe(take(1)).toPromise();
+		console2.addEventListener(console.emitProxy);
+		const eventPromise = events.pipe(take(1)).toPromise();
 
 		logger.debug(testMessage);
+
 		const ev = await eventPromise;
+
 		expect(ev.tag).toBe(logger.name);
 		expect(ev.level).toBe(LogLevel.DEBUG);
 		expect(ev.message).toBe(testMessage);
-
-		sub.unsubscribe();
-		console2.destroy();
-		console.destroy();
 	});
 
 	it('can solo a target logger and silence all others', async () => {
@@ -52,7 +53,8 @@ describe('RxConsole', () => {
 		const testMessage = 'a sample log message';
 		const loggerA = console.getLogger('CustomLoggerA');
 		const loggerB = console.getLogger('CustomLoggerB');
-		const eventPromise = console.events.pipe(take(5), toArray()).toPromise();
+		const events = console.asObservable<Observable<LogEvent>>(fromEventPattern);
+		const eventPromise = events.pipe(take(5), toArray()).toPromise();
 
 		expect(console.hasSoloLogger()).toBe(false);
 		expect(console.getSoloLogger()).not.toBeDefined();
@@ -65,7 +67,7 @@ describe('RxConsole', () => {
 		expect(console.hasSoloLogger()).toBe(true);
 		expect(console.getSoloLogger()).toBe(loggerB);
 
-		loggerA.debug(testMessage);
+		loggerA.debug(testMessage); // This should be suppressed
 		loggerB.debug(testMessage);
 
 		console.setSoloLogger(null);
@@ -76,14 +78,12 @@ describe('RxConsole', () => {
 		loggerA.debug(testMessage);
 		loggerB.debug(testMessage);
 
-		const events: LogEvent[] = await eventPromise;
-		const loggerACount = events.filter(ev => ev.tag === loggerA.name).length;
-		const loggerBCount = events.filter(ev => ev.tag === loggerB.name).length;
+		const loadedEvents: LogEvent[] = await eventPromise;
+		const loggerACount = loadedEvents.filter(ev => ev.tag === loggerA.name).length;
+		const loggerBCount = loadedEvents.filter(ev => ev.tag === loggerB.name).length;
 
 		expect(loggerACount).toBe(2);
 		expect(loggerBCount).toBe(3);
-
-		console.destroy();
 	});
 
 	describe('getLogger()', () => {
@@ -96,31 +96,9 @@ describe('RxConsole', () => {
 			expect(RxConsole.main.getLogger).toHaveBeenCalledTimes(1);
 			expect(logger1.getLevel()).toBeLessThan(LogLevel.INFO);
 
-			const logger2 = getLogger(logger1.name, { logEvents: { level: LogLevel.INFO } });
+			const logger2 = getLogger(logger1.name, { level: LogLevel.INFO });
 			expect(RxConsole.main.getLogger).toHaveBeenCalledTimes(2);
 			expect(logger1).toBe(logger2);
-		});
-	});
-
-	describe('destroy()', () => {
-
-		it('destroys non-main instances', () => {
-
-			const console = new RxConsole();
-			const sampleEvent = new LogEvent(LogLevel.INFO, 'test', [], '');
-			const logger = console.getLogger('ThrowAwayLogger');
-
-			expect(console.isDestroyed()).toBe(false);
-			expect(logger.isDestroyed()).toBe(false);
-
-			console.destroy();
-			expect(console.isDestroyed()).toBe(true);
-			expect(logger.isDestroyed()).toBe(true);
-			expect(() => console.destroy()).toThrowError();
-			expect(() => console.emit(sampleEvent)).toThrowError();
-
-			expect(() => RxConsole.main.destroy()).toThrowError();
-			expect(RxConsole.main.isDestroyed()).toBe(false);
 		});
 	});
 
@@ -143,29 +121,6 @@ describe('RxConsole', () => {
 
 			expect(logger1.getLevel()).toBe(LogLevel.INFO);
 			expect(logger2.getLevel()).toBe(LogLevel.INFO);
-
-			console.destroy();
-		});
-	});
-
-	describe('getLogLevelName()', () => {
-
-		it('is a convenience for converting numeric levels to their associated name', () => {
-
-			const targets: { level: number, value: string }[] = [
-				{ level: LogLevel.VERBOSE, value: 'VERBOSE' },
-				{ level: LogLevel.TRACE, value: 'TRACE' },
-				{ level: LogLevel.DEBUG, value: 'DEBUG' },
-				{ level: LogLevel.INFO, value: 'INFO' },
-				{ level: LogLevel.WARN, value: 'WARN' },
-				{ level: LogLevel.ERROR, value: 'ERROR' },
-				{ level: LogLevel.FATAL, value: 'FATAL' },
-				{ level: 1234, value: 'CUSTOM-LEVEL-1234' }
-			];
-
-			targets.forEach(target => {
-				expect(getLogLevelName(target.level)).toBe(target.value);
-			});
 		});
 	});
 });
