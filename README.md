@@ -45,61 +45,59 @@ npm install --save git+https://github.com/jospete/obsidize-rx-console.git
 This module uses RxJS for event streaming, and exposes a utility function ```getLogger()``` for generating logger instances:
 
 ```typescript
-import { getLogger, LogEventSource } from '@obsidize/rx-console';
+import { getLogger, LogEventSource, RxConsole, LogLevel } from '@obsidize/rx-console';
 
-export class MyServiceThing {
-	
+class MyServiceThing {
+
 	private readonly logger: LogEventSource = getLogger('MyServiceThing');
-	
+
 	test(): void {
 		this.logger.debug('test!');
 	}
 }
 
-// ... in your main startup routine ...
-
-import { RxConsole, LogLevel, LogEvent } from '@obsidize/rx-console';
-
 // You can use the main instance, or make your own with:
 // export const myCustomConsole = new RxConsole();
-RxConsole.main
+RxConsole
+	.main
 	.setLevel(LogLevel.DEBUG)
-	.events
-	.subscribe(ev => {
+	.listeners
+	.add(ev => {
 		// send log to standard browser console
-		ev.broadcastTo(console); // 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!
+		ev.broadcastTo(console);
 	});
 
+const service = new MyServiceThing();
+service.test(); // 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!
 ```
 
 > "Well that was unnecessary, we could have just used _console.log('test');_ right ...?"
 
-Not exactly -- the RxJS approach offers a few advantages:
+Not exactly -- this approach offers a few advantages:
 
 1. Unlike ```console.log()```, LogEvent instances carry _context_ about where the log came from, so 
 we can infer more useful data in the output like what time the event happened and what class (AKA "logger name") it came from.
-2. Now you can _also_ route events to a **file in cordova**, or to an **http server**, or just **buffer log events in memory**.
-3. All of these log events are now being passed through Observables, which means we now have the _nearly unlimited_ power of RxJS Observables at our disposal.
+2. This allows us to route events to a **file in cordova**, or to an **http server**, or just **buffer log events in memory**.
+3. This allows us to route events through RxJS operators (optional) which in of itself has many benefits for stream transformation.
 
 ```typescript
-import { RxConsole, LogLevel } from '@obsidize/rx-console';
-import { inverval } from 'rxjs';
+import { Observable, fromEventPattern, inverval } from 'rxjs';
 import { buffer, map } from 'rxjs/operators';
+import { RxConsole, LogEvent } from '@obsidize/rx-console';
 
-RxConsole.main.events.pipe(
+RxConsole.main.asObservable<Observable<LogEvent>>(fromEventPattern).pipe(
 
 	// accumulate log events for 5 seconds
-	buffer(inverval(5000)),
-	
+	buffer(interval(5000)),
+
 	// stringify and concatenate the buffered events
 	map(bufferedEvents => bufferedEvents.map(e => e.toString()).join('\n'))
-	
+
 ).subscribe(outputString => {
 
 	// Dump the buffer to a file, or send to a server, or wherever.
 	writeToFile(outputString);
 });
-
 ```
 
 ## Usage (NodeJS / Vanilla JavaScript)
@@ -109,15 +107,15 @@ The same concepts in the TypeScript example also apply to NodeJS / vanilla JS us
 The below snippet can be tested with runkit on NPM.
 
 ```javascript
-require("rxjs/package.json"); // rxjs is a peer dependency. 
+rxjs = require("rxjs/package.json"); // rxjs is a peer dependency. 
 var rxConsole = require("@obsidize/rx-console");
 const {RxConsole, LogLevel, getLogger} = rxConsole;
 
 const eventSubscription = RxConsole
 	.main
 	.setLevel(LogLevel.DEBUG)
-	.events
-	.subscribe(ev => ev.broadcastTo(console));
+	.listeners
+	.add(ev => ev.broadcastTo(console));
 
 const logger = getLogger('RunKitLogger');
 
@@ -140,35 +138,34 @@ logger.verbose('im obnoxious');
 This module is customizable at each level thanks to generics:
 
 ```typescript
-import { LogEvent, ConsoleEventEmitter, RxConsole } from '@obsidize/rx-console';
-import { map } from 'rxjs/operators';
+import { LogEvent, LogEventDelegate, LogEventEmitter, RxConsole } from '@obsidize/rx-console';
 
-class MyCustomEvent extends LogEvent {
+class MyCustomLogEvent extends LogEvent {
 
 	// Add some special sauce to your custom event instances.
 	specialSauceData: number = 42;
 }
 
-class MyCustomLogSubject extends LogEventSubject<MyCustomEvent> {
-	
+class MyCustomLogger extends LogEventEmitter<MyCustomLogEvent> {
+
 	// Override the createEvent() method to generate your custom event type.
-	protected createEvent(level: number, message: string, params: any[]): MyCustomEvent {
-		return new MyCustomEvent(level, message, params, this.name);
+	protected createEvent(level: number, message: string, params: any[]): MyCustomLogEvent {
+		return new MyCustomLogEvent(level, message, params, this.name);
 	}
 }
 
-class MyCustomConsole extends RxConsole<MyCustomEvent, MyCustomLogSubject> {
+class MyCustomConsole extends RxConsole<MyCustomLogEvent, MyCustomLogger> {
 
-	// Override the createEntryLogger() method to generate your custom subject type.
-	protected createEntryLogger(name: string): MyCustomLogSubject {
-		return new MyCustomLogSubject(name);
+	// Override the createLogger() method to generate your custom subject type.
+	protected createLogger(name: string): MyCustomLogger {
+		return new MyCustomLogger(this, name);
 	}
 }
 
 const myConsoleInstance = new MyCustomConsole();
 const logger = myConsoleInstance.getLogger('TestLogger');
 
-logger.events.subscribe(ev => {
+myConsoleInstance.listeners.add(ev => {
 	console.log(ev.message); // 'custom log'
 	console.log(ev.specialSauceData); // 42
 });
@@ -176,8 +173,7 @@ logger.events.subscribe(ev => {
 logger.info('custom log');
 
 // NOTE: You can also wire your custom console back into the main instance
-myConsoleInstance.pipeEventsTo(RxConsole.main);
-
+RxConsole.main.listeners.add(myConsoleInstance.proxy as LogEventDelegate);
 ```
 
 ## API
