@@ -90,15 +90,9 @@ export class RxConsole<T extends LogEvent = LogEvent, LoggerType extends Console
 	 * Sets the *global* level filter for all created loggers.
 	 */
 	public setLevel(value: number): this {
-
-		const previousLevel = this.getLevel();
 		super.setLevel(value);
 		const updatedLevel = this.getLevel();
-
-		if (previousLevel !== updatedLevel) {
-			this.mLoggerMap.forEach(logger => logger.setLevel(updatedLevel));
-		}
-
+		this.mLoggerMap.forEach(logger => logger.setLevel(updatedLevel));
 		return this;
 	}
 
@@ -110,7 +104,7 @@ export class RxConsole<T extends LogEvent = LogEvent, LoggerType extends Console
 		let logger = this.mLoggerMap.get(name);
 
 		if (!logger) {
-			logger = this.createLogger(name);
+			logger = this.createLogger(name).configure({ level: this.getLevel() });
 			this.mLoggerMap.set(name, logger);
 		}
 
