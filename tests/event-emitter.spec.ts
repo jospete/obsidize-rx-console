@@ -2,19 +2,27 @@ import { EventEmitter } from '../src';
 
 describe('EventEmitter', () => {
 
-	describe('add()', () => {
+	describe('general usage', () => {
 
-		it('does nothing when given a non-function value', () => {
+		it('properly tracks callbacks for mass broadcasting', () => {
 
 			const emitter = new EventEmitter<any>();
 
 			expect(() => emitter.add(null)).not.toThrowError();
 			expect(emitter.count).toBe(0);
+			expect(() => emitter.emit('test')).not.toThrowError();
 
-			const sampleFn = () => { };
+			const sampleFn = jasmine.createSpy('testEmitterSpy');
 			expect(() => emitter.add(sampleFn)).not.toThrowError();
 			expect(emitter.count).toBe(1);
 			expect(emitter.has(sampleFn)).toBe(true);
+			expect(sampleFn).not.toHaveBeenCalled();
+			expect(() => emitter.emit('test')).not.toThrowError();
+			expect(sampleFn).toHaveBeenCalledTimes(1);
+
+			emitter.clear();
+			expect(() => emitter.emit('test')).not.toThrowError();
+			expect(sampleFn).toHaveBeenCalledTimes(1);
 		});
 	});
 });
