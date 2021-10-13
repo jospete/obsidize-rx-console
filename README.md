@@ -110,7 +110,7 @@ The below snippet can be tested with runkit on NPM.
 var rxConsole = require("@obsidize/rx-console");
 const {RxConsole, LogLevel, getLogger} = rxConsole;
 
-const eventSubscription = RxConsole
+RxConsole
 	.main
 	.setLevel(LogLevel.DEBUG)
 	.listeners
