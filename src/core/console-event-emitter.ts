@@ -5,16 +5,14 @@ import { LogEventEmitter } from './log-event-emitter';
 import { LogEventEmitterLike } from './log-event-emitter-like';
 
 /**
- * Simplified type for when generics are not explicitly used.
+ * Simplified type import type for explicit declarations.
  */
 export type LogEventSource = ConsoleEventEmitter<LogEvent>;
 
 /**
  * Special kind of LogEventObservable that can spawn its own events via the createEvent() method.
  */
-export class ConsoleEventEmitter<T extends LogEvent>
-	extends LogEventEmitter<T>
-	implements ConsoleLike {
+export class ConsoleEventEmitter<T extends LogEvent = LogEvent> extends LogEventEmitter<T> implements ConsoleLike {
 
 	constructor(
 		aggregator: LogEventEmitterLike<T>,
@@ -55,7 +53,7 @@ export class ConsoleEventEmitter<T extends LogEvent>
 		this.emitWith(LogLevel.FATAL, message, params);
 	}
 
-	public emitWith(level: number, message: string, params: any[]): void {
+	protected emitWith(level: number, message: string, params: any[]): void {
 		this.emit(this.createEvent(level, message, params));
 	}
 

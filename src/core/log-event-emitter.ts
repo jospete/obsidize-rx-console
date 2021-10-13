@@ -7,7 +7,7 @@ import { LogEventEmitterLike } from './log-event-emitter-like';
  * Exposes the input source stream, as well as an 'events' stream that
  * only emits filtered values which meet the 'enabled' and 'level' requirements.
  */
-export class LogEventEmitter<T extends LogEvent> extends LogEventEmitterBase<T> {
+export class LogEventEmitter<T extends LogEvent = LogEvent> extends LogEventEmitterBase<T> {
 
 	constructor(
 		protected readonly aggregator: LogEventEmitterLike<T>

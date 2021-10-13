@@ -1,11 +1,13 @@
 import { LogEvent } from './log-event';
 import { RxConsoleUtility } from './rx-console-utility';
-import { LogEventDelegate, LogEventEmitterBase } from './log-event-emitter-base';
+import { LogEventEmitterBase } from './log-event-emitter-base';
 import { ConsoleEventEmitter, LogEventSource } from './console-event-emitter';
 import { LogEventEmitterConfig } from './log-event-emitter-config';
+import { LogEventDelegate } from './log-event-like';
 
 /**
  * Alias for a generator function similar to (or equal to) the rxjs fromEventPattern() function.
+ * We have this set as an alias so as to avoid dragging in rxjs as a required dependency.
  */
 export type ObservableEventPatternGenerator<T> = (
 	addHandler: (listener: any) => any,
@@ -14,16 +16,18 @@ export type ObservableEventPatternGenerator<T> = (
 
 /**
  * Core entry point for a collection of loggers.
+ * 
  * All loggers created from here via getLogger() will have their level updated when
  * this instance's level is updated, and all LogEvent instances will be funnelled back to
- * this instance's 'events' Observable.
+ * this instance's registered event listeners.
+ * 
+ * To route events into an rxjs-like observable, use asObservable().
  */
-export class RxConsole<T extends LogEvent, LoggerType extends ConsoleEventEmitter<T>>
-	extends LogEventEmitterBase<T> {
+export class RxConsole<T extends LogEvent = LogEvent, LoggerType extends ConsoleEventEmitter<T> = ConsoleEventEmitter<T>> extends LogEventEmitterBase<T> {
 
 	public static readonly main: RxConsole<LogEvent, LogEventSource> = new RxConsole();
 
-	public readonly emitProxy: LogEventDelegate<T> = this.emit.bind(this);
+	public readonly proxy: LogEventDelegate<T> = this.emit.bind(this);
 
 	private readonly mLoggerMap: Map<string, LoggerType> = new Map();
 	private readonly mListeners: Set<LogEventDelegate<T>> = new Set();
@@ -74,6 +78,10 @@ export class RxConsole<T extends LogEvent, LoggerType extends ConsoleEventEmitte
 		return !!this.getSoloLogger();
 	}
 
+	/**
+	 * Get the current solo'd logger.
+	 * Returns undefined if there is no solo logger set.
+	 */
 	public getSoloLogger(): LoggerType | undefined | null {
 		return RxConsoleUtility.isPopulatedString(this.mSoloName)
 			? this.getLogger(this.mSoloName!)
@@ -92,6 +100,9 @@ export class RxConsole<T extends LogEvent, LoggerType extends ConsoleEventEmitte
 		return this;
 	}
 
+	/**
+	 * Sets the *global* level filter for all created loggers.
+	 */
 	public setLevel(value: number): this {
 
 		const previousLevel = this.getLevel();
@@ -105,15 +116,15 @@ export class RxConsole<T extends LogEvent, LoggerType extends ConsoleEventEmitte
 		return this;
 	}
 
-	public getLogger(name: string, options: Partial<LogEventEmitterConfig> = {}): LoggerType {
+	/**
+	 * Find or create a logger instance for the given name.
+	 */
+	public getLogger(name: string): LoggerType {
 
 		let logger = this.mLoggerMap.get(name);
 
-		if (logger) {
-			logger.configure(options);
-
-		} else {
-			logger = this.createLogger(name, options);
+		if (!logger) {
+			logger = this.createLogger(name);
 			this.mLoggerMap.set(name, logger);
 		}
 
@@ -124,6 +135,6 @@ export class RxConsole<T extends LogEvent, LoggerType extends ConsoleEventEmitte
 /**
  * Conveinence for generating loggers via the standard 'main' RxConsole instance. 
  */
-export function getLogger(name: string, options?: Partial<LogEventEmitterConfig>): LogEventSource {
-	return RxConsole.main.getLogger(name, options);
+export function getLogger(name: string): LogEventSource {
+	return RxConsole.main.getLogger(name);
 }

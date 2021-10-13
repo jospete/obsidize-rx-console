@@ -16,7 +16,7 @@ describe('RxConsole', () => {
 		expect(console.isMainInstance).toBe(false);
 
 		const testMessage = 'a sample log message';
-		const logger = console.getLogger('MyCustomLogger', { level: LogLevel.VERBOSE });
+		const logger = console.getLogger('MyCustomLogger').configure({ level: LogLevel.VERBOSE });
 		const events = console.asObservable<Observable<LogEvent>>(fromEventPattern);
 		const eventPromise = events.pipe(take(1)).toPromise();
 
@@ -35,7 +35,7 @@ describe('RxConsole', () => {
 		const logger = console.getLogger('MyCustomLogger');
 		const events = console2.asObservable<Observable<LogEvent>>(fromEventPattern);
 
-		console.addEventListener(console2.emitProxy);
+		console.addEventListener(console2.proxy);
 		const eventPromise = events.pipe(take(1)).toPromise();
 
 		logger.debug(testMessage);
@@ -100,7 +100,7 @@ describe('RxConsole', () => {
 			expect(RxConsole.main.getLogger).toHaveBeenCalledTimes(1);
 			expect(logger1.getLevel()).toBeLessThan(LogLevel.INFO);
 
-			const logger2 = getLogger(logger1.name, { level: LogLevel.INFO });
+			const logger2 = getLogger(logger1.name).configure({ level: LogLevel.INFO });
 			expect(RxConsole.main.getLogger).toHaveBeenCalledTimes(2);
 			expect(logger1).toBe(logger2);
 		});

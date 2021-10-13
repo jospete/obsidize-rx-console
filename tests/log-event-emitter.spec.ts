@@ -1,4 +1,5 @@
 import { LogEventEmitter } from '../src';
+import { noopAggregator } from './util';
 
 describe('LogEventEmitter', () => {
 
@@ -6,7 +7,6 @@ describe('LogEventEmitter', () => {
 
 		it('gracefully handles partial configuration objects', () => {
 
-			const noopAggregator = { emit: () => { } };
 			const logEvents = new LogEventEmitter(noopAggregator);
 
 			expect(() => logEvents.configure(null)).not.toThrowError();
