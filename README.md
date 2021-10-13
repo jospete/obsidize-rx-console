@@ -78,7 +78,7 @@ Not exactly -- this approach offers a few advantages:
 1. Unlike ```console.log()```, LogEvent instances carry _context_ about where the log came from, so 
 we can infer more useful data in the output like what time the event happened and what class (AKA "logger name") it came from.
 2. This allows us to route events to a **file in cordova**, or to an **http server**, or just **buffer log events in memory**.
-3. This allows us to route events through RxJS operators (optional) which in of itself has many benefits for stream transformation.
+3. This allows us to route events through RxJS operators, which in of itself has many benefits for stream transformation.
 
 ```typescript
 import { Observable, fromEventPattern, inverval } from 'rxjs';
