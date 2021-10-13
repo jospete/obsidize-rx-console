@@ -9,3 +9,13 @@ export interface LogEventLike {
 	readonly params: any[];
 	readonly extras?: any;
 }
+
+/**
+ * Standard callback for handling emitted events
+ */
+export type LogEventDelegate<T extends LogEventLike = LogEventLike> = (ev: T) => void;
+
+/**
+ * Predicate that will dictate whether or not an event should be emitted.
+ */
+export type LogEventPredicate<T extends LogEventLike = LogEventLike> = (ev: T) => boolean;

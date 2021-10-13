@@ -1,6 +1,6 @@
 {
   "name": "@obsidize/rx-console",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "description": "A logging library that uses rxjs as the foundation for log event handling.",
   "main": "es5.js",
   "module": "index.js",
@@ -49,9 +49,6 @@
   "homepage": "https://github.com/jospete/obsidize-rx-console#readme",
   "dependencies": {
     "tslib": "^2.3.1"
-  },
-  "peerDependencies": {
-    "rxjs": ">= 6.2"
   },
   "devDependencies": {
     "@types/jasmine": "^3.6.3",

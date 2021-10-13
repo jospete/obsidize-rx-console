@@ -68,21 +68,22 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Core entry point for a collection of loggers.
-							All loggers created from here via getLogger() will have their level updated when
-							this instance&#39;s level is updated, and all LogEvent instances will be funnelled back to
-						this instance&#39;s &#39;events&#39; Observable.</p>
+						<p>Core entry point for a collection of loggers.</p>
 					</div>
+					<p>All loggers created from here via getLogger() will have their level updated when
+						this instance&#39;s level is updated, and all LogEvent instances will be funnelled back to
+					this instance&#39;s registered event listeners.</p>
+					<p>To route events into an rxjs-like observable, use asObservable().</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
-						<h4>T<span class="tsd-signature-symbol">: </span><a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a></h4>
+						<h4>T<span class="tsd-signature-symbol">: </span><a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a> = <a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a></h4>
 					</li>
 					<li>
-						<h4>LoggerType<span class="tsd-signature-symbol">: </span><a href="LogEventSubject.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventSubject</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						<h4>LoggerType<span class="tsd-signature-symbol">: </span><a href="LogEventEmitter.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventEmitter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span> = <a href="LogEventEmitter.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventEmitter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 					</li>
 				</ul>
 			</section>
@@ -90,7 +91,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="LogEventObservable.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventObservable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+						<a href="LogEventEmitterBase.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventEmitterBase</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">RxConsole</span>
@@ -99,38 +100,28 @@
 					</li>
 				</ul>
 			</section>
-			<section class="tsd-panel">
-				<h3>Implements</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/RxConsoleEntryHooks.html" class="tsd-signature-type" data-tsd-kind="Interface">RxConsoleEntryHooks</a></li>
-				</ul>
-			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite"><a href="RxConsole.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="RxConsole.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#accepts" class="tsd-kind-icon">accepts</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#events" class="tsd-kind-icon">events</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="RxConsole.html#onLevelChange" class="tsd-kind-icon">on<wbr>Level<wbr>Change</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#source" class="tsd-kind-icon">source</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="RxConsole.html#ERR_CANNOT_DESTROY_MAIN_INSTANCE" class="tsd-kind-icon">ERR_<wbr>CANNOT_<wbr>DESTROY_<wbr>MAIN_<wbr>INSTANCE</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="RxConsole.html#ERR_DESTROYED" class="tsd-kind-icon">ERR_<wbr>DESTROYED</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="RxConsole.html#configDefaults" class="tsd-kind-icon">config<wbr>Defaults</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="RxConsole.html#listeners" class="tsd-kind-icon">listeners</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="RxConsole.html#proxy" class="tsd-kind-icon">proxy</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="RxConsole.html#main" class="tsd-kind-icon">main</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#accepts" class="tsd-kind-icon">accepts</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="RxConsole.html#isMainInstance" class="tsd-kind-icon">is<wbr>Main<wbr>Instance</a></li>
 							</ul>
 						</section>
@@ -139,22 +130,19 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#acceptsLevel" class="tsd-kind-icon">accepts<wbr>Level</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="RxConsole.html#acceptsSoloEvent" class="tsd-kind-icon">accepts<wbr>Solo<wbr>Event</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="RxConsole.html#asObservable" class="tsd-kind-icon">as<wbr>Observable</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#configure" class="tsd-kind-icon">configure</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#copy" class="tsd-kind-icon">copy</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="RxConsole.html#createEntry" class="tsd-kind-icon">create<wbr>Entry</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="RxConsole.html#createEntryLogger" class="tsd-kind-icon">create<wbr>Entry<wbr>Logger</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="RxConsole.html#destroy" class="tsd-kind-icon">destroy</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="RxConsole.html#destroyAllLoggers" class="tsd-kind-icon">destroy<wbr>All<wbr>Loggers</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="RxConsole.html#emit" class="tsd-kind-icon">emit</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="RxConsole.html#createLogger" class="tsd-kind-icon">create<wbr>Logger</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#emit" class="tsd-kind-icon">emit</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="RxConsole.html#getDefaultAcceptanceDelegate" class="tsd-kind-icon">get<wbr>Default<wbr>Acceptance<wbr>Delegate</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#getLevel" class="tsd-kind-icon">get<wbr>Level</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="RxConsole.html#getLogger" class="tsd-kind-icon">get<wbr>Logger</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#getMaxLevel" class="tsd-kind-icon">get<wbr>Max<wbr>Level</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#getMinLevel" class="tsd-kind-icon">get<wbr>Min<wbr>Level</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="RxConsole.html#getSoloLogger" class="tsd-kind-icon">get<wbr>Solo<wbr>Logger</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="RxConsole.html#hasSoloLogger" class="tsd-kind-icon">has<wbr>Solo<wbr>Logger</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="RxConsole.html#isDestroyed" class="tsd-kind-icon">is<wbr>Destroyed</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#isEnabled" class="tsd-kind-icon">is<wbr>Enabled</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="RxConsole.html#pipeEventsTo" class="tsd-kind-icon">pipe<wbr>Events<wbr>To</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected"><a href="RxConsole.html#onWillEmit" class="tsd-kind-icon">on<wbr>Will<wbr>Emit</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#setEnabled" class="tsd-kind-icon">set<wbr>Enabled</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="RxConsole.html#setLevel" class="tsd-kind-icon">set<wbr>Level</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#setMaxLevel" class="tsd-kind-icon">set<wbr>Max<wbr>Level</a></li>
@@ -167,29 +155,26 @@
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite">
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">new <wbr>RxConsole&lt;T, LoggerType&gt;<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LoggerType</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#constructor">constructor</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L32">core/rx-console.ts:32</a></li>
-								</ul>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#constructor">constructor</a></p>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>T<span class="tsd-signature-symbol">: </span><a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span> = <a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a></h4>
 								</li>
 								<li>
-									<h4>LoggerType<span class="tsd-signature-symbol">: </span><a href="LogEventSubject.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventSubject</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LoggerType</span><span class="tsd-signature-symbol">&gt;</span></h4>
+									<h4>LoggerType<span class="tsd-signature-symbol">: </span><a href="LogEventEmitter.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventEmitter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LoggerType</span><span class="tsd-signature-symbol">&gt;</span> = <a href="LogEventEmitter.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventEmitter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LoggerType</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -199,96 +184,23 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="accepts" class="tsd-anchor"></a>
-					<h3>accepts</h3>
-					<div class="tsd-signature tsd-kind-icon">accepts<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>ev<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = ...</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="listeners" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> listeners</h3>
+					<div class="tsd-signature tsd-kind-icon">listeners<span class="tsd-signature-symbol">:</span> <a href="EventEmitter.html" class="tsd-signature-type" data-tsd-kind="Class">EventEmitter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#accepts">accepts</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L37">core/log-event-observable.ts:37</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-signature">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-class">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>ev<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>ev: <span class="tsd-signature-type">T</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="events" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> events</h3>
-					<div class="tsd-signature tsd-kind-icon">events<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#events">events</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L39">core/log-event-observable.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/rx-console.ts#L31">core/rx-console.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="onLevelChange" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> on<wbr>Level<wbr>Change</h3>
-					<div class="tsd-signature tsd-kind-icon">on<wbr>Level<wbr>Change<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/RxConsoleEntryHooks.html">RxConsoleEntryHooks</a>.<a href="../interfaces/RxConsoleEntryHooks.html#onLevelChange">onLevelChange</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L30">core/rx-console.ts:30</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="source" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> source</h3>
-					<div class="tsd-signature tsd-kind-icon">source<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#source">source</a></p>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="ERR_CANNOT_DESTROY_MAIN_INSTANCE" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> ERR_<wbr>CANNOT_<wbr>DESTROY_<wbr>MAIN_<wbr>INSTANCE</h3>
-					<div class="tsd-signature tsd-kind-icon">ERR_<wbr>CANNOT_<wbr>DESTROY_<wbr>MAIN_<wbr>INSTANCE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &#x27;RxConsole_ERR_CANNOT_DESTROY_MAIN_INSTANCE&#x27;</span></div>
+					<a name="proxy" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> proxy</h3>
+					<div class="tsd-signature tsd-kind-icon">proxy<span class="tsd-signature-symbol">:</span> <a href="../modules.html#LogEventDelegate" class="tsd-signature-type" data-tsd-kind="Type alias">LogEventDelegate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L21">core/rx-console.ts:21</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="ERR_DESTROYED" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> ERR_<wbr>DESTROYED</h3>
-					<div class="tsd-signature tsd-kind-icon">ERR_<wbr>DESTROYED<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &#x27;RxConsole_ERR_DESTROYED&#x27;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L20">core/rx-console.ts:20</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static">
-					<a name="configDefaults" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> config<wbr>Defaults</h3>
-					<div class="tsd-signature tsd-kind-icon">config<wbr>Defaults<span class="tsd-signature-symbol">:</span> <a href="../interfaces/LogEventObservableConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LogEventObservableConfig</a><span class="tsd-signature-symbol"> = ...</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#configDefaults">configDefaults</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L25">core/log-event-observable.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/rx-console.ts#L32">core/rx-console.ts:32</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -298,13 +210,45 @@
 					<div class="tsd-signature tsd-kind-icon">main<span class="tsd-signature-symbol">:</span> <a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a><span class="tsd-signature-symbol">, </span><a href="../modules.html#LogEventSource" class="tsd-signature-type" data-tsd-kind="Type alias">LogEventSource</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L22">core/rx-console.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/rx-console.ts#L29">core/rx-console.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited">
+					<a name="accepts" class="tsd-anchor"></a>
+					<h3>accepts</h3>
+					<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> accepts<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules.html#LogEventPredicate" class="tsd-signature-type" data-tsd-kind="Type alias">LogEventPredicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> accepts<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><a href="../modules.html#LogEventPredicate" class="tsd-signature-type" data-tsd-kind="Type alias">LogEventPredicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/log-event-emitter-base.ts#L27">core/log-event-emitter-base.ts:27</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="../modules.html#LogEventPredicate" class="tsd-signature-type" data-tsd-kind="Type alias">LogEventPredicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/log-event-emitter-base.ts#L31">core/log-event-emitter-base.ts:31</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <a href="../modules.html#LogEventPredicate" class="tsd-signature-type" data-tsd-kind="Type alias">LogEventPredicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
 					<a name="isMainInstance" class="tsd-anchor"></a>
 					<h3>is<wbr>Main<wbr>Instance</h3>
@@ -315,7 +259,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L51">core/rx-console.ts:51</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/rx-console.ts#L37">core/rx-console.ts:37</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -334,9 +278,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#acceptsLevel">acceptsLevel</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#acceptsLevel">acceptsLevel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L116">core/log-event-observable.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/log-event-emitter-base.ts#L111">core/log-event-emitter-base.ts:111</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -366,7 +310,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L136">core/rx-console.ts:136</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/rx-console.ts#L45">core/rx-console.ts:45</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -379,91 +323,70 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-					<a name="configure" class="tsd-anchor"></a>
-					<h3>configure</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">configure<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/LogEventObservableConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LogEventObservableConfig</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LoggerType</span><span class="tsd-signature-symbol">&gt;</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+					<a name="asObservable" class="tsd-anchor"></a>
+					<h3>as<wbr>Observable</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">as<wbr>Observable&lt;T&gt;<span class="tsd-signature-symbol">(</span>generator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ObservableEventPatternGenerator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#configure">configure</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L144">core/log-event-observable.ts:144</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/rx-console.ts#L56">core/rx-console.ts:56</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>generator: <span class="tsd-signature-type">ObservableEventPatternGenerator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="configure" class="tsd-anchor"></a>
+					<h3>configure</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">configure<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/LogEventEmitterConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LogEventEmitterConfig</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LoggerType</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#configure">configure</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/log-event-emitter-base.ts#L129">core/log-event-emitter-base.ts:129</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>config: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/LogEventObservableConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LogEventObservableConfig</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>config: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/LogEventEmitterConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LogEventEmitterConfig</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LoggerType</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-					<a name="copy" class="tsd-anchor"></a>
-					<h3>copy</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">copy<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="LogEventObservable.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventObservable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#copy">copy</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L138">core/log-event-observable.ts:138</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Generates a deep clone of this instance.
-									NOTE: does not generate sub-class instances.</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <a href="LogEventObservable.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventObservable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-					<a name="createEntry" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> create<wbr>Entry</h3>
+					<a name="createLogger" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> create<wbr>Logger</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Entry<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/RxConsoleEntryOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">RxConsoleEntryOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="RxConsoleEntry.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsoleEntry</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LoggerType</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Logger<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, _options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/LogEventEmitterConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LogEventEmitterConfig</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">LoggerType</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L132">core/rx-console.ts:132</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>name: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/RxConsoleEntryOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">RxConsoleEntryOptions</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="RxConsoleEntry.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsoleEntry</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LoggerType</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-					<a name="createEntryLogger" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> create<wbr>Entry<wbr>Logger</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Entry<wbr>Logger<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, _options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/RxConsoleEntryOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">RxConsoleEntryOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">LoggerType</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L128">core/rx-console.ts:128</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/rx-console.ts#L52">core/rx-console.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -477,71 +400,25 @@
 									<h5>name: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> _options: <a href="../interfaces/RxConsoleEntryOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">RxConsoleEntryOptions</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> _options: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/LogEventEmitterConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LogEventEmitterConfig</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">LoggerType</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="destroy" class="tsd-anchor"></a>
-					<h3>destroy</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">destroy<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L115">core/rx-console.ts:115</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Permanently kills this console instance and its event streams.
-									The instance should be disposed of after this is called.</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="destroyAllLoggers" class="tsd-anchor"></a>
-					<h3>destroy<wbr>All<wbr>Loggers</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">destroy<wbr>All<wbr>Loggers<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L106">core/rx-console.ts:106</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>IMPORTANT - this is mostly a debugging tool for tests, do not use this
-									unless you want to hit the entire logging system with a sledgehammer.</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="emit" class="tsd-anchor"></a>
 					<h3>emit</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">emit<span class="tsd-signature-symbol">(</span>ev<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/RxConsoleEntryHooks.html">RxConsoleEntryHooks</a>.<a href="../interfaces/RxConsoleEntryHooks.html#emit">emit</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#emit">emit</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L80">core/rx-console.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/log-event-emitter-base.ts#L37">core/log-event-emitter-base.ts:37</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -554,6 +431,24 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="getDefaultAcceptanceDelegate" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> get<wbr>Default<wbr>Acceptance<wbr>Delegate</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Default<wbr>Acceptance<wbr>Delegate<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules.html#LogEventPredicate" class="tsd-signature-type" data-tsd-kind="Type alias">LogEventPredicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#getDefaultAcceptanceDelegate">getDefaultAcceptanceDelegate</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/log-event-emitter-base.ts#L23">core/log-event-emitter-base.ts:23</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="../modules.html#LogEventPredicate" class="tsd-signature-type" data-tsd-kind="Type alias">LogEventPredicate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="getLevel" class="tsd-anchor"></a>
 					<h3>get<wbr>Level</h3>
@@ -563,9 +458,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#getLevel">getLevel</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#getLevel">getLevel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L64">core/log-event-observable.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/log-event-emitter-base.ts#L59">core/log-event-emitter-base.ts:59</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -581,22 +476,24 @@
 					<a name="getLogger" class="tsd-anchor"></a>
 					<h3>get<wbr>Logger</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Logger<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/RxConsoleEntryOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">RxConsoleEntryOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">LoggerType</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Logger<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">LoggerType</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L76">core/rx-console.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/rx-console.ts#L102">core/rx-console.ts:102</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Find or create a logger instance for the given name.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>name: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>options: <a href="../interfaces/RxConsoleEntryOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">RxConsoleEntryOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">LoggerType</span></h4>
@@ -612,9 +509,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#getMaxLevel">getMaxLevel</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#getMaxLevel">getMaxLevel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L94">core/log-event-observable.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/log-event-emitter-base.ts#L89">core/log-event-emitter-base.ts:89</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -630,9 +527,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#getMinLevel">getMinLevel</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#getMinLevel">getMinLevel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L78">core/log-event-observable.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/log-event-emitter-base.ts#L73">core/log-event-emitter-base.ts:73</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -649,9 +546,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L55">core/rx-console.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/rx-console.ts#L71">core/rx-console.ts:71</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the current solo&#39;d logger.
+									Returns undefined if there is no solo logger set.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">LoggerType</span></h4>
 						</li>
 					</ul>
@@ -666,24 +569,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L61">core/rx-console.ts:61</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="isDestroyed" class="tsd-anchor"></a>
-					<h3>is<wbr>Destroyed</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Destroyed<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L98">core/rx-console.ts:98</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/rx-console.ts#L63">core/rx-console.ts:63</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -699,41 +585,36 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#isEnabled">isEnabled</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#isEnabled">isEnabled</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L48">core/log-event-observable.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/log-event-emitter-base.ts#L43">core/log-event-emitter-base.ts:43</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="pipeEventsTo" class="tsd-anchor"></a>
-					<h3>pipe<wbr>Events<wbr>To</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">pipe<wbr>Events<wbr>To<span class="tsd-signature-symbol">(</span>otherConsole<span class="tsd-signature-symbol">: </span><a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LoggerType</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Subscription</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
+					<a name="onWillEmit" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> on<wbr>Will<wbr>Emit</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Will<wbr>Emit<span class="tsd-signature-symbol">(</span>ev<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#onWillEmit">onWillEmit</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L88">core/rx-console.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/rx-console.ts#L41">core/rx-console.ts:41</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>NOTE: this does not restrict circular subscriptions.
-									It is up to the caller to use this responsibly, lest ye fall into the hell hole of stack overflow.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>otherConsole: <a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LoggerType</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>ev: <span class="tsd-signature-type">T</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Subscription</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -746,9 +627,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#setEnabled">setEnabled</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#setEnabled">setEnabled</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L56">core/log-event-observable.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/log-event-emitter-base.ts#L51">core/log-event-emitter-base.ts:51</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -776,16 +657,14 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#setLevel">setLevel</a></p>
+								<p>Overrides <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#setLevel">setLevel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L92">core/rx-console.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/rx-console.ts#L92">core/rx-console.ts:92</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Set the minimum required level for output events in the &#39;events&#39; stream.
-										Any events below this level will be omitted from the stream.
-									NOTE: this value will be clamped between the minLevel and maxLevel values.</p>
+									<p>Sets the <em>global</em> level filter for all created loggers.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -807,9 +686,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#setMaxLevel">setMaxLevel</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#setMaxLevel">setMaxLevel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L104">core/log-event-observable.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/log-event-emitter-base.ts#L99">core/log-event-emitter-base.ts:99</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -838,9 +717,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#setMinLevel">setMinLevel</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#setMinLevel">setMinLevel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L88">core/log-event-observable.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/log-event-emitter-base.ts#L83">core/log-event-emitter-base.ts:83</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -864,13 +743,13 @@
 					<a name="setSoloLogger" class="tsd-anchor"></a>
 					<h3>set<wbr>Solo<wbr>Logger</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Solo<wbr>Logger<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">LoggerType</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Solo<wbr>Logger<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">LoggerType</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LoggerType</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/rx-console.ts#L69">core/rx-console.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/rx-console.ts#L81">core/rx-console.ts:81</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -885,7 +764,7 @@
 									<h5>value: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">LoggerType</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LoggerType</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -898,9 +777,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#syncLevel">syncLevel</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#syncLevel">syncLevel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L120">core/log-event-observable.ts:120</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/log-event-emitter-base.ts#L115">core/log-event-emitter-base.ts:115</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LoggerType</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -911,17 +790,17 @@
 					<a name="toConfig" class="tsd-anchor"></a>
 					<h3>to<wbr>Config</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Config<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/LogEventObservableConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LogEventObservableConfig</a></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Config<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/LogEventEmitterConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LogEventEmitterConfig</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventObservable.html">LogEventObservable</a>.<a href="LogEventObservable.html#toConfig">toConfig</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#toConfig">toConfig</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df1676d/src/core/log-event-observable.ts#L125">core/log-event-observable.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/df184e2/src/core/log-event-emitter-base.ts#L120">core/log-event-emitter-base.ts:120</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/LogEventObservableConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LogEventObservableConfig</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/LogEventEmitterConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LogEventEmitterConfig</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -940,46 +819,37 @@
 					<li class=" tsd-kind-enum">
 						<a href="../enums/LogLevel.html" class="tsd-kind-icon">Log<wbr>Level</a>
 					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="EventEmitter.html" class="tsd-kind-icon">Event<wbr>Emitter</a>
+					</li>
 					<li class=" tsd-kind-class">
 						<a href="LogEvent.html" class="tsd-kind-icon">Log<wbr>Event</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="LogEventObservable.html" class="tsd-kind-icon">Log<wbr>Event<wbr>Observable</a>
+						<a href="LogEventEmitter.html" class="tsd-kind-icon">Log<wbr>Event<wbr>Emitter</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="LogEventSubject.html" class="tsd-kind-icon">Log<wbr>Event<wbr>Subject</a>
+						<a href="LogEventEmitterBase.html" class="tsd-kind-icon">Log<wbr>Event<wbr>Emitter<wbr>Base</a>
 					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-has-type-parameter">
 						<a href="RxConsole.html" class="tsd-kind-icon">Rx<wbr>Console</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite">
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
 								<a href="RxConsole.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#accepts" class="tsd-kind-icon">accepts</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#events" class="tsd-kind-icon">events</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="RxConsole.html#listeners" class="tsd-kind-icon">listeners</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="RxConsole.html#onLevelChange" class="tsd-kind-icon">on<wbr>Level<wbr>Change</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#source" class="tsd-kind-icon">source</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="RxConsole.html#ERR_CANNOT_DESTROY_MAIN_INSTANCE" class="tsd-kind-icon">ERR_<wbr>CANNOT_<wbr>DESTROY_<wbr>MAIN_<wbr>INSTANCE</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="RxConsole.html#ERR_DESTROYED" class="tsd-kind-icon">ERR_<wbr>DESTROYED</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static">
-								<a href="RxConsole.html#configDefaults" class="tsd-kind-icon">config<wbr>Defaults</a>
+								<a href="RxConsole.html#proxy" class="tsd-kind-icon">proxy</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
 								<a href="RxConsole.html#main" class="tsd-kind-icon">main</a>
+							</li>
+							<li class=" tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited">
+								<a href="RxConsole.html#accepts" class="tsd-kind-icon">accepts</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="RxConsole.html#isMainInstance" class="tsd-kind-icon">is<wbr>Main<wbr>Instance</a>
@@ -990,26 +860,20 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 								<a href="RxConsole.html#acceptsSoloEvent" class="tsd-kind-icon">accepts<wbr>Solo<wbr>Event</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="RxConsole.html#asObservable" class="tsd-kind-icon">as<wbr>Observable</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="RxConsole.html#configure" class="tsd-kind-icon">configure</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+								<a href="RxConsole.html#createLogger" class="tsd-kind-icon">create<wbr>Logger</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#copy" class="tsd-kind-icon">copy</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-								<a href="RxConsole.html#createEntry" class="tsd-kind-icon">create<wbr>Entry</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-								<a href="RxConsole.html#createEntryLogger" class="tsd-kind-icon">create<wbr>Entry<wbr>Logger</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="RxConsole.html#destroy" class="tsd-kind-icon">destroy</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="RxConsole.html#destroyAllLoggers" class="tsd-kind-icon">destroy<wbr>All<wbr>Loggers</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="RxConsole.html#emit" class="tsd-kind-icon">emit</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="RxConsole.html#getDefaultAcceptanceDelegate" class="tsd-kind-icon">get<wbr>Default<wbr>Acceptance<wbr>Delegate</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="RxConsole.html#getLevel" class="tsd-kind-icon">get<wbr>Level</a>
@@ -1029,14 +893,11 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="RxConsole.html#hasSoloLogger" class="tsd-kind-icon">has<wbr>Solo<wbr>Logger</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="RxConsole.html#isDestroyed" class="tsd-kind-icon">is<wbr>Destroyed</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="RxConsole.html#isEnabled" class="tsd-kind-icon">is<wbr>Enabled</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="RxConsole.html#pipeEventsTo" class="tsd-kind-icon">pipe<wbr>Events<wbr>To</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
+								<a href="RxConsole.html#onWillEmit" class="tsd-kind-icon">on<wbr>Will<wbr>Emit</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="RxConsole.html#setEnabled" class="tsd-kind-icon">set<wbr>Enabled</a>
@@ -1063,29 +924,32 @@
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="RxConsoleEntry.html" class="tsd-kind-icon">Rx<wbr>Console<wbr>Entry</a>
-					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/ConsoleLike.html" class="tsd-kind-icon">Console<wbr>Like</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="../interfaces/EventEmitterLike.html" class="tsd-kind-icon">Event<wbr>Emitter<wbr>Like</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/LogEventEmitterConfig.html" class="tsd-kind-icon">Log<wbr>Event<wbr>Emitter<wbr>Config</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/LogEventLike.html" class="tsd-kind-icon">Log<wbr>Event<wbr>Like</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/LogEventObservableConfig.html" class="tsd-kind-icon">Log<wbr>Event<wbr>Observable<wbr>Config</a>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../modules.html#EventEmitterDelegate" class="tsd-kind-icon">Event<wbr>Emitter<wbr>Delegate</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/RxConsoleEntryHooks.html" class="tsd-kind-icon">Rx<wbr>Console<wbr>Entry<wbr>Hooks</a>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../modules.html#LogEventDelegate" class="tsd-kind-icon">Log<wbr>Event<wbr>Delegate</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/RxConsoleEntryOptions.html" class="tsd-kind-icon">Rx<wbr>Console<wbr>Entry<wbr>Options</a>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../modules.html#LogEventPredicate" class="tsd-kind-icon">Log<wbr>Event<wbr>Predicate</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../modules.html#LogEventSource" class="tsd-kind-icon">Log<wbr>Event<wbr>Source</a>
 					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../modules.html#ReadOnlyLogEventSource" class="tsd-kind-icon">Read<wbr>Only<wbr>Log<wbr>Event<wbr>Source</a>
+					<li class=" tsd-kind-variable">
+						<a href="../modules.html#LogEventEmitterConfigDefaults" class="tsd-kind-icon">Log<wbr>Event<wbr>Emitter<wbr>Config<wbr>Defaults</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../modules.html#getLogLevelName" class="tsd-kind-icon">get<wbr>Log<wbr>Level<wbr>Name</a>
@@ -1106,16 +970,18 @@
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
 			</ul>
 			<ul class="tsd-legend">

@@ -23,8 +23,16 @@ export namespace RxConsoleUtility {
 		return typeof value === 'string';
 	}
 
+	export function isFunction(value: any): boolean {
+		return typeof value === 'function';
+	}
+
 	export function isPopulatedString(value: any): boolean {
 		return isString(value) && value.length > 0;
+	}
+
+	export function clamp(value: number, min: number, max: number): number {
+		return Math.max(min, Math.min(value, max));
 	}
 
 	export function optObject<T>(value: T): T {
@@ -33,9 +41,8 @@ export namespace RxConsoleUtility {
 
 	export function truncate(str: string, targetLength: number): string {
 		const safeStr = str + '';
-		return (safeStr.length <= targetLength)
-			? safeStr
-			: (safeStr.substring(0, targetLength) + '...');
+		if (safeStr.length <= targetLength) return safeStr;
+		return (safeStr.substring(0, targetLength) + '...');
 	}
 
 	export function stringifySafe(value: any): string {
@@ -47,8 +54,9 @@ export namespace RxConsoleUtility {
 	}
 
 	export function stringifyOptionalParams(optionalParams: any[], joinStr: string = ' :: ', maxLength: number = 250): string {
-		const safeParams = Array.from(optionalParams).map(p => truncate(stringifySafe(p), maxLength));
-		return (safeParams.length > 0) ? (joinStr + safeParams.join(joinStr)) : '';
+		if (!Array.isArray(optionalParams) || optionalParams.length <= 0) return '';
+		const serializedParams = optionalParams.map(p => truncate(stringifySafe(p), maxLength));
+		return (joinStr + serializedParams.join(joinStr));
 	}
 
 	export function stringifyLogEventBaseValues(ev: LogEventLike): string {
