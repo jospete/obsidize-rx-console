@@ -34,7 +34,7 @@ export abstract class LogEventEmitterBase<T extends LogEvent = LogEvent> impleme
 	}
 
 	public emit(ev: T): void {
-		if (this.isEnabled() || !!ev && this.accepts(ev)) {
+		if (this.isEnabled() && !!ev && this.accepts(ev)) {
 			this.onWillEmit(ev);
 		}
 	}

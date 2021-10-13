@@ -72,7 +72,6 @@ describe('RxConsole', () => {
 
 		loggerA.debug(testMessage); // This should be suppressed
 		loggerB.debug(testMessage);
-		loggerB.debug(testMessage); // FIXME: why does this make the error go away?
 
 		console.setSoloLogger(null);
 
