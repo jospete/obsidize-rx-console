@@ -42,7 +42,7 @@ npm install --save git+https://github.com/jospete/obsidize-rx-console.git
 
 ## Usage (TypeScript)
 
-This module uses RxJS for event streaming, and exposes a utility function ```getLogger()``` for generating logger instances:
+This module exposes a utility function ```getLogger()``` for generating logger instances:
 
 ```typescript
 import { getLogger, LogEventSource, RxConsole, LogLevel } from '@obsidize/rx-console';
