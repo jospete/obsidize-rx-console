@@ -172,7 +172,7 @@ myConsoleInstance.listeners.add(ev => {
 logger.info('custom log');
 
 // NOTE: You can also wire your custom console back into the main instance
-RxConsole.main.listeners.add(myConsoleInstance.proxy as LogEventDelegate);
+myConsoleInstance.listeners.add(RxConsole.main.proxy as LogEventDelegate);
 ```
 
 ## API
