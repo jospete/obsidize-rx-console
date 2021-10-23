@@ -13,7 +13,17 @@ export interface EventEmitterLike<T> {
 }
 
 /**
+ * Alias for a generator function similar to (or equal to) the rxjs fromEventPattern() function.
+ * We have this set as an alias so as to avoid dragging in rxjs as a required dependency.
+ */
+export type ObservableEventPatternGenerator<T> = (
+	addHandler: (listener: any) => any,
+	removeHandler: (listener: any) => any
+) => T;
+
+/**
  * Simple event emitter utility used to track callbacks in this module.
+ * Can also be transformed into an Observable type using the asObservable() method.
  */
 export class EventEmitter<T> implements EventEmitterLike<T> {
 
@@ -44,5 +54,14 @@ export class EventEmitter<T> implements EventEmitterLike<T> {
 	public clear(): this {
 		this.mListeners.clear();
 		return this;
+	}
+
+	public asObservable<ObservableType>(
+		generator: ObservableEventPatternGenerator<ObservableType>
+	): ObservableType {
+		return generator(
+			listener => this.add(listener),
+			listener => this.remove(listener)
+		);
 	}
 }

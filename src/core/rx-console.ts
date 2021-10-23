@@ -1,19 +1,10 @@
 import { LogEvent } from './log-event';
-import { EventEmitter } from './event-emitter';
 import { LogEventDelegate } from './log-event-like';
 import { RxConsoleUtility } from './rx-console-utility';
 import { LogEventEmitterBase } from './log-event-emitter-base';
 import { LogEventEmitter, LogEventSource } from './log-event-emitter';
 import { LogEventEmitterConfig } from './log-event-emitter-config';
-
-/**
- * Alias for a generator function similar to (or equal to) the rxjs fromEventPattern() function.
- * We have this set as an alias so as to avoid dragging in rxjs as a required dependency.
- */
-export type ObservableEventPatternGenerator<T> = (
-	addHandler: (listener: any) => any,
-	removeHandler: (listener: any) => any
-) => T;
+import { EventEmitter, ObservableEventPatternGenerator } from './event-emitter';
 
 /**
  * Core entry point for a collection of loggers.
@@ -54,10 +45,7 @@ export class RxConsole<T extends LogEvent = LogEvent, LoggerType extends LogEven
 	}
 
 	public asObservable<T>(generator: ObservableEventPatternGenerator<T>): T {
-		return generator(
-			listener => this.listeners.add(listener),
-			listener => this.listeners.remove(listener)
-		);
+		return this.listeners.asObservable(generator);
 	}
 
 	public hasSoloLogger(): boolean {
