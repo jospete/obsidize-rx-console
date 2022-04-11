@@ -14,7 +14,7 @@
     "build": "run-s build:tsc build:webpack copy:assets",
     "clean": "rimraf ./dist ./coverage",
     "rebuild": "run-s clean build",
-    "coverage:open": "open-cli \".\\coverage\\*\\html\\index.html\"",
+    "coverage:open": "open coverage/*/html/index.html",
     "coverage": "run-s test:single coverage:open",
     "copy:package": "cpy ./package.json ./dist/",
     "copy:readme": "cpy ./README.md ./dist/",

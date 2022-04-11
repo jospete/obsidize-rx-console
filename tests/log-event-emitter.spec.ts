@@ -1,3 +1,4 @@
+import { Logger } from './../src/core/logger';
 import { fromEventPattern, Observable } from 'rxjs';
 import { bufferCount, take } from 'rxjs/operators';
 
@@ -11,7 +12,7 @@ describe('LogEventEmitter', () => {
 		it('has the standard ConsoleLike methods implemented', async () => {
 
 			const console = new RxConsole();
-			const logger = console.getLogger('SubjectTester');
+			const logger = new Logger('SubjectTester', console);
 			const events = console.asObservable<Observable<LogEvent>>(fromEventPattern);
 			const eventsPromise = events.pipe(bufferCount(8), take(1)).toPromise();
 
