@@ -180,7 +180,7 @@
 					<h2>Custom Extensions</h2>
 				</a>
 				<p>This module is customizable at each level thanks to generics:</p>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">RxConsole</span><span style="color: #000000">, </span><span style="color: #001080">Logger</span><span style="color: #000000">, </span><span style="color: #001080">LogEvent</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@obsidize/rx-console&#039;</span><span style="color: #000000">;</span>
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">RxConsole</span><span style="color: #000000">, </span><span style="color: #001080">LogEventAggregator</span><span style="color: #000000">, </span><span style="color: #001080">Logger</span><span style="color: #000000">, </span><span style="color: #001080">LogEvent</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@obsidize/rx-console&#039;</span><span style="color: #000000">;</span>
 
 <span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">MyCustomLogEvent</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">LogEvent</span><span style="color: #000000"> {</span>
 
@@ -188,30 +188,29 @@
 <span style="color: #000000">    </span><span style="color: #001080">specialSauceData</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000"> = </span><span style="color: #098658">42</span><span style="color: #000000">;</span>
 <span style="color: #000000">}</span>
 
-<span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">MyCustomConsole</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">RxConsole</span><span style="color: #000000">&lt;</span><span style="color: #267F99">MyCustomLogEvent</span><span style="color: #000000">&gt; {</span>
+<span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">MyCustomConsole</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">LogEventAggregator</span><span style="color: #000000">&lt;</span><span style="color: #267F99">MyCustomLogEvent</span><span style="color: #000000">&gt; {</span>
 <span style="color: #000000">    </span>
 <span style="color: #000000">    </span><span style="color: #008000">// Create a main instance for your loggers to report back to</span>
-<span style="color: #000000">    </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #0000FF">static</span><span style="color: #000000"> </span><span style="color: #0000FF">readonly</span><span style="color: #000000"> </span><span style="color: #001080">customMain</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">MyCustomConsole</span><span style="color: #000000">();</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #0000FF">static</span><span style="color: #000000"> </span><span style="color: #0000FF">readonly</span><span style="color: #000000"> </span><span style="color: #001080">main</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">MyCustomConsole</span><span style="color: #000000">();</span>
 <span style="color: #000000">}</span>
 
 <span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">MyCustomLogger</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">Logger</span><span style="color: #000000">&lt;</span><span style="color: #267F99">MyCustomLogEvent</span><span style="color: #000000">&gt; {</span>
 
 <span style="color: #000000">    </span><span style="color: #0000FF">constructor</span><span style="color: #000000">(</span>
 <span style="color: #000000">        </span><span style="color: #001080">name</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">,</span>
-<span style="color: #000000">        </span><span style="color: #001080">aggregator</span><span style="color: #000000">: </span><span style="color: #267F99">EventEmitterLike</span><span style="color: #000000">&lt;</span><span style="color: #267F99">MyCustomLogEvent</span><span style="color: #000000">&gt; = </span><span style="color: #001080">MyCustomConsole</span><span style="color: #000000">.</span><span style="color: #001080">customMain</span>
+<span style="color: #000000">        </span><span style="color: #001080">aggregator</span><span style="color: #000000">: </span><span style="color: #267F99">EventEmitterLike</span><span style="color: #000000">&lt;</span><span style="color: #267F99">MyCustomLogEvent</span><span style="color: #000000">&gt; = </span><span style="color: #001080">MyCustomConsole</span><span style="color: #000000">.</span><span style="color: #001080">main</span>
 <span style="color: #000000">    ) {</span>
 <span style="color: #000000">        </span><span style="color: #0000FF">super</span><span style="color: #000000">(</span><span style="color: #001080">name</span><span style="color: #000000">, </span><span style="color: #001080">aggregator</span><span style="color: #000000">);</span>
 <span style="color: #000000">    }</span>
 
 <span style="color: #000000">    </span><span style="color: #008000">// Override the createEvent() method to generate your custom event type.</span>
 <span style="color: #000000">    </span><span style="color: #0000FF">protected</span><span style="color: #000000"> </span><span style="color: #795E26">createEvent</span><span style="color: #000000">(</span><span style="color: #001080">level</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">, </span><span style="color: #001080">message</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">, </span><span style="color: #001080">params</span><span style="color: #000000">: </span><span style="color: #267F99">any</span><span style="color: #000000">[]): </span><span style="color: #267F99">MyCustomLogEvent</span><span style="color: #000000"> {</span>
-<span style="color: #000000">        </span><span style="color: #008000">// Do some fancy stuff here to customize your event</span>
 <span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">MyCustomLogEvent</span><span style="color: #000000">(</span><span style="color: #001080">level</span><span style="color: #000000">, </span><span style="color: #001080">message</span><span style="color: #000000">, </span><span style="color: #001080">params</span><span style="color: #000000">, </span><span style="color: #0000FF">this</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000">);</span>
 <span style="color: #000000">    }</span>
 <span style="color: #000000">}</span>
 
-<span style="color: #001080">MyCustomConsole</span><span style="color: #000000">.</span><span style="color: #001080">customMain</span><span style="color: #000000">.</span><span style="color: #001080">listeners</span><span style="color: #000000">.</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">ev</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span>
+<span style="color: #001080">MyCustomConsole</span><span style="color: #000000">.</span><span style="color: #001080">main</span><span style="color: #000000">.</span><span style="color: #001080">listeners</span><span style="color: #000000">.</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">ev</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+
 <span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">ev</span><span style="color: #000000">.</span><span style="color: #001080">message</span><span style="color: #000000">); </span><span style="color: #008000">// &#039;custom log&#039;</span>
 <span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">ev</span><span style="color: #000000">.</span><span style="color: #001080">specialSauceData</span><span style="color: #000000">); </span><span style="color: #008000">// 42</span>
 
@@ -225,7 +224,7 @@
 <span style="color: #001080">logger</span><span style="color: #000000">.</span><span style="color: #795E26">info</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;custom log&#039;</span><span style="color: #000000">);</span>
 
 <span style="color: #008000">// NOTE: You can also wire your custom console back into the default main instance</span>
-<span style="color: #001080">MyCustomConsole</span><span style="color: #000000">.</span><span style="color: #001080">customMain</span><span style="color: #000000">.</span><span style="color: #001080">listeners</span><span style="color: #000000">.</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">RxConsole</span><span style="color: #000000">.</span><span style="color: #001080">main</span><span style="color: #000000">.</span><span style="color: #001080">proxy</span><span style="color: #000000">);</span>
+<span style="color: #001080">MyCustomConsole</span><span style="color: #000000">.</span><span style="color: #001080">main</span><span style="color: #000000">.</span><span style="color: #001080">listeners</span><span style="color: #000000">.</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">RxConsole</span><span style="color: #000000">.</span><span style="color: #001080">main</span><span style="color: #000000">.</span><span style="color: #001080">proxy</span><span style="color: #000000">);</span>
 </code></pre>
 				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
 					<h2>API</h2>
@@ -263,6 +262,9 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/LogEvent.html" class="tsd-kind-icon">Log<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/LogEventAggregator.html" class="tsd-kind-icon">Log<wbr>Event<wbr>Aggregator</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/LogEventEmitter.html" class="tsd-kind-icon">Log<wbr>Event<wbr>Emitter</a>

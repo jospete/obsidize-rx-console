@@ -1,9 +1,7 @@
-import { EventEmitterLike } from './../src/core/event-emitter';
-import { Logger } from './../src/core/logger';
 import { Observable, fromEventPattern, interval } from 'rxjs';
 import { buffer, map } from 'rxjs/operators';
 
-import { LogEvent, RxConsole, LogLevel } from '../src';
+import { LogEvent, RxConsole, LogLevel, Logger, LogEventAggregator, EventEmitterLike } from '../src';
 
 describe('README Examples', () => {
 
@@ -80,17 +78,17 @@ describe('README Examples', () => {
 			specialSauceData: number = 42;
 		}
 
-		class MyCustomConsole extends RxConsole<MyCustomLogEvent> {
+		class MyCustomConsole extends LogEventAggregator<MyCustomLogEvent> {
 			
 			// Create a main instance for your loggers to report back to
-			public static readonly customMain = new MyCustomConsole();
+			public static readonly main = new MyCustomConsole();
 		}
 
 		class MyCustomLogger extends Logger<MyCustomLogEvent> {
 
 			constructor(
 				name: string,
-				aggregator: EventEmitterLike<MyCustomLogEvent> = MyCustomConsole.customMain
+				aggregator: EventEmitterLike<MyCustomLogEvent> = MyCustomConsole.main
 			) {
 				super(name, aggregator);
 			}
@@ -101,7 +99,7 @@ describe('README Examples', () => {
 			}
 		}
 
-		MyCustomConsole.customMain.listeners.add(ev => {
+		MyCustomConsole.main.listeners.add(ev => {
 	
 			console.log(ev.message); // 'custom log'
 			console.log(ev.specialSauceData); // 42
@@ -116,6 +114,6 @@ describe('README Examples', () => {
 		logger.info('custom log');
 
 		// NOTE: You can also wire your custom console back into the default main instance
-		MyCustomConsole.customMain.listeners.add(RxConsole.main.proxy);
+		MyCustomConsole.main.listeners.add(RxConsole.main.proxy);
 	});
 });

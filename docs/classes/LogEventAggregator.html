@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>RxConsole | @obsidize/rx-console</title>
+	<title>LogEventAggregator | @obsidize/rx-console</title>
 	<meta name="description" content="Documentation for @obsidize/rx-console">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">@obsidize/rx-console</a>
 				</li>
 				<li>
-					<a href="RxConsole.html">RxConsole</a>
+					<a href="LogEventAggregator.html">LogEventAggregator</a>
 				</li>
 			</ul>
-			<h1>Class RxConsole&lt;T&gt;</h1>
+			<h1>Class LogEventAggregator&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -68,7 +68,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Standard aggregator for loggers created with <code>new Logger()</code></p>
+						<p>Sink object for a set of loggers to report their events to.
+						To route events into an rxjs-like observable, use asObservable().</p>
 					</div>
 				</div>
 			</section>
@@ -84,10 +85,15 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+						<a href="LogEventEmitterBase.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventEmitterBase</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">RxConsole</span>
+								<span class="target">LogEventAggregator</span>
+								<ul class="tsd-hierarchy">
+									<li>
+										<a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a>
+									</li>
+								</ul>
 							</li>
 						</ul>
 					</li>
@@ -100,49 +106,47 @@
 						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="RxConsole.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="LogEventAggregator.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#listeners" class="tsd-kind-icon">listeners</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#proxy" class="tsd-kind-icon">proxy</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="RxConsole.html#main" class="tsd-kind-icon">main</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="LogEventAggregator.html#listeners" class="tsd-kind-icon">listeners</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="LogEventAggregator.html#proxy" class="tsd-kind-icon">proxy</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#accepts" class="tsd-kind-icon">accepts</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="RxConsole.html#isMainInstance" class="tsd-kind-icon">is<wbr>Main<wbr>Instance</a></li>
+								<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a href="LogEventAggregator.html#accepts" class="tsd-kind-icon">accepts</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#acceptsLevel" class="tsd-kind-icon">accepts<wbr>Level</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="RxConsole.html#acceptsSoloEvent" class="tsd-kind-icon">accepts<wbr>Solo<wbr>Event</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="RxConsole.html#asObservable" class="tsd-kind-icon">as<wbr>Observable</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#configure" class="tsd-kind-icon">configure</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#disableDefaultBroadcast" class="tsd-kind-icon">disable<wbr>Default<wbr>Broadcast</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#emit" class="tsd-kind-icon">emit</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#enableDefaultBroadcast" class="tsd-kind-icon">enable<wbr>Default<wbr>Broadcast</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="RxConsole.html#getDefaultAcceptanceDelegate" class="tsd-kind-icon">get<wbr>Default<wbr>Acceptance<wbr>Delegate</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#getLevel" class="tsd-kind-icon">get<wbr>Level</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#getMaxLevel" class="tsd-kind-icon">get<wbr>Max<wbr>Level</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#getMinLevel" class="tsd-kind-icon">get<wbr>Min<wbr>Level</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#getSoloLogger" class="tsd-kind-icon">get<wbr>Solo<wbr>Logger</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#hasSoloLogger" class="tsd-kind-icon">has<wbr>Solo<wbr>Logger</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#isEnabled" class="tsd-kind-icon">is<wbr>Enabled</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="RxConsole.html#onWillEmit" class="tsd-kind-icon">on<wbr>Will<wbr>Emit</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#setEnabled" class="tsd-kind-icon">set<wbr>Enabled</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#setLevel" class="tsd-kind-icon">set<wbr>Level</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#setMaxLevel" class="tsd-kind-icon">set<wbr>Max<wbr>Level</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#setMinLevel" class="tsd-kind-icon">set<wbr>Min<wbr>Level</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#setSoloLogger" class="tsd-kind-icon">set<wbr>Solo<wbr>Logger</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#syncLevel" class="tsd-kind-icon">sync<wbr>Level</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="RxConsole.html#toConfig" class="tsd-kind-icon">to<wbr>Config</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="LogEventAggregator.html#acceptsLevel" class="tsd-kind-icon">accepts<wbr>Level</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="LogEventAggregator.html#acceptsSoloEvent" class="tsd-kind-icon">accepts<wbr>Solo<wbr>Event</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="LogEventAggregator.html#asObservable" class="tsd-kind-icon">as<wbr>Observable</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="LogEventAggregator.html#configure" class="tsd-kind-icon">configure</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="LogEventAggregator.html#disableDefaultBroadcast" class="tsd-kind-icon">disable<wbr>Default<wbr>Broadcast</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="LogEventAggregator.html#emit" class="tsd-kind-icon">emit</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="LogEventAggregator.html#enableDefaultBroadcast" class="tsd-kind-icon">enable<wbr>Default<wbr>Broadcast</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="LogEventAggregator.html#getDefaultAcceptanceDelegate" class="tsd-kind-icon">get<wbr>Default<wbr>Acceptance<wbr>Delegate</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="LogEventAggregator.html#getLevel" class="tsd-kind-icon">get<wbr>Level</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="LogEventAggregator.html#getMaxLevel" class="tsd-kind-icon">get<wbr>Max<wbr>Level</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="LogEventAggregator.html#getMinLevel" class="tsd-kind-icon">get<wbr>Min<wbr>Level</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="LogEventAggregator.html#getSoloLogger" class="tsd-kind-icon">get<wbr>Solo<wbr>Logger</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="LogEventAggregator.html#hasSoloLogger" class="tsd-kind-icon">has<wbr>Solo<wbr>Logger</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="LogEventAggregator.html#isEnabled" class="tsd-kind-icon">is<wbr>Enabled</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected"><a href="LogEventAggregator.html#onWillEmit" class="tsd-kind-icon">on<wbr>Will<wbr>Emit</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="LogEventAggregator.html#setEnabled" class="tsd-kind-icon">set<wbr>Enabled</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="LogEventAggregator.html#setLevel" class="tsd-kind-icon">set<wbr>Level</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="LogEventAggregator.html#setMaxLevel" class="tsd-kind-icon">set<wbr>Max<wbr>Level</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="LogEventAggregator.html#setMinLevel" class="tsd-kind-icon">set<wbr>Min<wbr>Level</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="LogEventAggregator.html#setSoloLogger" class="tsd-kind-icon">set<wbr>Solo<wbr>Logger</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="LogEventAggregator.html#syncLevel" class="tsd-kind-icon">sync<wbr>Level</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="LogEventAggregator.html#toConfig" class="tsd-kind-icon">to<wbr>Config</a></li>
 							</ul>
 						</section>
 					</div>
@@ -154,12 +158,12 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>RxConsole&lt;T&gt;<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Log<wbr>Event<wbr>Aggregator&lt;T&gt;<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#constructor">constructor</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#constructor">constructor</a></p>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
@@ -167,42 +171,30 @@
 									<h4>T<span class="tsd-signature-symbol">: </span><a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span> = <a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a></h4>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="listeners" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> listeners</h3>
 					<div class="tsd-signature tsd-kind-icon">listeners<span class="tsd-signature-symbol">:</span> <a href="EventEmitter.html" class="tsd-signature-type" data-tsd-kind="Class">EventEmitter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#listeners">listeners</a></p>
 						<ul>
 							<li>Defined in core/log-event-aggregator.ts:13</li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="proxy" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> proxy</h3>
 					<div class="tsd-signature tsd-kind-icon">proxy<span class="tsd-signature-symbol">:</span> <a href="../modules.html#LogEventDelegate" class="tsd-signature-type" data-tsd-kind="Type alias">LogEventDelegate</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#proxy">proxy</a></p>
 						<ul>
 							<li>Defined in core/log-event-aggregator.ts:14</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="main" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> main</h3>
-					<div class="tsd-signature tsd-kind-icon">main<span class="tsd-signature-symbol">:</span> <a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/b75e2a4/src/core/rx-console.ts#L9">core/rx-console.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -241,25 +233,8 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="isMainInstance" class="tsd-anchor"></a>
-					<h3>is<wbr>Main<wbr>Instance</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> isMainInstance<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/b75e2a4/src/core/rx-console.ts#L11">core/rx-console.ts:11</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="acceptsLevel" class="tsd-anchor"></a>
@@ -270,7 +245,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#acceptsLevel">acceptsLevel</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#acceptsLevel">acceptsLevel</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/b75e2a4/src/core/log-event-emitter-base.ts#L111">core/log-event-emitter-base.ts:111</a></li>
 								</ul>
@@ -292,16 +267,15 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 					<a name="acceptsSoloEvent" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> accepts<wbr>Solo<wbr>Event</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 						<li class="tsd-signature tsd-kind-icon">accepts<wbr>Solo<wbr>Event<span class="tsd-signature-symbol">(</span>ev<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#acceptsSoloEvent">acceptsSoloEvent</a></p>
 								<ul>
 									<li>Defined in core/log-event-aggregator.ts:22</li>
 								</ul>
@@ -316,16 +290,15 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 					<a name="asObservable" class="tsd-anchor"></a>
 					<h3>as<wbr>Observable</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 						<li class="tsd-signature tsd-kind-icon">as<wbr>Observable&lt;T&gt;<span class="tsd-signature-symbol">(</span>generator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ObservableEventPatternGenerator</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#asObservable">asObservable</a></p>
 								<ul>
 									<li>Defined in core/log-event-aggregator.ts:43</li>
 								</ul>
@@ -350,12 +323,12 @@
 					<a name="configure" class="tsd-anchor"></a>
 					<h3>configure</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">configure<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/LogEventEmitterConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LogEventEmitterConfig</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">configure<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/LogEventEmitterConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LogEventEmitterConfig</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#configure">configure</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#configure">configure</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/b75e2a4/src/core/log-event-emitter-base.ts#L129">core/log-event-emitter-base.ts:129</a></li>
 								</ul>
@@ -366,20 +339,19 @@
 									<h5>config: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/LogEventEmitterConfig.html" class="tsd-signature-type" data-tsd-kind="Interface">LogEventEmitterConfig</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="disableDefaultBroadcast" class="tsd-anchor"></a>
 					<h3>disable<wbr>Default<wbr>Broadcast</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">disable<wbr>Default<wbr>Broadcast<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">disable<wbr>Default<wbr>Broadcast<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#disableDefaultBroadcast">disableDefaultBroadcast</a></p>
 								<ul>
 									<li>Defined in core/log-event-aggregator.ts:38</li>
 								</ul>
@@ -390,7 +362,7 @@
 									Does nothing if global log traffic routing is not enabled.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -403,7 +375,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#emit">emit</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#emit">emit</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/b75e2a4/src/core/log-event-emitter-base.ts#L37">core/log-event-emitter-base.ts:37</a></li>
 								</ul>
@@ -418,16 +390,15 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="enableDefaultBroadcast" class="tsd-anchor"></a>
 					<h3>enable<wbr>Default<wbr>Broadcast</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">enable<wbr>Default<wbr>Broadcast<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">enable<wbr>Default<wbr>Broadcast<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#enableDefaultBroadcast">enableDefaultBroadcast</a></p>
 								<ul>
 									<li>Defined in core/log-event-aggregator.ts:29</li>
 								</ul>
@@ -437,7 +408,7 @@
 									<p>Routes all traffic for this instance to <code>window.console</code></p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -450,7 +421,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#getDefaultAcceptanceDelegate">getDefaultAcceptanceDelegate</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#getDefaultAcceptanceDelegate">getDefaultAcceptanceDelegate</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/b75e2a4/src/core/log-event-emitter-base.ts#L23">core/log-event-emitter-base.ts:23</a></li>
 								</ul>
@@ -468,7 +439,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#getLevel">getLevel</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#getLevel">getLevel</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/b75e2a4/src/core/log-event-emitter-base.ts#L59">core/log-event-emitter-base.ts:59</a></li>
 								</ul>
@@ -491,7 +462,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#getMaxLevel">getMaxLevel</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#getMaxLevel">getMaxLevel</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/b75e2a4/src/core/log-event-emitter-base.ts#L89">core/log-event-emitter-base.ts:89</a></li>
 								</ul>
@@ -509,7 +480,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#getMinLevel">getMinLevel</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#getMinLevel">getMinLevel</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/b75e2a4/src/core/log-event-emitter-base.ts#L73">core/log-event-emitter-base.ts:73</a></li>
 								</ul>
@@ -518,16 +489,15 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="getSoloLogger" class="tsd-anchor"></a>
 					<h3>get<wbr>Solo<wbr>Logger</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">get<wbr>Solo<wbr>Logger<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="LogEventEmitter.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventEmitter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#getSoloLogger">getSoloLogger</a></p>
 								<ul>
 									<li>Defined in core/log-event-aggregator.ts:55</li>
 								</ul>
@@ -542,16 +512,15 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="hasSoloLogger" class="tsd-anchor"></a>
 					<h3>has<wbr>Solo<wbr>Logger</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">has<wbr>Solo<wbr>Logger<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#hasSoloLogger">hasSoloLogger</a></p>
 								<ul>
 									<li>Defined in core/log-event-aggregator.ts:47</li>
 								</ul>
@@ -569,7 +538,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#isEnabled">isEnabled</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#isEnabled">isEnabled</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/b75e2a4/src/core/log-event-emitter-base.ts#L43">core/log-event-emitter-base.ts:43</a></li>
 								</ul>
@@ -578,16 +547,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
 					<a name="onWillEmit" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> on<wbr>Will<wbr>Emit</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
 						<li class="tsd-signature tsd-kind-icon">on<wbr>Will<wbr>Emit<span class="tsd-signature-symbol">(</span>ev<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#onWillEmit">onWillEmit</a></p>
+								<p>Overrides <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#onWillEmit">onWillEmit</a></p>
 								<ul>
 									<li>Defined in core/log-event-aggregator.ts:18</li>
 								</ul>
@@ -606,12 +575,12 @@
 					<a name="setEnabled" class="tsd-anchor"></a>
 					<h3>set<wbr>Enabled</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Enabled<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Enabled<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#setEnabled">setEnabled</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#setEnabled">setEnabled</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/b75e2a4/src/core/log-event-emitter-base.ts#L51">core/log-event-emitter-base.ts:51</a></li>
 								</ul>
@@ -628,7 +597,7 @@
 									<h5>value: <span class="tsd-signature-type">boolean</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -636,12 +605,12 @@
 					<a name="setLevel" class="tsd-anchor"></a>
 					<h3>set<wbr>Level</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Level<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Level<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#setLevel">setLevel</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#setLevel">setLevel</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/b75e2a4/src/core/log-event-emitter-base.ts#L68">core/log-event-emitter-base.ts:68</a></li>
 								</ul>
@@ -659,7 +628,7 @@
 									<h5>value: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -667,12 +636,12 @@
 					<a name="setMaxLevel" class="tsd-anchor"></a>
 					<h3>set<wbr>Max<wbr>Level</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Max<wbr>Level<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Max<wbr>Level<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#setMaxLevel">setMaxLevel</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#setMaxLevel">setMaxLevel</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/b75e2a4/src/core/log-event-emitter-base.ts#L99">core/log-event-emitter-base.ts:99</a></li>
 								</ul>
@@ -690,7 +659,7 @@
 									<h5>value: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -698,12 +667,12 @@
 					<a name="setMinLevel" class="tsd-anchor"></a>
 					<h3>set<wbr>Min<wbr>Level</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Min<wbr>Level<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Min<wbr>Level<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#setMinLevel">setMinLevel</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#setMinLevel">setMinLevel</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/b75e2a4/src/core/log-event-emitter-base.ts#L83">core/log-event-emitter-base.ts:83</a></li>
 								</ul>
@@ -721,20 +690,19 @@
 									<h5>value: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="setSoloLogger" class="tsd-anchor"></a>
 					<h3>set<wbr>Solo<wbr>Logger</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Solo<wbr>Logger<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="LogEventEmitter.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventEmitter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Solo<wbr>Logger<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="LogEventEmitter.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventEmitter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#setSoloLogger">setSoloLogger</a></p>
 								<ul>
 									<li>Defined in core/log-event-aggregator.ts:63</li>
 								</ul>
@@ -751,7 +719,7 @@
 									<h5>value: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="LogEventEmitter.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventEmitter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -759,17 +727,17 @@
 					<a name="syncLevel" class="tsd-anchor"></a>
 					<h3>sync<wbr>Level</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">sync<wbr>Level<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">sync<wbr>Level<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#syncLevel">syncLevel</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#syncLevel">syncLevel</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/b75e2a4/src/core/log-event-emitter-base.ts#L115">core/log-event-emitter-base.ts:115</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="RxConsole.html" class="tsd-signature-type" data-tsd-kind="Class">RxConsole</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="LogEventAggregator.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventAggregator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -782,7 +750,7 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="LogEventAggregator.html">LogEventAggregator</a>.<a href="LogEventAggregator.html#toConfig">toConfig</a></p>
+								<p>Inherited from <a href="LogEventEmitterBase.html">LogEventEmitterBase</a>.<a href="LogEventEmitterBase.html#toConfig">toConfig</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/b75e2a4/src/core/log-event-emitter-base.ts#L120">core/log-event-emitter-base.ts:120</a></li>
 								</ul>
@@ -812,9 +780,93 @@
 					<li class=" tsd-kind-class">
 						<a href="LogEvent.html" class="tsd-kind-icon">Log<wbr>Event</a>
 					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-has-type-parameter">
 						<a href="LogEventAggregator.html" class="tsd-kind-icon">Log<wbr>Event<wbr>Aggregator</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+								<a href="LogEventAggregator.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="LogEventAggregator.html#listeners" class="tsd-kind-icon">listeners</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="LogEventAggregator.html#proxy" class="tsd-kind-icon">proxy</a>
+							</li>
+							<li class=" tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited">
+								<a href="LogEventAggregator.html#accepts" class="tsd-kind-icon">accepts</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="LogEventAggregator.html#acceptsLevel" class="tsd-kind-icon">accepts<wbr>Level</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+								<a href="LogEventAggregator.html#acceptsSoloEvent" class="tsd-kind-icon">accepts<wbr>Solo<wbr>Event</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="LogEventAggregator.html#asObservable" class="tsd-kind-icon">as<wbr>Observable</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="LogEventAggregator.html#configure" class="tsd-kind-icon">configure</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="LogEventAggregator.html#disableDefaultBroadcast" class="tsd-kind-icon">disable<wbr>Default<wbr>Broadcast</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="LogEventAggregator.html#emit" class="tsd-kind-icon">emit</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="LogEventAggregator.html#enableDefaultBroadcast" class="tsd-kind-icon">enable<wbr>Default<wbr>Broadcast</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="LogEventAggregator.html#getDefaultAcceptanceDelegate" class="tsd-kind-icon">get<wbr>Default<wbr>Acceptance<wbr>Delegate</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="LogEventAggregator.html#getLevel" class="tsd-kind-icon">get<wbr>Level</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="LogEventAggregator.html#getMaxLevel" class="tsd-kind-icon">get<wbr>Max<wbr>Level</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="LogEventAggregator.html#getMinLevel" class="tsd-kind-icon">get<wbr>Min<wbr>Level</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="LogEventAggregator.html#getSoloLogger" class="tsd-kind-icon">get<wbr>Solo<wbr>Logger</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="LogEventAggregator.html#hasSoloLogger" class="tsd-kind-icon">has<wbr>Solo<wbr>Logger</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="LogEventAggregator.html#isEnabled" class="tsd-kind-icon">is<wbr>Enabled</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
+								<a href="LogEventAggregator.html#onWillEmit" class="tsd-kind-icon">on<wbr>Will<wbr>Emit</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="LogEventAggregator.html#setEnabled" class="tsd-kind-icon">set<wbr>Enabled</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="LogEventAggregator.html#setLevel" class="tsd-kind-icon">set<wbr>Level</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="LogEventAggregator.html#setMaxLevel" class="tsd-kind-icon">set<wbr>Max<wbr>Level</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="LogEventAggregator.html#setMinLevel" class="tsd-kind-icon">set<wbr>Min<wbr>Level</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="LogEventAggregator.html#setSoloLogger" class="tsd-kind-icon">set<wbr>Solo<wbr>Logger</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="LogEventAggregator.html#syncLevel" class="tsd-kind-icon">sync<wbr>Level</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="LogEventAggregator.html#toConfig" class="tsd-kind-icon">to<wbr>Config</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="LogEventEmitter.html" class="tsd-kind-icon">Log<wbr>Event<wbr>Emitter</a>
 					</li>
@@ -824,99 +876,9 @@
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="Logger.html" class="tsd-kind-icon">Logger</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="RxConsole.html" class="tsd-kind-icon">Rx<wbr>Console</a>
-						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
-								<a href="RxConsole.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#listeners" class="tsd-kind-icon">listeners</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#proxy" class="tsd-kind-icon">proxy</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="RxConsole.html#main" class="tsd-kind-icon">main</a>
-							</li>
-							<li class=" tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#accepts" class="tsd-kind-icon">accepts</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="RxConsole.html#isMainInstance" class="tsd-kind-icon">is<wbr>Main<wbr>Instance</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#acceptsLevel" class="tsd-kind-icon">accepts<wbr>Level</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="RxConsole.html#acceptsSoloEvent" class="tsd-kind-icon">accepts<wbr>Solo<wbr>Event</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
-								<a href="RxConsole.html#asObservable" class="tsd-kind-icon">as<wbr>Observable</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#configure" class="tsd-kind-icon">configure</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#disableDefaultBroadcast" class="tsd-kind-icon">disable<wbr>Default<wbr>Broadcast</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#emit" class="tsd-kind-icon">emit</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#enableDefaultBroadcast" class="tsd-kind-icon">enable<wbr>Default<wbr>Broadcast</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="RxConsole.html#getDefaultAcceptanceDelegate" class="tsd-kind-icon">get<wbr>Default<wbr>Acceptance<wbr>Delegate</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#getLevel" class="tsd-kind-icon">get<wbr>Level</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#getMaxLevel" class="tsd-kind-icon">get<wbr>Max<wbr>Level</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#getMinLevel" class="tsd-kind-icon">get<wbr>Min<wbr>Level</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#getSoloLogger" class="tsd-kind-icon">get<wbr>Solo<wbr>Logger</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#hasSoloLogger" class="tsd-kind-icon">has<wbr>Solo<wbr>Logger</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#isEnabled" class="tsd-kind-icon">is<wbr>Enabled</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="RxConsole.html#onWillEmit" class="tsd-kind-icon">on<wbr>Will<wbr>Emit</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#setEnabled" class="tsd-kind-icon">set<wbr>Enabled</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#setLevel" class="tsd-kind-icon">set<wbr>Level</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#setMaxLevel" class="tsd-kind-icon">set<wbr>Max<wbr>Level</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#setMinLevel" class="tsd-kind-icon">set<wbr>Min<wbr>Level</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#setSoloLogger" class="tsd-kind-icon">set<wbr>Solo<wbr>Logger</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#syncLevel" class="tsd-kind-icon">sync<wbr>Level</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="RxConsole.html#toConfig" class="tsd-kind-icon">to<wbr>Config</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/ConsoleLike.html" class="tsd-kind-icon">Console<wbr>Like</a>
 					</li>
