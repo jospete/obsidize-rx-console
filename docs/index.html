@@ -117,11 +117,7 @@
 <span style="color: #001080">RxConsole</span>
 <span style="color: #000000">    .</span><span style="color: #001080">main</span>
 <span style="color: #000000">    .</span><span style="color: #795E26">setLevel</span><span style="color: #000000">(</span><span style="color: #001080">LogLevel</span><span style="color: #000000">.</span><span style="color: #0070C1">DEBUG</span><span style="color: #000000">)</span>
-<span style="color: #000000">    .</span><span style="color: #001080">listeners</span>
-<span style="color: #000000">    .</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">ev</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">        </span><span style="color: #008000">// send log to standard browser console</span>
-<span style="color: #000000">        </span><span style="color: #001080">ev</span><span style="color: #000000">.</span><span style="color: #795E26">broadcastTo</span><span style="color: #000000">(</span><span style="color: #001080">console</span><span style="color: #000000">);</span>
-<span style="color: #000000">    });</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">enableDefaultBroadcast</span><span style="color: #000000">();</span>
 
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">service</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">MyServiceThing</span><span style="color: #000000">();</span>
 <span style="color: #001080">service</span><span style="color: #000000">.</span><span style="color: #795E26">test</span><span style="color: #000000">(); </span><span style="color: #008000">// 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!</span>
@@ -164,9 +160,8 @@
 
 <span style="color: #001080">RxConsole</span>
 <span style="color: #000000">    .</span><span style="color: #001080">main</span>
-<span style="color: #000000">    .</span><span style="color: #795E26">setLevel</span><span style="color: #000000">(</span><span style="color: #001080">LogLevel</span><span style="color: #000000">.</span><span style="color: #0070C1">DEBUG</span><span style="color: #000000">)</span>
-<span style="color: #000000">    .</span><span style="color: #001080">listeners</span>
-<span style="color: #000000">    .</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">ev</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">ev</span><span style="color: #000000">.</span><span style="color: #795E26">broadcastTo</span><span style="color: #000000">(</span><span style="color: #001080">console</span><span style="color: #000000">));</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">setLevel</span><span style="color: #000000">(</span><span style="color: #001080">LogLevel</span><span style="color: #000000">.</span><span style="color: #0070C1">TRACE</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">enableDefaultBroadcast</span><span style="color: #000000">();</span>
 
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">logger</span><span style="color: #000000"> = </span><span style="color: #795E26">getLogger</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;RunKitLogger&#039;</span><span style="color: #000000">);</span>
 
@@ -268,6 +263,9 @@
 						<a href="classes/LogEventEmitterBase.html" class="tsd-kind-icon">Log<wbr>Event<wbr>Emitter<wbr>Base</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/Logger.html" class="tsd-kind-icon">Logger</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/RxConsole.html" class="tsd-kind-icon">Rx<wbr>Console</a>
 					</li>
 					<li class=" tsd-kind-interface">
@@ -319,12 +317,13 @@
 				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
