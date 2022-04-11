@@ -34,12 +34,6 @@ I needed a middle ground between these two types of modules, and this is the res
 npm install --save @obsidize/rx-console
 ```
 
-- git:
-
-```bash
-npm install --save git+https://github.com/jospete/obsidize-rx-console.git
-```
-
 ## Usage (TypeScript)
 
 This module exposes a utility function ```getLogger()``` for generating logger instances:
