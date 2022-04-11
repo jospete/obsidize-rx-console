@@ -1,6 +1,6 @@
 {
   "name": "@obsidize/rx-console",
-  "version": "2.0.5",
+  "version": "3.0.0",
   "description": "A logging library that uses rxjs as the foundation for log event handling.",
   "main": "es5.js",
   "module": "index.js",
@@ -24,7 +24,7 @@
     "dist:pack": "node ./scripts/release-pack.js",
     "dist:bundle": "run-s rebuild coverage docs",
     "version": "npm run dist:bundle",
-    "release:publish": "run-s git:publish dist:publish",
+    "version:publish": "run-s git:publish dist:publish",
     "release:prepare:patch": "npm version patch",
     "bump": "run-s release:prepare:patch release:publish",
     "docs": "typedoc ./src/index.ts --out ./docs --excludePrivate",
