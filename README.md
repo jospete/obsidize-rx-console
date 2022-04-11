@@ -129,7 +129,7 @@ logger.verbose('im obnoxious');
 This module is customizable at each level thanks to generics:
 
 ```typescript
-import { RxConsole, LogEventAggregator, Logger, LogEvent } from '@obsidize/rx-console';
+import { RxConsole, LogEventAggregator, Logger, LogEvent, EventEmitterLike } from '@obsidize/rx-console';
 
 class MyCustomLogEvent extends LogEvent {
 
