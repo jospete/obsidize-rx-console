@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.0
+
+- Add new class ```LogEventAggregator``` to allow for more fluid customization options
+
 ## 3.0.0
 
 - Remove deprecated ```getLogger()``` function

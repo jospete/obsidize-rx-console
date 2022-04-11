@@ -129,7 +129,7 @@ logger.verbose('im obnoxious');
 This module is customizable at each level thanks to generics:
 
 ```typescript
-import { RxConsole, Logger, LogEvent } from '@obsidize/rx-console';
+import { RxConsole, LogEventAggregator, Logger, LogEvent } from '@obsidize/rx-console';
 
 class MyCustomLogEvent extends LogEvent {
 
@@ -137,30 +137,29 @@ class MyCustomLogEvent extends LogEvent {
 	specialSauceData: number = 42;
 }
 
-class MyCustomConsole extends RxConsole<MyCustomLogEvent> {
+class MyCustomConsole extends LogEventAggregator<MyCustomLogEvent> {
 	
 	// Create a main instance for your loggers to report back to
-	public static readonly customMain = new MyCustomConsole();
+	public static readonly main = new MyCustomConsole();
 }
 
 class MyCustomLogger extends Logger<MyCustomLogEvent> {
 
 	constructor(
 		name: string,
-		aggregator: EventEmitterLike<MyCustomLogEvent> = MyCustomConsole.customMain
+		aggregator: EventEmitterLike<MyCustomLogEvent> = MyCustomConsole.main
 	) {
 		super(name, aggregator);
 	}
 
 	// Override the createEvent() method to generate your custom event type.
 	protected createEvent(level: number, message: string, params: any[]): MyCustomLogEvent {
-		// Do some fancy stuff here to customize your event
 		return new MyCustomLogEvent(level, message, params, this.name);
 	}
 }
 
-MyCustomConsole.customMain.listeners.add(ev => {
-	
+MyCustomConsole.main.listeners.add(ev => {
+
 	console.log(ev.message); // 'custom log'
 	console.log(ev.specialSauceData); // 42
 
@@ -174,7 +173,7 @@ const logger = new MyCustomLogger('TestLogger');
 logger.info('custom log');
 
 // NOTE: You can also wire your custom console back into the default main instance
-MyCustomConsole.customMain.listeners.add(RxConsole.main.proxy);
+MyCustomConsole.main.listeners.add(RxConsole.main.proxy);
 ```
 
 ## API
