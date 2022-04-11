@@ -1,7 +1,7 @@
 import { fromEventPattern, Observable } from 'rxjs';
 import { take, toArray } from 'rxjs/operators';
 
-import { RxConsole, getLogger, LogLevel, LogEvent } from '../src';
+import { RxConsole, LogLevel, LogEvent, Logger } from '../src';
 
 describe('RxConsole', () => {
 
@@ -16,7 +16,7 @@ describe('RxConsole', () => {
 		expect(console.isMainInstance).toBe(false);
 
 		const testMessage = 'a sample log message';
-		const logger = console.getLogger('MyCustomLogger').configure({ level: LogLevel.VERBOSE });
+		const logger = new Logger('MyCustomLogger', console).configure({ level: LogLevel.VERBOSE });
 		const events = console.asObservable<Observable<LogEvent>>(fromEventPattern);
 		const eventPromise = events.pipe(take(1)).toPromise();
 
@@ -32,7 +32,7 @@ describe('RxConsole', () => {
 		const console = new RxConsole();
 		const console2 = new RxConsole();
 		const testMessage = 'a sample log message';
-		const logger = console.getLogger('MyCustomLogger');
+		const logger = new Logger('MyCustomLogger', console);
 		const events = console2.asObservable<Observable<LogEvent>>(fromEventPattern);
 
 		console.listeners.add(console2.proxy);
@@ -51,8 +51,8 @@ describe('RxConsole', () => {
 
 		const console = new RxConsole();
 		const testMessage = 'a sample log message';
-		const loggerA = console.getLogger('CustomLoggerA');
-		const loggerB = console.getLogger('CustomLoggerB');
+		const loggerA = new Logger('CustomLoggerA', console);
+		const loggerB = new Logger('CustomLoggerB', console);
 		const events = console.asObservable<Observable<LogEvent>>(fromEventPattern);
 		const eventPromise = events.pipe(take(5), toArray()).toPromise();
 
@@ -86,41 +86,18 @@ describe('RxConsole', () => {
 		expect(loggerBCount).toBe(3);
 	});
 
-	describe('getLogger()', () => {
+	it('can enable and disable default broadcasts to the window console object', () => {
 
-		it('uses the main instance to generate loggers', () => {
+		const rxConsole = new RxConsole();
+		expect(rxConsole.listeners.has(LogEvent.performDefaultBroadcast)).toBe(false);
 
-			spyOn(RxConsole.main, 'getLogger').and.callThrough();
+		rxConsole.enableDefaultBroadcast();
+		expect(rxConsole.listeners.has(LogEvent.performDefaultBroadcast)).toBe(true);
 
-			const logger1 = getLogger('TestLogger');
-			expect(RxConsole.main.getLogger).toHaveBeenCalledTimes(1);
-			expect(logger1.getLevel()).toBeLessThan(LogLevel.INFO);
+		rxConsole.disableDefaultBroadcast();
+		expect(rxConsole.listeners.has(LogEvent.performDefaultBroadcast)).toBe(false);
 
-			const logger2 = getLogger(logger1.name).configure({ level: LogLevel.INFO });
-			expect(RxConsole.main.getLogger).toHaveBeenCalledTimes(2);
-			expect(logger1).toBe(logger2);
-		});
-	});
-
-	describe('setLevel()', () => {
-
-		it('sets the global level among all log entry instances', () => {
-
-			const console = new RxConsole();
-			const logger1 = console.getLogger('LogSourceOne');
-			const logger2 = console.getLogger('LogSourceTwo');
-			expect(logger1).not.toBe(logger2);
-
-			logger1.setLevel(LogLevel.DEBUG);
-			logger2.setLevel(LogLevel.WARN);
-
-			expect(logger1.getLevel()).toBe(LogLevel.DEBUG);
-			expect(logger2.getLevel()).toBe(LogLevel.WARN);
-
-			console.setLevel(LogLevel.INFO);
-
-			expect(logger1.getLevel()).toBe(LogLevel.INFO);
-			expect(logger2.getLevel()).toBe(LogLevel.INFO);
-		});
+		expect(() => rxConsole.disableDefaultBroadcast()).not.toThrowError();
+		expect(rxConsole.listeners.has(LogEvent.performDefaultBroadcast)).toBe(false);
 	});
 });

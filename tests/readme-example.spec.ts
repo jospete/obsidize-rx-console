@@ -1,7 +1,9 @@
+import { EventEmitterLike } from './../src/core/event-emitter';
+import { Logger } from './../src/core/logger';
 import { Observable, fromEventPattern, interval } from 'rxjs';
 import { buffer, map } from 'rxjs/operators';
 
-import { LogEvent, LogEventDelegate, LogEventEmitter, RxConsole, getLogger, LogEventSource, LogLevel } from '../src';
+import { LogEvent, RxConsole, LogLevel } from '../src';
 
 describe('README Examples', () => {
 
@@ -9,7 +11,7 @@ describe('README Examples', () => {
 
 		class MyServiceThing {
 
-			private readonly logger: LogEventSource = getLogger('MyServiceThing');
+			private readonly logger = new Logger('MyServiceThing');
 
 			test(): void {
 				this.logger.debug('test!');
@@ -21,11 +23,7 @@ describe('README Examples', () => {
 		RxConsole
 			.main
 			.setLevel(LogLevel.DEBUG)
-			.listeners
-			.add(ev => {
-				// send log to standard browser console
-				ev.broadcastTo(console);
-			});
+			.enableDefaultBroadcast();
 
 		const service = new MyServiceThing();
 		service.test(); // 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!
@@ -33,6 +31,7 @@ describe('README Examples', () => {
 
 	it('can execute the rxjs example', () => {
 
+		// noop function for example purposes
 		const writeToFile = (..._args: any[]) => { };
 
 		RxConsole.main.asObservable<Observable<LogEvent>>(fromEventPattern).pipe(
@@ -55,10 +54,9 @@ describe('README Examples', () => {
 		RxConsole
 			.main
 			.setLevel(LogLevel.DEBUG)
-			.listeners
-			.add(ev => ev.broadcastTo(console));
+			.enableDefaultBroadcast();
 
-		const logger = getLogger('RunKitLogger');
+		const logger = new Logger('RunKitLogger');
 
 		logger.debug('test');
 		// "2021-03-15T21:13:42.356Z [DEBUG] [RunKitLogger] test"
@@ -82,7 +80,20 @@ describe('README Examples', () => {
 			specialSauceData: number = 42;
 		}
 
-		class MyCustomLogger extends LogEventEmitter<MyCustomLogEvent> {
+		class MyCustomConsole extends RxConsole<MyCustomLogEvent> {
+			
+			// Create a main instance for your loggers to report back to
+			public static readonly customMain = new MyCustomConsole();
+		}
+
+		class MyCustomLogger extends Logger<MyCustomLogEvent> {
+
+			constructor(
+				name: string,
+				aggregator: EventEmitterLike<MyCustomLogEvent> = MyCustomConsole.customMain
+			) {
+				super(name, aggregator);
+			}
 
 			// Override the createEvent() method to generate your custom event type.
 			protected createEvent(level: number, message: string, params: any[]): MyCustomLogEvent {
@@ -90,25 +101,21 @@ describe('README Examples', () => {
 			}
 		}
 
-		class MyCustomConsole extends RxConsole<MyCustomLogEvent, MyCustomLogger> {
-
-			// Override the createLogger() method to generate your custom subject type.
-			protected createLogger(name: string): MyCustomLogger {
-				return new MyCustomLogger(this, name);
-			}
-		}
-
-		const myConsoleInstance = new MyCustomConsole();
-		const logger = myConsoleInstance.getLogger('TestLogger');
-
-		myConsoleInstance.listeners.add(ev => {
+		MyCustomConsole.customMain.listeners.add(ev => {
+	
 			console.log(ev.message); // 'custom log'
 			console.log(ev.specialSauceData); // 42
+		
+			// uses the default output transforms
+			// (or your custom ones if supplied in the MyCustomConsole class)
+			ev.broadcastTo(console);
 		});
+
+		const logger = new MyCustomLogger('TestLogger');
 
 		logger.info('custom log');
 
-		// NOTE: You can also wire your custom console back into the main instance
-		myConsoleInstance.listeners.add(RxConsole.main.proxy as LogEventDelegate);
+		// NOTE: You can also wire your custom console back into the default main instance
+		MyCustomConsole.customMain.listeners.add(RxConsole.main.proxy);
 	});
 });

@@ -60,4 +60,18 @@ describe('LogEvent', () => {
 			expect(stringifySafe(circularObject)).toBe('[object Object]');
 		});
 	});
+
+	describe('performDefaultBroadcast', () => {
+
+		it('broadcasts the event to window.console', () => {
+
+			const ev = new LogEvent(LogLevel.DEBUG, 'hello', [], '');
+			spyOn(ev, 'broadcastTo').and.callThrough();
+
+			expect(ev.broadcastTo).not.toHaveBeenCalled();
+
+			LogEvent.performDefaultBroadcast(ev);
+			expect(ev.broadcastTo).toHaveBeenCalledWith(console);
+		});
+	});
 });

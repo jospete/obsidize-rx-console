@@ -34,22 +34,16 @@ I needed a middle ground between these two types of modules, and this is the res
 npm install --save @obsidize/rx-console
 ```
 
-- git:
-
-```bash
-npm install --save git+https://github.com/jospete/obsidize-rx-console.git
-```
-
 ## Usage (TypeScript)
 
-This module exposes a utility function ```getLogger()``` for generating logger instances:
+Context-based loggers can be created like so:
 
 ```typescript
-import { getLogger, LogEventSource, RxConsole, LogLevel } from '@obsidize/rx-console';
+import { RxConsole, LogLevel, Logger } from '@obsidize/rx-console';
 
 class MyServiceThing {
 
-	private readonly logger: LogEventSource = getLogger('MyServiceThing');
+	private readonly logger = new Logger('MyServiceThing');
 
 	test(): void {
 		this.logger.debug('test!');
@@ -61,11 +55,7 @@ class MyServiceThing {
 RxConsole
 	.main
 	.setLevel(LogLevel.DEBUG)
-	.listeners
-	.add(ev => {
-		// send log to standard browser console
-		ev.broadcastTo(console);
-	});
+	.enableDefaultBroadcast();
 
 const service = new MyServiceThing();
 service.test(); // 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!
@@ -84,6 +74,9 @@ we can infer more useful data in the output like what time the event happened an
 import { Observable, fromEventPattern, inverval } from 'rxjs';
 import { buffer, map } from 'rxjs/operators';
 import { RxConsole, LogEvent } from '@obsidize/rx-console';
+
+// noop function for example purposes
+const writeToFile = (..._args: any[]) => { };
 
 RxConsole.main.asObservable<Observable<LogEvent>>(fromEventPattern).pipe(
 
@@ -108,20 +101,19 @@ The below snippet can be tested with runkit on NPM.
 
 ```javascript
 var rxConsole = require("@obsidize/rx-console");
-const {RxConsole, LogLevel, getLogger} = rxConsole;
+const {RxConsole, LogLevel, Logger} = rxConsole;
 
 RxConsole
 	.main
 	.setLevel(LogLevel.DEBUG)
-	.listeners
-	.add(ev => ev.broadcastTo(console));
+	.enableDefaultBroadcast();
 
-const logger = getLogger('RunKitLogger');
+const logger = new Logger('RunKitLogger');
 
 logger.debug('test');
 // "2021-03-15T21:13:42.356Z [DEBUG] [RunKitLogger] test"
 
-logger.info('some object info: ', {myValueIs: 42, isOptionalParam: true, someOtherValue: 'yep'});
+logger.info('some object info: ', { myValueIs: 42, isOptionalParam: true, someOtherValue: 'yep' });
 // "2021-03-15T21:13:42.360Z [INFO] [RunKitLogger] some object info: "
 // Object {myValueIs: 42, isOptionalParam: true, someOtherValue: "yep"}
 
@@ -137,7 +129,7 @@ logger.verbose('im obnoxious');
 This module is customizable at each level thanks to generics:
 
 ```typescript
-import { LogEvent, LogEventDelegate, LogEventEmitter, RxConsole } from '@obsidize/rx-console';
+import { RxConsole, Logger, LogEvent } from '@obsidize/rx-console';
 
 class MyCustomLogEvent extends LogEvent {
 
@@ -145,34 +137,44 @@ class MyCustomLogEvent extends LogEvent {
 	specialSauceData: number = 42;
 }
 
-class MyCustomLogger extends LogEventEmitter<MyCustomLogEvent> {
+class MyCustomConsole extends RxConsole<MyCustomLogEvent> {
+	
+	// Create a main instance for your loggers to report back to
+	public static readonly customMain = new MyCustomConsole();
+}
+
+class MyCustomLogger extends Logger<MyCustomLogEvent> {
+
+	constructor(
+		name: string,
+		aggregator: EventEmitterLike<MyCustomLogEvent> = MyCustomConsole.customMain
+	) {
+		super(name, aggregator);
+	}
 
 	// Override the createEvent() method to generate your custom event type.
 	protected createEvent(level: number, message: string, params: any[]): MyCustomLogEvent {
+		// Do some fancy stuff here to customize your event
 		return new MyCustomLogEvent(level, message, params, this.name);
 	}
 }
 
-class MyCustomConsole extends RxConsole<MyCustomLogEvent, MyCustomLogger> {
-
-	// Override the createLogger() method to generate your custom subject type.
-	protected createLogger(name: string): MyCustomLogger {
-		return new MyCustomLogger(this, name);
-	}
-}
-
-const myConsoleInstance = new MyCustomConsole();
-const logger = myConsoleInstance.getLogger('TestLogger');
-
-myConsoleInstance.listeners.add(ev => {
+MyCustomConsole.customMain.listeners.add(ev => {
+	
 	console.log(ev.message); // 'custom log'
 	console.log(ev.specialSauceData); // 42
+
+	// uses the default output transforms
+	// (or your custom ones if supplied in the MyCustomConsole class)
+	ev.broadcastTo(console);
 });
+
+const logger = new MyCustomLogger('TestLogger');
 
 logger.info('custom log');
 
-// NOTE: You can also wire your custom console back into the main instance
-myConsoleInstance.listeners.add(RxConsole.main.proxy as LogEventDelegate);
+// NOTE: You can also wire your custom console back into the default main instance
+MyCustomConsole.customMain.listeners.add(RxConsole.main.proxy);
 ```
 
 ## API
