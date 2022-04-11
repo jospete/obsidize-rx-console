@@ -61,11 +61,7 @@ class MyServiceThing {
 RxConsole
 	.main
 	.setLevel(LogLevel.DEBUG)
-	.listeners
-	.add(ev => {
-		// send log to standard browser console
-		ev.broadcastTo(console);
-	});
+	.enableDefaultBroadcast();
 
 const service = new MyServiceThing();
 service.test(); // 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!
@@ -112,9 +108,8 @@ const {RxConsole, LogLevel, getLogger} = rxConsole;
 
 RxConsole
 	.main
-	.setLevel(LogLevel.DEBUG)
-	.listeners
-	.add(ev => ev.broadcastTo(console));
+	.setLevel(LogLevel.TRACE)
+	.enableDefaultBroadcast();
 
 const logger = getLogger('RunKitLogger');
 
