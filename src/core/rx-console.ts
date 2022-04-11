@@ -44,6 +44,21 @@ export class RxConsole<T extends LogEvent = LogEvent, LoggerType extends LogEven
 		return new LogEventEmitter(this, name) as LoggerType;
 	}
 
+	/**
+	 * Routes all traffic for this instance to ```window.console```
+	 */
+	public enableDefaultBroadcast(): void {
+		this.listeners.add(LogEvent.performDefaultBroadcast);
+	}
+
+	/**
+	 * Removes ```window.console``` traffic routing from this instance if it was enabled previously.
+	 * Does nothing if global log traffic routing is not enabled.
+	 */
+	public disableDefaultBroadcast(): void {
+		this.listeners.remove(LogEvent.performDefaultBroadcast);
+	}
+
 	public asObservable<T>(generator: ObservableEventPatternGenerator<T>): T {
 		return this.listeners.asObservable(generator);
 	}
@@ -101,7 +116,8 @@ export class RxConsole<T extends LogEvent = LogEvent, LoggerType extends LogEven
 }
 
 /**
- * Conveinence for generating loggers via the standard 'main' RxConsole instance. 
+ * Conveinence for generating loggers via the standard 'main' RxConsole instance.
+ * @deprecated - use new Logger() instead.
  */
 export function getLogger(name: string): LogEventSource {
 	return RxConsole.main.getLogger(name);
