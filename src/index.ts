@@ -8,3 +8,4 @@ export { LogEvent } from './core/log-event';
 export { LogLevel, getLogLevelName } from './core/log-level';
 export { RxConsoleUtility } from './core/rx-console-utility';
 export { RxConsole, getLogger } from './core/rx-console';
+export { Logger } from './core/logger';
