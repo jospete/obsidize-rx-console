@@ -24,7 +24,6 @@
     "dist:pack": "node ./scripts/release-pack.js",
     "dist:bundle": "run-s rebuild coverage docs",
     "version": "npm run dist:bundle",
-    "postversion": "npm run dist:pack",
     "release:publish": "run-s git:publish dist:publish",
     "release:prepare:patch": "npm version patch",
     "bump": "run-s release:prepare:patch release:publish",
