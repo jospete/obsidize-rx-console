@@ -86,6 +86,20 @@ describe('RxConsole', () => {
 		expect(loggerBCount).toBe(3);
 	});
 
+	it('can enable and disable default broadcasts to the window console object', () => {
+
+		expect(RxConsole.main.listeners.has(LogEvent.performDefaultBroadcast)).toBe(false);
+
+		RxConsole.main.enableDefaultBroadcast();
+		expect(RxConsole.main.listeners.has(LogEvent.performDefaultBroadcast)).toBe(true);
+
+		RxConsole.main.disableDefaultBroadcast();
+		expect(RxConsole.main.listeners.has(LogEvent.performDefaultBroadcast)).toBe(false);
+
+		expect(() => RxConsole.main.disableDefaultBroadcast()).not.toThrowError();
+		expect(RxConsole.main.listeners.has(LogEvent.performDefaultBroadcast)).toBe(false);
+	});
+
 	describe('getLogger()', () => {
 
 		it('uses the main instance to generate loggers', () => {
