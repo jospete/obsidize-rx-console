@@ -17,6 +17,14 @@ export class LogEvent implements LogEventLike {
 	}
 
 	/**
+	 * Default behaviour for handling events.
+	 * Sends events to the global ```window.console``` instance.
+	 */
+	public static performDefaultBroadcast<R extends LogEvent>(ev: R): void {
+		ev.broadcastTo(console);
+	}
+
+	/**
 	 * Send this event to a ConsoleLike structure to be printed to some stdout stream.
 	 * 
 	 * Override this in a sub-class to cusotmize output data.
