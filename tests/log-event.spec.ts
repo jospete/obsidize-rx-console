@@ -1,7 +1,14 @@
-import { LogEvent, LogLevel } from '../src';
+import { LogEvent, LogLevel, stringifyLogEvent } from '../src';
 import { mockConsole } from './test-utility';
 
 describe('LogEvent', () => {
+
+	describe('stringifyLogEvent()', () => {
+
+		it('can operate on any value without blowing up', () => {
+			expect(() => stringifyLogEvent(null as any)).not.toThrowError();
+		});
+	});
 
 	describe('toString()', () => {
 

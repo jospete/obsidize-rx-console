@@ -7,7 +7,7 @@ import { LogEventSink, getDefaultSink } from './log-event-sink';
  */
 export abstract class LogEventListener<T extends LogEvent = LogEvent> implements LogEventInterceptor<T> {
 
-	private readonly listener = this.onInterceptLogEvent.bind(this);
+	private readonly proxy = this.onInterceptLogEvent.bind(this);
 
 	constructor(
 		private readonly source: LogEventSink<T> = getDefaultSink<T>(),
@@ -17,7 +17,7 @@ export abstract class LogEventListener<T extends LogEvent = LogEvent> implements
 	}
 
 	public get enabled(): boolean {
-		return this.source.onNext.has(this.listener);
+		return this.source.onNext.has(this.proxy);
 	}
 
 	public set enabled(value: boolean) {
@@ -26,11 +26,11 @@ export abstract class LogEventListener<T extends LogEvent = LogEvent> implements
 	}
 
 	public watchSource(): void {
-		this.source.onNext.add(this.listener);
+		this.source.onNext.add(this.proxy);
 	}
 
 	public unwatchSource(): void {
-		this.source.onNext.remove(this.listener);
+		this.source.onNext.remove(this.proxy);
 	}
 
 	public abstract onInterceptLogEvent(ev: T): void;

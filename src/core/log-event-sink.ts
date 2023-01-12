@@ -19,7 +19,7 @@ export class LogEventSink<T extends LogEvent = LogEvent> implements LogEventInte
 	 * Notify "other" when this sink receives a new log event.
 	 */
 	public pipeTo(other: LogEventSink | LogEventSink<T>): void {
-		if (other) this.onNext.add(other.proxy);
+		this.onNext.add(other.proxy);
 	}
 
 	public asObservable<ObservableType>(
