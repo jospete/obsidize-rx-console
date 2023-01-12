@@ -22,4 +22,4 @@ const namesByLevel = new Map<number, string>(
  */
 export function getLogLevelName(level: number): string {
 	return namesByLevel.get(level) || ('L-' + level);
-};
+}
