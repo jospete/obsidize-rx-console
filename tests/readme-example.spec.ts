@@ -8,13 +8,14 @@ import {
 	getDefaultSink,
 	setDefaultBroadcastEnabled,
 	LogEventSink,
-	LogEventInterceptor
+	type LogEventInterceptor
 } from '../src';
 
 describe('README Examples', () => {
 
 	it('can execute the TLDR example', () => {
 
+		// turn on default `window.console` usage
 		setDefaultBroadcastEnabled(true);
 
 		class MyServiceThing {

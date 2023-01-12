@@ -18,11 +18,15 @@ export class DelegateLogEventListener<T extends LogEvent = LogEvent> extends Log
 	}
 }
 
-const windowConsoleBroadcast = new DelegateLogEventListener(LogEvent.performDefaultBroadcast);
+let windowConsoleBroadcast: DelegateLogEventListener;
 
 /**
  * When enabled, calls `LogEvent.performDefaultBroadcast` on all default sink emissions.
  */
 export function setDefaultBroadcastEnabled(enabled: boolean): void {
+
+	if (!windowConsoleBroadcast)
+		windowConsoleBroadcast = new DelegateLogEventListener(LogEvent.performDefaultBroadcast);
+
 	windowConsoleBroadcast.enabled = enabled;
 }
