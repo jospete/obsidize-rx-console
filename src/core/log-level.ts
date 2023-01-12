@@ -2,7 +2,7 @@
  * Default levels for convenience.
  * These values are spaced out in such a way that you can add more granularity as needed.
  */
-export const LogLevel = {
+export const LogLevel: Record<string, number> = {
 	VERBOSE: 100,
 	TRACE: 200,
 	DEBUG: 300,
