@@ -11,9 +11,9 @@ export abstract class LogEventListener<T extends LogEvent = LogEvent> implements
 
 	constructor(
 		private readonly source: LogEventSink<T> = getDefaultLoggerSink<T>(),
-		autoWatch: boolean = true
+		autoWatch?: boolean
 	) {
-		this.enabled = autoWatch;
+		if (autoWatch) this.enabled = true;
 	}
 
 	public get enabled(): boolean {
