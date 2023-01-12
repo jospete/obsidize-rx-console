@@ -1,21 +1,36 @@
+import { getLogLevelName } from './log-level';
+import { stringifyOptionalParams } from './utility';
+
 /**
- * Utility for declaring a bare-minimum shape for LogEvent instances.
+ * General shape of a baseline log event emitted by this module.
  */
 export interface LogEventLike {
-	readonly timestamp: number;
 	readonly level: number;
-	readonly tag: string;
 	readonly message: string;
 	readonly params: any[];
-	readonly extras?: any;
+	readonly tag: string;
+	readonly timestamp: number;
 }
 
 /**
- * Standard callback for handling emitted events
+ * Serializes everything on the given event to a string, except
+ * for the optional params on the event.
  */
-export type LogEventDelegate<T extends LogEventLike = LogEventLike> = (ev: T) => void;
+export function stringifyLogEventBaseValues(ev: LogEventLike): string {
+	const { timestamp, level, tag, message } = ev;
+	const timestampJson = new Date(timestamp).toJSON();
+	const levelStr = getLogLevelName(level);
+	return `${timestampJson} [${levelStr}] [${tag}] ${message}`;
+}
 
 /**
- * Predicate that will dictate whether or not an event should be emitted.
+ * Serializes everything on the given event to a string, including
+ * the optional params.
  */
-export type LogEventPredicate<T extends LogEventLike = LogEventLike> = (ev: T) => boolean;
+export function stringifyLogEvent(ev: LogEventLike): string {
+	const safeEvent = (ev || {}) as any;
+	const { params } = safeEvent;
+	const baseMessage = stringifyLogEventBaseValues(safeEvent);
+	const paramsStr = stringifyOptionalParams(params);
+	return baseMessage + paramsStr;
+}

@@ -1,345 +1,161 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>@obsidize/rx-console</title>
-	<meta name="description" content="Documentation for @obsidize/rx-console">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script async src="assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">@obsidize/rx-console</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<h1>@obsidize/rx-console</h1>
-		</div>
-	</div>
-</header>
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@obsidize/rx-console</title><meta name="description" content="Documentation for @obsidize/rx-console"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container">
+<div class="table-cell" id="tsd-search" data-base=".">
+<div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
+<div class="field">
+<div id="tsd-toolbar-links"></div></div>
+<ul class="results">
+<li class="state loading">Preparing search index...</li>
+<li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">@obsidize/rx-console</a></div>
+<div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
 <div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#obsidizerx-console" id="obsidizerx-console" style="color: inherit; text-decoration: none;">
-					<h1>@obsidize/rx-console</h1>
-				</a>
-				<p>This is yet another logging library in an attempt to strip away unnecessary dependencies that break
-				interoperability between browser and node environments.</p>
-				<p>The goals of this module are:</p>
-				<ul>
-					<li>Allow runtime configuration of log levels</li>
-					<li>Ability to intercept log events, so they can be transported to a persistence source</li>
-					<li>Make no assumptions about the persistence layer (i.e. no dependency declarations that lock this module to node or the browser, like node fs)</li>
-					<li>Configurability at each abstraction level, from the root <code>RxConsole</code> class all the way down to the <code>LogEvent</code> class.</li>
-				</ul>
-				<a href="#why-did-i-make-this-module" id="why-did-i-make-this-module" style="color: inherit; text-decoration: none;">
-					<h4>Why Did I Make This Module?</h4>
-				</a>
-				<p><a href="https://www.npmjs.com/package/winston">Winston</a>
-					and <a href="https://www.npmjs.com/package/bunyan">Bunyan</a>
-					are excellent tools for creating a complex logger heirarchy and routing log traffic to external transports.
-					However, they have (completely unnecessary) mandatory dependencies to node-specific things like fs and stream utilities.
-					This may lead one down the rabbit-hole of trying to shim or &quot;fake&quot; these dependencies in order to get all the other
-				benefits of using these logging modules, which in turn leads to bundling pain and misery.</p>
-				<p>On the other side of the spectrum we have the
-					<a href="https://www.npmjs.com/package/debug">debug</a>
-					and <a href="https://www.npmjs.com/package/loglevel">loglevel</a> modules, which are super-light-weight browser-compatible loggers with no concept of transports.
-				(Honestly if you don&#39;t need transport abstractions, consider using one of these)</p>
-				<p>I needed a middle ground between these two types of modules, and this is the result.</p>
-				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
-					<h2>Installation</h2>
-				</a>
-				<ul>
-					<li>npm:</li>
-				</ul>
-				<pre><code class="language-bash"><span style="color: #000000">npm install --save @obsidize/rx-console</span>
+<div class="col-8 col-content">
+<div class="tsd-page-title">
+<h2>@obsidize/rx-console</h2></div>
+<div class="tsd-panel tsd-typography">
+<a href="#obsidizerx-console" id="obsidizerx-console" style="color: inherit; text-decoration: none;">
+  <h1>@obsidize/rx-console</h1>
+</a>
+<p>A logging library that is more configurable than something like <a href="https://www.npmjs.com/package/debug">debug</a>,
+without the platform locking of something like <a href="https://www.npmjs.com/package/winston">Winston</a>.</p>
+
+<a href="#highlights" id="highlights" style="color: inherit; text-decoration: none;">
+  <h4>Highlights</h4>
+</a>
+<ul>
+<li>Zero dependencies</li>
+<li>Compatible on both Browser / NodeJS</li>
+<li>Compact (~4Kb es5 file)</li>
+</ul>
+
+<a href="#goals" id="goals" style="color: inherit; text-decoration: none;">
+  <h4>Goals</h4>
+</a>
+<ul>
+<li>Allow runtime configuration of log levels</li>
+<li>Ability to intercept log events, so they can be transported to a persistence source</li>
+<li>Make no assumptions about the persistence layer (i.e. no dependency declarations that lock this module to node or the browser, like node &#39;fs&#39; or &#39;stream&#39; packages)</li>
+<li>Configurability at each abstraction layer (Event / Sink / Listener)</li>
+</ul>
+
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h2>Installation</h2>
+</a>
+<ul>
+<li>npm:</li>
+</ul>
+<pre><code class="language-bash"><span class="hl-0">npm </span><span class="hl-1">install</span><span class="hl-0"> </span><span class="hl-1">-P</span><span class="hl-0"> </span><span class="hl-1">-E</span><span class="hl-0"> </span><span class="hl-1">@obsidize/rx-console</span>
 </code></pre>
-				<ul>
-					<li>git:</li>
-				</ul>
-				<pre><code class="language-bash"><span style="color: #000000">npm install --save git+https://github.com/jospete/obsidize-rx-console.git</span>
+
+<a href="#usage-typescript" id="usage-typescript" style="color: inherit; text-decoration: none;">
+  <h2>Usage (TypeScript)</h2>
+</a>
+<p>Context-based loggers can be created like so:</p>
+<pre><code class="language-typescript"><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">Logger</span><span class="hl-0">, </span><span class="hl-3">setDefaultBroadcastEnabled</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-1">&#39;@obsidize/rx-console&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-4">// turn on default `window.console` usage</span><br/><span class="hl-5">setDefaultBroadcastEnabled</span><span class="hl-0">(</span><span class="hl-6">true</span><span class="hl-0">);</span><br/><br/><span class="hl-6">class</span><span class="hl-0"> </span><span class="hl-7">MyServiceThing</span><span class="hl-0"> {</span><br/><br/><span class="hl-0">    </span><span class="hl-6">private</span><span class="hl-0"> </span><span class="hl-6">readonly</span><span class="hl-0"> </span><span class="hl-3">logger</span><span class="hl-0"> = </span><span class="hl-6">new</span><span class="hl-0"> </span><span class="hl-5">Logger</span><span class="hl-0">(</span><span class="hl-1">&#39;MyServiceThing&#39;</span><span class="hl-0">);</span><br/><br/><span class="hl-0">    </span><span class="hl-5">test</span><span class="hl-0">(): </span><span class="hl-7">void</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-6">this</span><span class="hl-0">.</span><span class="hl-3">logger</span><span class="hl-0">.</span><span class="hl-5">debug</span><span class="hl-0">(</span><span class="hl-1">&#39;test!&#39;</span><span class="hl-0">);</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">}</span><br/><br/><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-8">service</span><span class="hl-0"> = </span><span class="hl-6">new</span><span class="hl-0"> </span><span class="hl-5">MyServiceThing</span><span class="hl-0">();</span><br/><span class="hl-3">service</span><span class="hl-0">.</span><span class="hl-5">test</span><span class="hl-0">(); </span><span class="hl-4">// 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!</span>
 </code></pre>
-				<a href="#usage-typescript" id="usage-typescript" style="color: inherit; text-decoration: none;">
-					<h2>Usage (TypeScript)</h2>
-				</a>
-				<p>This module exposes a utility function <code>getLogger()</code> for generating logger instances:</p>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">getLogger</span><span style="color: #000000">, </span><span style="color: #001080">LogEventSource</span><span style="color: #000000">, </span><span style="color: #001080">RxConsole</span><span style="color: #000000">, </span><span style="color: #001080">LogLevel</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@obsidize/rx-console&#039;</span><span style="color: #000000">;</span>
-
-<span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">MyServiceThing</span><span style="color: #000000"> {</span>
-
-<span style="color: #000000">    </span><span style="color: #0000FF">private</span><span style="color: #000000"> </span><span style="color: #0000FF">readonly</span><span style="color: #000000"> </span><span style="color: #001080">logger</span><span style="color: #000000">: </span><span style="color: #267F99">LogEventSource</span><span style="color: #000000"> = </span><span style="color: #795E26">getLogger</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;MyServiceThing&#039;</span><span style="color: #000000">);</span>
-
-<span style="color: #000000">    </span><span style="color: #795E26">test</span><span style="color: #000000">(): </span><span style="color: #267F99">void</span><span style="color: #000000"> {</span>
-<span style="color: #000000">        </span><span style="color: #0000FF">this</span><span style="color: #000000">.</span><span style="color: #001080">logger</span><span style="color: #000000">.</span><span style="color: #795E26">debug</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;test!&#039;</span><span style="color: #000000">);</span>
-<span style="color: #000000">    }</span>
-<span style="color: #000000">}</span>
-
-<span style="color: #008000">// You can use the main instance, or make your own with:</span>
-<span style="color: #008000">// export const myCustomConsole = new RxConsole();</span>
-<span style="color: #001080">RxConsole</span>
-<span style="color: #000000">    .</span><span style="color: #001080">main</span>
-<span style="color: #000000">    .</span><span style="color: #795E26">setLevel</span><span style="color: #000000">(</span><span style="color: #001080">LogLevel</span><span style="color: #000000">.</span><span style="color: #0070C1">DEBUG</span><span style="color: #000000">)</span>
-<span style="color: #000000">    .</span><span style="color: #001080">listeners</span>
-<span style="color: #000000">    .</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">ev</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">        </span><span style="color: #008000">// send log to standard browser console</span>
-<span style="color: #000000">        </span><span style="color: #001080">ev</span><span style="color: #000000">.</span><span style="color: #795E26">broadcastTo</span><span style="color: #000000">(</span><span style="color: #001080">console</span><span style="color: #000000">);</span>
-<span style="color: #000000">    });</span>
-
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">service</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">MyServiceThing</span><span style="color: #000000">();</span>
-<span style="color: #001080">service</span><span style="color: #000000">.</span><span style="color: #795E26">test</span><span style="color: #000000">(); </span><span style="color: #008000">// 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!</span>
+<blockquote>
+<p>&quot;Well that was unnecessary, we could have just used <em>console.log(&#39;test&#39;);</em> right ...?&quot;</p>
+</blockquote>
+<p>Not exactly -- this approach offers a few advantages:</p>
+<ol>
+<li>Unlike <code>console.log()</code>, LogEvent instances carry <em>context</em> about where the log came from, so 
+we can infer more useful data in the output like what time the event happened and what class (AKA &quot;logger name&quot;) it came from.</li>
+<li>This allows us to route events to a <strong>file in cordova</strong>, or to an <strong>http server</strong>, or just <strong>buffer log events in memory</strong>.</li>
+<li>This allows us to route events through RxJS operators, which in of itself has many benefits for stream transformation.</li>
+</ol>
+<pre><code class="language-typescript"><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">Observable</span><span class="hl-0">, </span><span class="hl-3">fromEventPattern</span><span class="hl-0">, </span><span class="hl-3">inverval</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-1">&#39;rxjs&#39;</span><span class="hl-0">;</span><br/><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">buffer</span><span class="hl-0">, </span><span class="hl-3">map</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-1">&#39;rxjs/operators&#39;</span><span class="hl-0">;</span><br/><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">LogEvent</span><span class="hl-0">, </span><span class="hl-3">getDefaultSink</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-1">&#39;@obsidize/rx-console&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-4">// noop function for example purposes</span><br/><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-5">writeToFile</span><span class="hl-0"> = (...</span><span class="hl-3">_args</span><span class="hl-0">: </span><span class="hl-7">any</span><span class="hl-0">[]) </span><span class="hl-6">=&gt;</span><span class="hl-0"> { };</span><br/><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-8">sink</span><span class="hl-0"> = </span><span class="hl-5">getDefaultSink</span><span class="hl-0">();</span><br/><br/><span class="hl-3">sink</span><span class="hl-0">.</span><span class="hl-5">asObservable</span><span class="hl-0">&lt;</span><span class="hl-7">Observable</span><span class="hl-0">&lt;</span><span class="hl-7">LogEvent</span><span class="hl-0">&gt;&gt;(</span><span class="hl-3">fromEventPattern</span><span class="hl-0">).</span><span class="hl-5">pipe</span><span class="hl-0">(</span><br/><br/><span class="hl-0">    </span><span class="hl-4">// accumulate log events for 5 seconds</span><br/><span class="hl-0">    </span><span class="hl-5">buffer</span><span class="hl-0">(</span><span class="hl-5">interval</span><span class="hl-0">(</span><span class="hl-9">5000</span><span class="hl-0">)),</span><br/><br/><span class="hl-0">    </span><span class="hl-4">// stringify and concatenate the buffered events</span><br/><span class="hl-0">    </span><span class="hl-5">map</span><span class="hl-0">(</span><span class="hl-3">bufferedEvents</span><span class="hl-0"> </span><span class="hl-6">=&gt;</span><span class="hl-0"> </span><span class="hl-3">bufferedEvents</span><span class="hl-0">.</span><span class="hl-5">map</span><span class="hl-0">(</span><span class="hl-3">e</span><span class="hl-0"> </span><span class="hl-6">=&gt;</span><span class="hl-0"> </span><span class="hl-3">e</span><span class="hl-0">.</span><span class="hl-5">toString</span><span class="hl-0">()).</span><span class="hl-5">join</span><span class="hl-0">(</span><span class="hl-1">&#39;</span><span class="hl-10">\n</span><span class="hl-1">&#39;</span><span class="hl-0">))</span><br/><br/><span class="hl-0">).</span><span class="hl-5">subscribe</span><span class="hl-0">(</span><span class="hl-3">outputString</span><span class="hl-0"> </span><span class="hl-6">=&gt;</span><span class="hl-0"> {</span><br/><br/><span class="hl-0">    </span><span class="hl-4">// Dump the buffer to a file, or send to a server, or wherever.</span><br/><span class="hl-0">    </span><span class="hl-5">writeToFile</span><span class="hl-0">(</span><span class="hl-3">outputString</span><span class="hl-0">);</span><br/><span class="hl-0">});</span>
 </code></pre>
-				<blockquote>
-					<p>&quot;Well that was unnecessary, we could have just used <em>console.log(&#39;test&#39;);</em> right ...?&quot;</p>
-				</blockquote>
-				<p>Not exactly -- this approach offers a few advantages:</p>
-				<ol>
-					<li>Unlike <code>console.log()</code>, LogEvent instances carry <em>context</em> about where the log came from, so
-					we can infer more useful data in the output like what time the event happened and what class (AKA &quot;logger name&quot;) it came from.</li>
-					<li>This allows us to route events to a <strong>file in cordova</strong>, or to an <strong>http server</strong>, or just <strong>buffer log events in memory</strong>.</li>
-					<li>This allows us to route events through RxJS operators, which in of itself has many benefits for stream transformation.</li>
-				</ol>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Observable</span><span style="color: #000000">, </span><span style="color: #001080">fromEventPattern</span><span style="color: #000000">, </span><span style="color: #001080">inverval</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;rxjs&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">buffer</span><span style="color: #000000">, </span><span style="color: #001080">map</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;rxjs/operators&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">RxConsole</span><span style="color: #000000">, </span><span style="color: #001080">LogEvent</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@obsidize/rx-console&#039;</span><span style="color: #000000">;</span>
 
-<span style="color: #001080">RxConsole</span><span style="color: #000000">.</span><span style="color: #001080">main</span><span style="color: #000000">.</span><span style="color: #795E26">asObservable</span><span style="color: #000000">&lt;</span><span style="color: #267F99">Observable</span><span style="color: #000000">&lt;</span><span style="color: #267F99">LogEvent</span><span style="color: #000000">&gt;&gt;(</span><span style="color: #001080">fromEventPattern</span><span style="color: #000000">).</span><span style="color: #795E26">pipe</span><span style="color: #000000">(</span>
-
-<span style="color: #000000">    </span><span style="color: #008000">// accumulate log events for 5 seconds</span>
-<span style="color: #000000">    </span><span style="color: #795E26">buffer</span><span style="color: #000000">(</span><span style="color: #795E26">interval</span><span style="color: #000000">(</span><span style="color: #098658">5000</span><span style="color: #000000">)),</span>
-
-<span style="color: #000000">    </span><span style="color: #008000">// stringify and concatenate the buffered events</span>
-<span style="color: #000000">    </span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">bufferedEvents</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">bufferedEvents</span><span style="color: #000000">.</span><span style="color: #795E26">map</span><span style="color: #000000">(</span><span style="color: #001080">e</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">e</span><span style="color: #000000">.</span><span style="color: #795E26">toString</span><span style="color: #000000">()).</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;</span><span style="color: #EE0000">\n</span><span style="color: #A31515">&#039;</span><span style="color: #000000">))</span>
-
-<span style="color: #000000">).</span><span style="color: #795E26">subscribe</span><span style="color: #000000">(</span><span style="color: #001080">outputString</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-
-<span style="color: #000000">    </span><span style="color: #008000">// Dump the buffer to a file, or send to a server, or wherever.</span>
-<span style="color: #000000">    </span><span style="color: #795E26">writeToFile</span><span style="color: #000000">(</span><span style="color: #001080">outputString</span><span style="color: #000000">);</span>
-<span style="color: #000000">});</span>
+<a href="#usage-nodejs--vanilla-javascript" id="usage-nodejs--vanilla-javascript" style="color: inherit; text-decoration: none;">
+  <h2>Usage (NodeJS / Vanilla JavaScript)</h2>
+</a>
+<p>The same concepts in the TypeScript example also apply to NodeJS / vanilla JS usage.</p>
+<p>The below snippet can be tested with runkit on NPM.</p>
+<pre><code class="language-javascript"><span class="hl-6">var</span><span class="hl-0"> </span><span class="hl-3">rxConsole</span><span class="hl-0"> = </span><span class="hl-5">require</span><span class="hl-0">(</span><span class="hl-1">&quot;@obsidize/rx-console&quot;</span><span class="hl-0">);</span><br/><span class="hl-6">const</span><span class="hl-0"> {</span><span class="hl-8">Logger</span><span class="hl-0">, </span><span class="hl-8">LogLevel</span><span class="hl-0">, </span><span class="hl-8">getDefaultSink</span><span class="hl-0">} = </span><span class="hl-3">rxConsole</span><span class="hl-0">;</span><br/><br/><span class="hl-5">getDefaultSink</span><span class="hl-0">().</span><span class="hl-3">filter</span><span class="hl-0">.</span><span class="hl-5">setMinLevel</span><span class="hl-0">(</span><span class="hl-3">LogLevel</span><span class="hl-0">.</span><span class="hl-8">DEBUG</span><span class="hl-0">);</span><br/><span class="hl-5">setDefaultBroadcastEnabled</span><span class="hl-0">(</span><span class="hl-6">true</span><span class="hl-0">);</span><br/><br/><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-8">logger</span><span class="hl-0"> = </span><span class="hl-6">new</span><span class="hl-0"> </span><span class="hl-5">Logger</span><span class="hl-0">(</span><span class="hl-1">&#39;RunKitLogger&#39;</span><span class="hl-0">);</span><br/><br/><span class="hl-3">logger</span><span class="hl-0">.</span><span class="hl-5">debug</span><span class="hl-0">(</span><span class="hl-1">&#39;test&#39;</span><span class="hl-0">);</span><br/><span class="hl-4">// &quot;2021-03-15T21:13:42.356Z [DEBUG] [RunKitLogger] test&quot;</span><br/><br/><span class="hl-3">logger</span><span class="hl-0">.</span><span class="hl-5">info</span><span class="hl-0">(</span><span class="hl-1">&#39;some object info: &#39;</span><span class="hl-0">, { </span><span class="hl-3">myValueIs:</span><span class="hl-0"> </span><span class="hl-9">42</span><span class="hl-0">, </span><span class="hl-3">isOptionalParam:</span><span class="hl-0"> </span><span class="hl-6">true</span><span class="hl-0">, </span><span class="hl-3">someOtherValue:</span><span class="hl-0"> </span><span class="hl-1">&#39;yep&#39;</span><span class="hl-0"> });</span><br/><span class="hl-4">// &quot;2021-03-15T21:13:42.360Z [INFO] [RunKitLogger] some object info: &quot;</span><br/><span class="hl-4">// Object {myValueIs: 42, isOptionalParam: true, someOtherValue: &quot;yep&quot;}</span><br/><br/><span class="hl-3">logger</span><span class="hl-0">.</span><span class="hl-5">fatal</span><span class="hl-0">(</span><span class="hl-1">&#39;EXPLOSIONS?!?!?!&#39;</span><span class="hl-0">);</span><br/><span class="hl-4">// &quot;2021-03-15T21:13:42.363Z [FATAL] [RunKitLogger] EXPLOSIONS?!?!?!&quot;</span><br/><br/><span class="hl-3">logger</span><span class="hl-0">.</span><span class="hl-5">verbose</span><span class="hl-0">(</span><span class="hl-1">&#39;im obnoxious&#39;</span><span class="hl-0">);</span><br/><span class="hl-4">// Does not log anything because VERBOSE &lt; DEBUG</span>
 </code></pre>
-				<a href="#usage-nodejs--vanilla-javascript" id="usage-nodejs--vanilla-javascript" style="color: inherit; text-decoration: none;">
-					<h2>Usage (NodeJS / Vanilla JavaScript)</h2>
-				</a>
-				<p>The same concepts in the TypeScript example also apply to NodeJS / vanilla JS usage.</p>
-				<p>The below snippet can be tested with runkit on NPM.</p>
-				<pre><code class="language-javascript"><span style="color: #0000FF">var</span><span style="color: #000000"> </span><span style="color: #001080">rxConsole</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;@obsidize/rx-console&quot;</span><span style="color: #000000">);</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> {</span><span style="color: #0070C1">RxConsole</span><span style="color: #000000">, </span><span style="color: #0070C1">LogLevel</span><span style="color: #000000">, </span><span style="color: #0070C1">getLogger</span><span style="color: #000000">} = </span><span style="color: #001080">rxConsole</span><span style="color: #000000">;</span>
 
-<span style="color: #001080">RxConsole</span>
-<span style="color: #000000">    .</span><span style="color: #001080">main</span>
-<span style="color: #000000">    .</span><span style="color: #795E26">setLevel</span><span style="color: #000000">(</span><span style="color: #001080">LogLevel</span><span style="color: #000000">.</span><span style="color: #0070C1">DEBUG</span><span style="color: #000000">)</span>
-<span style="color: #000000">    .</span><span style="color: #001080">listeners</span>
-<span style="color: #000000">    .</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">ev</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">ev</span><span style="color: #000000">.</span><span style="color: #795E26">broadcastTo</span><span style="color: #000000">(</span><span style="color: #001080">console</span><span style="color: #000000">));</span>
-
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">logger</span><span style="color: #000000"> = </span><span style="color: #795E26">getLogger</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;RunKitLogger&#039;</span><span style="color: #000000">);</span>
-
-<span style="color: #001080">logger</span><span style="color: #000000">.</span><span style="color: #795E26">debug</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;test&#039;</span><span style="color: #000000">);</span>
-<span style="color: #008000">// &quot;2021-03-15T21:13:42.356Z [DEBUG] [RunKitLogger] test&quot;</span>
-
-<span style="color: #001080">logger</span><span style="color: #000000">.</span><span style="color: #795E26">info</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;some object info: &#039;</span><span style="color: #000000">, {</span><span style="color: #001080">myValueIs:</span><span style="color: #000000"> </span><span style="color: #098658">42</span><span style="color: #000000">, </span><span style="color: #001080">isOptionalParam:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">, </span><span style="color: #001080">someOtherValue:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;yep&#039;</span><span style="color: #000000">});</span>
-<span style="color: #008000">// &quot;2021-03-15T21:13:42.360Z [INFO] [RunKitLogger] some object info: &quot;</span>
-<span style="color: #008000">// Object {myValueIs: 42, isOptionalParam: true, someOtherValue: &quot;yep&quot;}</span>
-
-<span style="color: #001080">logger</span><span style="color: #000000">.</span><span style="color: #795E26">fatal</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;EXPLOSIONS?!?!?!&#039;</span><span style="color: #000000">);</span>
-<span style="color: #008000">// &quot;2021-03-15T21:13:42.363Z [FATAL] [RunKitLogger] EXPLOSIONS?!?!?!&quot;</span>
-
-<span style="color: #001080">logger</span><span style="color: #000000">.</span><span style="color: #795E26">verbose</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;im obnoxious&#039;</span><span style="color: #000000">);</span>
-<span style="color: #008000">// Does not log anything because VERBOSE &lt; DEBUG</span>
+<a href="#custom-extensions" id="custom-extensions" style="color: inherit; text-decoration: none;">
+  <h2>Custom Extensions</h2>
+</a>
+<p>This module is customizable at each level thanks to generics:</p>
+<pre><code class="language-typescript"><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">LogEvent</span><span class="hl-0">, </span><span class="hl-3">LogEventSink</span><span class="hl-0">, </span><span class="hl-3">Logger</span><span class="hl-0">, </span><span class="hl-3">getDefaultSink</span><span class="hl-0">, </span><span class="hl-2">type</span><span class="hl-0"> </span><span class="hl-3">LogEventInterceptor</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-1">&#39;@obsidize/rx-console&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-6">class</span><span class="hl-0"> </span><span class="hl-7">MyCustomLogEvent</span><span class="hl-0"> </span><span class="hl-6">extends</span><span class="hl-0"> </span><span class="hl-7">LogEvent</span><span class="hl-0"> {</span><br/><br/><span class="hl-0">    </span><span class="hl-4">// Add some special sauce to your custom event instances.</span><br/><span class="hl-0">    </span><span class="hl-3">specialSauceData</span><span class="hl-0">: </span><span class="hl-7">number</span><span class="hl-0"> = </span><span class="hl-9">42</span><span class="hl-0">;</span><br/><span class="hl-0">}</span><br/><br/><span class="hl-6">class</span><span class="hl-0"> </span><span class="hl-7">MyCustomSink</span><span class="hl-0"> </span><span class="hl-6">extends</span><span class="hl-0"> </span><span class="hl-7">LogEventSink</span><span class="hl-0">&lt;</span><span class="hl-7">MyCustomLogEvent</span><span class="hl-0">&gt; {</span><br/><br/><span class="hl-0">    </span><span class="hl-4">// Create a main instance for your loggers to report back to</span><br/><span class="hl-0">    </span><span class="hl-6">public</span><span class="hl-0"> </span><span class="hl-6">static</span><span class="hl-0"> </span><span class="hl-6">readonly</span><span class="hl-0"> </span><span class="hl-3">main</span><span class="hl-0"> = </span><span class="hl-6">new</span><span class="hl-0"> </span><span class="hl-5">MyCustomSink</span><span class="hl-0">();</span><br/><span class="hl-0">}</span><br/><br/><span class="hl-6">class</span><span class="hl-0"> </span><span class="hl-7">MyCustomLogger</span><span class="hl-0"> </span><span class="hl-6">extends</span><span class="hl-0"> </span><span class="hl-7">Logger</span><span class="hl-0">&lt;</span><span class="hl-7">MyCustomLogEvent</span><span class="hl-0">&gt; {</span><br/><br/><span class="hl-0">    </span><span class="hl-6">constructor</span><span class="hl-0">(</span><br/><span class="hl-0">        </span><span class="hl-3">name</span><span class="hl-0">: </span><span class="hl-7">string</span><span class="hl-0">,</span><br/><span class="hl-0">        </span><span class="hl-3">aggregator</span><span class="hl-0">: </span><span class="hl-7">LogEventInterceptor</span><span class="hl-0">&lt;</span><span class="hl-7">MyCustomLogEvent</span><span class="hl-0">&gt; = </span><span class="hl-3">MyCustomSink</span><span class="hl-0">.</span><span class="hl-3">main</span><br/><span class="hl-0">    ) {</span><br/><span class="hl-0">        </span><span class="hl-6">super</span><span class="hl-0">(</span><span class="hl-3">name</span><span class="hl-0">, </span><span class="hl-3">aggregator</span><span class="hl-0">);</span><br/><span class="hl-0">    }</span><br/><br/><span class="hl-0">    </span><span class="hl-4">// Override the createEvent() method to generate your custom event type.</span><br/><span class="hl-0">    </span><span class="hl-6">protected</span><span class="hl-0"> </span><span class="hl-5">createEvent</span><span class="hl-0">(</span><span class="hl-3">level</span><span class="hl-0">: </span><span class="hl-7">number</span><span class="hl-0">, </span><span class="hl-3">message</span><span class="hl-0">: </span><span class="hl-7">string</span><span class="hl-0">, </span><span class="hl-3">params</span><span class="hl-0">: </span><span class="hl-7">any</span><span class="hl-0">[]): </span><span class="hl-7">MyCustomLogEvent</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-2">return</span><span class="hl-0"> </span><span class="hl-6">new</span><span class="hl-0"> </span><span class="hl-5">MyCustomLogEvent</span><span class="hl-0">(</span><span class="hl-3">level</span><span class="hl-0">, </span><span class="hl-3">message</span><span class="hl-0">, </span><span class="hl-3">params</span><span class="hl-0">, </span><span class="hl-6">this</span><span class="hl-0">.</span><span class="hl-3">name</span><span class="hl-0">);</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">}</span><br/><br/><span class="hl-3">MyCustomSink</span><span class="hl-0">.</span><span class="hl-3">main</span><span class="hl-0">.</span><span class="hl-3">onNext</span><span class="hl-0">.</span><span class="hl-5">add</span><span class="hl-0">(</span><span class="hl-3">ev</span><span class="hl-0"> </span><span class="hl-6">=&gt;</span><span class="hl-0"> {</span><br/><br/><span class="hl-0">    </span><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-5">log</span><span class="hl-0">(</span><span class="hl-3">ev</span><span class="hl-0">.</span><span class="hl-3">message</span><span class="hl-0">); </span><span class="hl-4">// &#39;custom log&#39;</span><br/><span class="hl-0">    </span><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-5">log</span><span class="hl-0">(</span><span class="hl-3">ev</span><span class="hl-0">.</span><span class="hl-3">specialSauceData</span><span class="hl-0">); </span><span class="hl-4">// 42</span><br/><br/><span class="hl-0">    </span><span class="hl-4">// uses the default output transforms</span><br/><span class="hl-0">    </span><span class="hl-4">// (or your custom ones if supplied in the MyCustomConsole class)</span><br/><span class="hl-0">    </span><span class="hl-3">ev</span><span class="hl-0">.</span><span class="hl-5">broadcastTo</span><span class="hl-0">(</span><span class="hl-3">console</span><span class="hl-0">);</span><br/><span class="hl-0">});</span><br/><br/><span class="hl-4">// NOTE: You can also wire your custom console back into the default main instance</span><br/><span class="hl-3">MyCustomSink</span><span class="hl-0">.</span><span class="hl-3">main</span><span class="hl-0">.</span><span class="hl-5">pipeTo</span><span class="hl-0">(</span><span class="hl-5">getDefaultSink</span><span class="hl-0">());</span><br/><br/><span class="hl-6">const</span><span class="hl-0"> </span><span class="hl-8">logger</span><span class="hl-0"> = </span><span class="hl-6">new</span><span class="hl-0"> </span><span class="hl-5">MyCustomLogger</span><span class="hl-0">(</span><span class="hl-1">&#39;TestLogger&#39;</span><span class="hl-0">);</span><br/><br/><span class="hl-3">logger</span><span class="hl-0">.</span><span class="hl-5">info</span><span class="hl-0">(</span><span class="hl-1">&#39;custom log&#39;</span><span class="hl-0">);</span>
 </code></pre>
-				<a href="#custom-extensions" id="custom-extensions" style="color: inherit; text-decoration: none;">
-					<h2>Custom Extensions</h2>
-				</a>
-				<p>This module is customizable at each level thanks to generics:</p>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">LogEvent</span><span style="color: #000000">, </span><span style="color: #001080">LogEventDelegate</span><span style="color: #000000">, </span><span style="color: #001080">LogEventEmitter</span><span style="color: #000000">, </span><span style="color: #001080">RxConsole</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@obsidize/rx-console&#039;</span><span style="color: #000000">;</span>
 
-<span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">MyCustomLogEvent</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">LogEvent</span><span style="color: #000000"> {</span>
+<a href="#why-did-i-make-this-module" id="why-did-i-make-this-module" style="color: inherit; text-decoration: none;">
+  <h2>Why Did I Make This Module?</h2>
+</a>
+<p><a href="https://www.npmjs.com/package/winston">Winston</a> 
+and <a href="https://www.npmjs.com/package/bunyan">Bunyan</a>
+are excellent tools for creating a complex logger heirarchy and routing log traffic to external transports.
+However, they have (completely unnecessary) mandatory dependencies to node-specific things like fs and stream utilities. 
+This may lead one down the rabbit-hole of trying to shim or &quot;fake&quot; these dependencies in order to get all the other 
+benefits of using these logging modules, which in turn leads to bundling pain and misery.</p>
+<p>On the other side of the spectrum we have the
+<a href="https://www.npmjs.com/package/debug">debug</a> 
+and <a href="https://www.npmjs.com/package/loglevel">loglevel</a> modules, which are super-light-weight browser-compatible loggers with no concept of transports.
+(Honestly if you don&#39;t need transport abstractions, consider using one of these)</p>
+<p>I needed a middle ground between these two types of modules, and this is the result.</p>
 
-<span style="color: #000000">    </span><span style="color: #008000">// Add some special sauce to your custom event instances.</span>
-<span style="color: #000000">    </span><span style="color: #001080">specialSauceData</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000"> = </span><span style="color: #098658">42</span><span style="color: #000000">;</span>
-<span style="color: #000000">}</span>
+<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+  <h2>API</h2>
+</a>
+<p>Source documentation can be found <a href="https://jospete.github.io/obsidize-rx-console/">here</a></p>
 
-<span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">MyCustomLogger</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">LogEventEmitter</span><span style="color: #000000">&lt;</span><span style="color: #267F99">MyCustomLogEvent</span><span style="color: #000000">&gt; {</span>
-
-<span style="color: #000000">    </span><span style="color: #008000">// Override the createEvent() method to generate your custom event type.</span>
-<span style="color: #000000">    </span><span style="color: #0000FF">protected</span><span style="color: #000000"> </span><span style="color: #795E26">createEvent</span><span style="color: #000000">(</span><span style="color: #001080">level</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">, </span><span style="color: #001080">message</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">, </span><span style="color: #001080">params</span><span style="color: #000000">: </span><span style="color: #267F99">any</span><span style="color: #000000">[]): </span><span style="color: #267F99">MyCustomLogEvent</span><span style="color: #000000"> {</span>
-<span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">MyCustomLogEvent</span><span style="color: #000000">(</span><span style="color: #001080">level</span><span style="color: #000000">, </span><span style="color: #001080">message</span><span style="color: #000000">, </span><span style="color: #001080">params</span><span style="color: #000000">, </span><span style="color: #0000FF">this</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000">);</span>
-<span style="color: #000000">    }</span>
-<span style="color: #000000">}</span>
-
-<span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">MyCustomConsole</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">RxConsole</span><span style="color: #000000">&lt;</span><span style="color: #267F99">MyCustomLogEvent</span><span style="color: #000000">, </span><span style="color: #267F99">MyCustomLogger</span><span style="color: #000000">&gt; {</span>
-
-<span style="color: #000000">    </span><span style="color: #008000">// Override the createLogger() method to generate your custom subject type.</span>
-<span style="color: #000000">    </span><span style="color: #0000FF">protected</span><span style="color: #000000"> </span><span style="color: #795E26">createLogger</span><span style="color: #000000">(</span><span style="color: #001080">name</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">): </span><span style="color: #267F99">MyCustomLogger</span><span style="color: #000000"> {</span>
-<span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">MyCustomLogger</span><span style="color: #000000">(</span><span style="color: #0000FF">this</span><span style="color: #000000">, </span><span style="color: #001080">name</span><span style="color: #000000">);</span>
-<span style="color: #000000">    }</span>
-<span style="color: #000000">}</span>
-
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">myConsoleInstance</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">MyCustomConsole</span><span style="color: #000000">();</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">logger</span><span style="color: #000000"> = </span><span style="color: #001080">myConsoleInstance</span><span style="color: #000000">.</span><span style="color: #795E26">getLogger</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;TestLogger&#039;</span><span style="color: #000000">);</span>
-
-<span style="color: #001080">myConsoleInstance</span><span style="color: #000000">.</span><span style="color: #001080">listeners</span><span style="color: #000000">.</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">ev</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">ev</span><span style="color: #000000">.</span><span style="color: #001080">message</span><span style="color: #000000">); </span><span style="color: #008000">// &#039;custom log&#039;</span>
-<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">ev</span><span style="color: #000000">.</span><span style="color: #001080">specialSauceData</span><span style="color: #000000">); </span><span style="color: #008000">// 42</span>
-<span style="color: #000000">});</span>
-
-<span style="color: #001080">logger</span><span style="color: #000000">.</span><span style="color: #795E26">info</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;custom log&#039;</span><span style="color: #000000">);</span>
-
-<span style="color: #008000">// NOTE: You can also wire your custom console back into the main instance</span>
-<span style="color: #001080">myConsoleInstance</span><span style="color: #000000">.</span><span style="color: #001080">listeners</span><span style="color: #000000">.</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">RxConsole</span><span style="color: #000000">.</span><span style="color: #001080">main</span><span style="color: #000000">.</span><span style="color: #001080">proxy</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #267F99">LogEventDelegate</span><span style="color: #000000">);</span>
-</code></pre>
-				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
-					<h2>API</h2>
-				</a>
-				<p>Source documentation can be found <a href="https://jospete.github.io/obsidize-rx-console/">here</a></p>
-				<a href="#supplemental-notes" id="supplemental-notes" style="color: inherit; text-decoration: none;">
-					<h2>Supplemental Notes</h2>
-				</a>
-				<p>It is important to note that this module is only creating and emitting the log data.
-				Any logic that has to do with <em>transporting</em> the data (AKA to a file or server) should be considered a separate entity.</p>
-				<p>Available Transports</p>
-				<ul>
-					<li><a href="https://github.com/jospete/obsidize-rotating-file-stream">@obsidize/rotating-file-stream</a> - spreads data seamlessly across multiple files in a rotating fashion</li>
-				</ul>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="modules.html">Exports</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="modules/RxConsoleUtility.html">Rx<wbr>Console<wbr>Utility</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-					<li class=" tsd-kind-enum">
-						<a href="enums/LogLevel.html" class="tsd-kind-icon">Log<wbr>Level</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/EventEmitter.html" class="tsd-kind-icon">Event<wbr>Emitter</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/LogEvent.html" class="tsd-kind-icon">Log<wbr>Event</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/LogEventEmitter.html" class="tsd-kind-icon">Log<wbr>Event<wbr>Emitter</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/LogEventEmitterBase.html" class="tsd-kind-icon">Log<wbr>Event<wbr>Emitter<wbr>Base</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/RxConsole.html" class="tsd-kind-icon">Rx<wbr>Console</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/ConsoleLike.html" class="tsd-kind-icon">Console<wbr>Like</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/EventEmitterLike.html" class="tsd-kind-icon">Event<wbr>Emitter<wbr>Like</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/LogEventEmitterConfig.html" class="tsd-kind-icon">Log<wbr>Event<wbr>Emitter<wbr>Config</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/LogEventLike.html" class="tsd-kind-icon">Log<wbr>Event<wbr>Like</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="modules.html#EventEmitterDelegate" class="tsd-kind-icon">Event<wbr>Emitter<wbr>Delegate</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="modules.html#LogEventDelegate" class="tsd-kind-icon">Log<wbr>Event<wbr>Delegate</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="modules.html#LogEventPredicate" class="tsd-kind-icon">Log<wbr>Event<wbr>Predicate</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#LogEventSource" class="tsd-kind-icon">Log<wbr>Event<wbr>Source</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="modules.html#LogEventEmitterConfigDefaults" class="tsd-kind-icon">Log<wbr>Event<wbr>Emitter<wbr>Config<wbr>Defaults</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#getLogLevelName" class="tsd-kind-icon">get<wbr>Log<wbr>Level<wbr>Name</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="modules.html#getLogger" class="tsd-kind-icon">get<wbr>Logger</a>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
+<a href="#supplemental-notes" id="supplemental-notes" style="color: inherit; text-decoration: none;">
+  <h2>Supplemental Notes</h2>
+</a>
+<p>It is important to note that this module is only creating and emitting the log data.
+Any logic that has to do with <em>transporting</em> the data (AKA to a file or server) should be considered a separate entity.</p>
+<p>Available Transports</p>
+<ul>
+<li><a href="https://github.com/jospete/obsidize-rotating-file-stream">@obsidize/rotating-file-stream</a> - spreads data seamlessly across multiple files in a rotating fashion</li>
+</ul>
+</div></div>
+<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+<div class="tsd-navigation settings">
+<details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility">
+<h4 class="uppercase">Member Visibility</h4><form>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div>
+<div class="tsd-theme-toggle">
+<h4 class="uppercase">Theme</h4><select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<nav class="tsd-navigation primary">
+<details class="tsd-index-accordion" open><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Modules</h3></summary>
+<div class="tsd-accordion-details">
+<ul>
+<li class="current selected"><a href="modules.html">@obsidize/rx-<wbr/>console</a>
+<ul></ul></li></ul></div></details></nav>
+<nav class="tsd-navigation secondary menu-sticky">
+<ul>
+<li class="tsd-kind-enum"><a href="enums/LogLevel.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-enum)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-8-path"></rect><path d="M9.45 16V7.24H14.49V8.224H10.518V10.936H14.07V11.908H10.518V15.016H14.49V16H9.45Z" fill="var(--color-text)" id="icon-8-text"></path></svg>Log<wbr/>Level</a></li>
+<li class="tsd-kind-class"><a href="classes/DelegateLogEventListener.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-class)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-128-path"></rect><path d="M11.898 16.1201C11.098 16.1201 10.466 15.8961 10.002 15.4481C9.53803 15.0001 9.30603 14.3841 9.30603 13.6001V9.64012C9.30603 8.85612 9.53803 8.24012 10.002 7.79212C10.466 7.34412 11.098 7.12012 11.898 7.12012C12.682 7.12012 13.306 7.34812 13.77 7.80412C14.234 8.25212 14.466 8.86412 14.466 9.64012H13.386C13.386 9.14412 13.254 8.76412 12.99 8.50012C12.734 8.22812 12.37 8.09212 11.898 8.09212C11.426 8.09212 11.054 8.22412 10.782 8.48812C10.518 8.75212 10.386 9.13212 10.386 9.62812V13.6001C10.386 14.0961 10.518 14.4801 10.782 14.7521C11.054 15.0161 11.426 15.1481 11.898 15.1481C12.37 15.1481 12.734 15.0161 12.99 14.7521C13.254 14.4801 13.386 14.0961 13.386 13.6001H14.466C14.466 14.3761 14.234 14.9921 13.77 15.4481C13.306 15.8961 12.682 16.1201 11.898 16.1201Z" fill="var(--color-text)" id="icon-128-text"></path></svg>Delegate<wbr/>Log<wbr/>Event<wbr/>Listener</a></li>
+<li class="tsd-kind-class"><a href="classes/EventEmitter.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>Event<wbr/>Emitter</a></li>
+<li class="tsd-kind-class"><a href="classes/LogEvent.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>Log<wbr/>Event</a></li>
+<li class="tsd-kind-class"><a href="classes/LogEventFilter.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>Log<wbr/>Event<wbr/>Filter</a></li>
+<li class="tsd-kind-class"><a href="classes/LogEventListener.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>Log<wbr/>Event<wbr/>Listener</a></li>
+<li class="tsd-kind-class"><a href="classes/LogEventSink.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>Log<wbr/>Event<wbr/>Sink</a></li>
+<li class="tsd-kind-class"><a href="classes/Logger.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>Logger</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/ConsoleLike.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-interface)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-256-path"></rect><path d="M9.51 16V15.016H11.298V8.224H9.51V7.24H14.19V8.224H12.402V15.016H14.19V16H9.51Z" fill="var(--color-text)" id="icon-256-text"></path></svg>Console<wbr/>Like</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/EventEmitterLike.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Event<wbr/>Emitter<wbr/>Like</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/LogEventInterceptor.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Log<wbr/>Event<wbr/>Interceptor</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/LogEventLike.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Log<wbr/>Event<wbr/>Like</a></li>
+<li class="tsd-kind-type-alias"><a href="types/EventEmitterDelegate.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-4194304-path"></rect><path d="M11.31 16V8.224H8.91V7.24H14.79V8.224H12.39V16H11.31Z" fill="var(--color-text)" id="icon-4194304-text"></path></svg>Event<wbr/>Emitter<wbr/>Delegate</a></li>
+<li class="tsd-kind-type-alias"><a href="types/ObservableEventPatternGenerator.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Observable<wbr/>Event<wbr/>Pattern<wbr/>Generator</a></li>
+<li class="tsd-kind-function"><a href="functions/callConsoleDynamic.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-function)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-64-path"></rect><path d="M9.39 16V7.24H14.55V8.224H10.446V11.128H14.238V12.112H10.47V16H9.39Z" fill="var(--color-text)" id="icon-64-text"></path></svg>call<wbr/>Console<wbr/>Dynamic</a></li>
+<li class="tsd-kind-function"><a href="functions/getDefaultSink.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>get<wbr/>Default<wbr/>Sink</a></li>
+<li class="tsd-kind-function"><a href="functions/getLogLevelName.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>get<wbr/>Log<wbr/>Level<wbr/>Name</a></li>
+<li class="tsd-kind-function"><a href="functions/setDefaultBroadcastEnabled.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>set<wbr/>Default<wbr/>Broadcast<wbr/>Enabled</a></li>
+<li class="tsd-kind-function"><a href="functions/stringifyLogEvent.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>stringify<wbr/>Log<wbr/>Event</a></li>
+<li class="tsd-kind-function"><a href="functions/stringifyLogEventBaseValues.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>stringify<wbr/>Log<wbr/>Event<wbr/>Base<wbr/>Values</a></li>
+<li class="tsd-kind-function"><a href="functions/stringifyOptionalParams.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>stringify<wbr/>Optional<wbr/>Params</a></li>
+<li class="tsd-kind-function"><a href="functions/stringifySafe.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>stringify<wbr/>Safe</a></li>
+<li class="tsd-kind-function"><a href="functions/truncate.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg>truncate</a></li></ul></nav></div></div>
 <div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
+<div class="overlay"></div><script src="assets/main.js"></script></body></html>

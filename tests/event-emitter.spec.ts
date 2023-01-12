@@ -8,7 +8,7 @@ describe('EventEmitter', () => {
 
 			const emitter = new EventEmitter<any>();
 
-			expect(() => emitter.add(null)).not.toThrowError();
+			expect(() => emitter.add(null as any)).not.toThrowError();
 			expect(emitter.count).toBe(0);
 			expect(() => emitter.emit('test')).not.toThrowError();
 

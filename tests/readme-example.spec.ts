@@ -1,31 +1,31 @@
 import { Observable, fromEventPattern, interval } from 'rxjs';
 import { buffer, map } from 'rxjs/operators';
 
-import { LogEvent, LogEventDelegate, LogEventEmitter, RxConsole, getLogger, LogEventSource, LogLevel } from '../src';
+import {
+	LogEvent,
+	LogLevel,
+	Logger,
+	getDefaultSink,
+	setDefaultBroadcastEnabled,
+	LogEventSink,
+	type LogEventInterceptor
+} from '../src';
 
 describe('README Examples', () => {
 
 	it('can execute the TLDR example', () => {
 
+		// turn on default `window.console` usage
+		setDefaultBroadcastEnabled(true);
+
 		class MyServiceThing {
 
-			private readonly logger: LogEventSource = getLogger('MyServiceThing');
+			private readonly logger = new Logger('MyServiceThing');
 
 			test(): void {
 				this.logger.debug('test!');
 			}
 		}
-
-		// You can use the main instance, or make your own with:
-		// export const myCustomConsole = new RxConsole();
-		RxConsole
-			.main
-			.setLevel(LogLevel.DEBUG)
-			.listeners
-			.add(ev => {
-				// send log to standard browser console
-				ev.broadcastTo(console);
-			});
 
 		const service = new MyServiceThing();
 		service.test(); // 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!
@@ -33,9 +33,11 @@ describe('README Examples', () => {
 
 	it('can execute the rxjs example', () => {
 
+		// noop function for example purposes
 		const writeToFile = (..._args: any[]) => { };
+		const sink = getDefaultSink();
 
-		RxConsole.main.asObservable<Observable<LogEvent>>(fromEventPattern).pipe(
+		sink.asObservable<Observable<LogEvent>>(fromEventPattern).pipe(
 
 			// accumulate log events for 5 seconds
 			buffer(interval(5000)),
@@ -52,13 +54,10 @@ describe('README Examples', () => {
 
 	it('can execute the vanilla JS example', () => {
 
-		RxConsole
-			.main
-			.setLevel(LogLevel.DEBUG)
-			.listeners
-			.add(ev => ev.broadcastTo(console));
+		getDefaultSink().filter.setMinLevel(LogLevel.DEBUG);
+		setDefaultBroadcastEnabled(true);
 
-		const logger = getLogger('RunKitLogger');
+		const logger = new Logger('RunKitLogger');
 
 		logger.debug('test');
 		// "2021-03-15T21:13:42.356Z [DEBUG] [RunKitLogger] test"
@@ -82,7 +81,20 @@ describe('README Examples', () => {
 			specialSauceData: number = 42;
 		}
 
-		class MyCustomLogger extends LogEventEmitter<MyCustomLogEvent> {
+		class MyCustomSink extends LogEventSink<MyCustomLogEvent> {
+
+			// Create a main instance for your loggers to report back to
+			public static readonly main = new MyCustomSink();
+		}
+
+		class MyCustomLogger extends Logger<MyCustomLogEvent> {
+
+			constructor(
+				name: string,
+				aggregator: LogEventInterceptor<MyCustomLogEvent> = MyCustomSink.main
+			) {
+				super(name, aggregator);
+			}
 
 			// Override the createEvent() method to generate your custom event type.
 			protected createEvent(level: number, message: string, params: any[]): MyCustomLogEvent {
@@ -90,25 +102,21 @@ describe('README Examples', () => {
 			}
 		}
 
-		class MyCustomConsole extends RxConsole<MyCustomLogEvent, MyCustomLogger> {
+		MyCustomSink.main.onNext.add(ev => {
 
-			// Override the createLogger() method to generate your custom subject type.
-			protected createLogger(name: string): MyCustomLogger {
-				return new MyCustomLogger(this, name);
-			}
-		}
-
-		const myConsoleInstance = new MyCustomConsole();
-		const logger = myConsoleInstance.getLogger('TestLogger');
-
-		myConsoleInstance.listeners.add(ev => {
 			console.log(ev.message); // 'custom log'
 			console.log(ev.specialSauceData); // 42
+
+			// uses the default output transforms
+			// (or your custom ones if supplied in the MyCustomConsole class)
+			ev.broadcastTo(console);
 		});
 
-		logger.info('custom log');
+		// NOTE: You can also wire your custom console back into the default main instance
+		MyCustomSink.main.pipeTo(getDefaultSink());
 
-		// NOTE: You can also wire your custom console back into the main instance
-		myConsoleInstance.listeners.add(RxConsole.main.proxy as LogEventDelegate);
+		const logger = new MyCustomLogger('TestLogger');
+
+		logger.info('custom log');
 	});
 });

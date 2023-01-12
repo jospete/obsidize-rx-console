@@ -1,10 +1,2 @@
-export { ConsoleLike } from './core/console-like';
-export { EventEmitter, EventEmitterDelegate, EventEmitterLike } from './core/event-emitter';
-export { LogEventEmitterBase } from './core/log-event-emitter-base';
-export { LogEventEmitterConfig, LogEventEmitterConfigDefaults } from './core/log-event-emitter-config';
-export { LogEventEmitter, LogEventSource } from './core/log-event-emitter';
-export { LogEventLike, LogEventDelegate, LogEventPredicate } from './core/log-event-like';
-export { LogEvent } from './core/log-event';
-export { LogLevel, getLogLevelName } from './core/log-level';
-export { RxConsoleUtility } from './core/rx-console-utility';
-export { RxConsole, getLogger } from './core/rx-console';
+export * from './core';
+export * from './listeners';

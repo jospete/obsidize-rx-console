@@ -1,9 +1,14 @@
-import { LogEvent, LogLevel, RxConsoleUtility } from '../src';
-import { mockConsole } from './util';
-
-const { truncate, stringifySafe } = RxConsoleUtility;
+import { LogEvent, LogLevel, stringifyLogEvent } from '../src';
+import { mockConsole } from './test-utility';
 
 describe('LogEvent', () => {
+
+	describe('stringifyLogEvent()', () => {
+
+		it('can operate on any value without blowing up', () => {
+			expect(() => stringifyLogEvent(null as any)).not.toThrowError();
+		});
+	});
 
 	describe('toString()', () => {
 
@@ -21,9 +26,9 @@ describe('LogEvent', () => {
 		});
 	});
 
-	describe('broadcast() and broadcastTo()', () => {
+	describe('broadcastTo()', () => {
 
-		it('routes the given LogEvent to its nearest ConsoleLike equivalent', () => {
+		it('routes the given LogEvent to the given ConsoleLike object', () => {
 
 			const now = new Date();
 			const sampleEvent1 = new LogEvent(LogLevel.DEBUG, 'test message', [], 'custom-tag', now.getTime());
@@ -43,21 +48,17 @@ describe('LogEvent', () => {
 		});
 	});
 
-	describe('truncate', () => {
+	describe('performDefaultBroadcast', () => {
 
-		it('shortens the length of strings that exceed the given target length', () => {
-			expect(truncate('hello', 5)).toBe('hello');
-			expect(truncate('hello', 4)).toBe('hell...');
-		});
-	});
+		it('broadcasts the event to window.console', () => {
 
-	describe('stringifySafe', () => {
+			const ev = new LogEvent(LogLevel.DEBUG, 'hello', [], '');
+			spyOn(ev, 'broadcastTo').and.callThrough();
 
-		it('attempts to stringify an object, but does not explode on error', () => {
-			expect(stringifySafe({ hello: 'test' })).toBe('{"hello":"test"}');
-			const circularObject = { parent: null };
-			circularObject.parent = circularObject;
-			expect(stringifySafe(circularObject)).toBe('[object Object]');
+			expect(ev.broadcastTo).not.toHaveBeenCalled();
+
+			LogEvent.performDefaultBroadcast(ev);
+			expect(ev.broadcastTo).toHaveBeenCalledWith(console);
 		});
 	});
 });

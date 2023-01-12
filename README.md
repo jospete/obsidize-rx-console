@@ -1,71 +1,47 @@
 # @obsidize/rx-console
 
-This is yet another logging library in an attempt to strip away unnecessary dependencies that break
-interoperability between browser and node environments.
+A logging library that is more configurable than something like [debug](https://www.npmjs.com/package/debug),
+without the platform locking of something like [Winston](https://www.npmjs.com/package/winston).
 
-The goals of this module are:
+#### Highlights
+
+- Zero dependencies
+- Compatible on both Browser / NodeJS
+- Compact (~4Kb es5 file)
+
+#### Goals
 
 - Allow runtime configuration of log levels
 - Ability to intercept log events, so they can be transported to a persistence source
-- Make no assumptions about the persistence layer (i.e. no dependency declarations that lock this module to node or the browser, like node fs)
-- Configurability at each abstraction level, from the root ```RxConsole``` class all the way down to the ```LogEvent``` class.
-
-#### Why Did I Make This Module?
-
-[Winston](https://www.npmjs.com/package/winston) 
-and [Bunyan](https://www.npmjs.com/package/bunyan)
-are excellent tools for creating a complex logger heirarchy and routing log traffic to external transports.
-However, they have (completely unnecessary) mandatory dependencies to node-specific things like fs and stream utilities. 
-This may lead one down the rabbit-hole of trying to shim or "fake" these dependencies in order to get all the other 
-benefits of using these logging modules, which in turn leads to bundling pain and misery.
-
-On the other side of the spectrum we have the
-[debug](https://www.npmjs.com/package/debug) 
-and [loglevel](https://www.npmjs.com/package/loglevel) modules, which are super-light-weight browser-compatible loggers with no concept of transports.
-(Honestly if you don't need transport abstractions, consider using one of these)
-
-I needed a middle ground between these two types of modules, and this is the result.
+- Make no assumptions about the persistence layer (i.e. no dependency declarations that lock this module to node or the browser, like node 'fs' or 'stream' packages)
+- Configurability at each abstraction layer (Event / Sink / Listener)
 
 ## Installation
 
 - npm:
 
 ```bash
-npm install --save @obsidize/rx-console
-```
-
-- git:
-
-```bash
-npm install --save git+https://github.com/jospete/obsidize-rx-console.git
+npm install -P -E @obsidize/rx-console
 ```
 
 ## Usage (TypeScript)
 
-This module exposes a utility function ```getLogger()``` for generating logger instances:
+Context-based loggers can be created like so:
 
 ```typescript
-import { getLogger, LogEventSource, RxConsole, LogLevel } from '@obsidize/rx-console';
+import { Logger, setDefaultBroadcastEnabled } from '@obsidize/rx-console';
+
+// turn on default `window.console` usage
+setDefaultBroadcastEnabled(true);
 
 class MyServiceThing {
 
-	private readonly logger: LogEventSource = getLogger('MyServiceThing');
+	private readonly logger = new Logger('MyServiceThing');
 
 	test(): void {
 		this.logger.debug('test!');
 	}
 }
-
-// You can use the main instance, or make your own with:
-// export const myCustomConsole = new RxConsole();
-RxConsole
-	.main
-	.setLevel(LogLevel.DEBUG)
-	.listeners
-	.add(ev => {
-		// send log to standard browser console
-		ev.broadcastTo(console);
-	});
 
 const service = new MyServiceThing();
 service.test(); // 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!
@@ -83,9 +59,13 @@ we can infer more useful data in the output like what time the event happened an
 ```typescript
 import { Observable, fromEventPattern, inverval } from 'rxjs';
 import { buffer, map } from 'rxjs/operators';
-import { RxConsole, LogEvent } from '@obsidize/rx-console';
+import { LogEvent, getDefaultSink } from '@obsidize/rx-console';
 
-RxConsole.main.asObservable<Observable<LogEvent>>(fromEventPattern).pipe(
+// noop function for example purposes
+const writeToFile = (..._args: any[]) => { };
+const sink = getDefaultSink();
+
+sink.asObservable<Observable<LogEvent>>(fromEventPattern).pipe(
 
 	// accumulate log events for 5 seconds
 	buffer(interval(5000)),
@@ -108,20 +88,17 @@ The below snippet can be tested with runkit on NPM.
 
 ```javascript
 var rxConsole = require("@obsidize/rx-console");
-const {RxConsole, LogLevel, getLogger} = rxConsole;
+const {Logger, LogLevel, getDefaultSink} = rxConsole;
 
-RxConsole
-	.main
-	.setLevel(LogLevel.DEBUG)
-	.listeners
-	.add(ev => ev.broadcastTo(console));
+getDefaultSink().filter.setMinLevel(LogLevel.DEBUG);
+setDefaultBroadcastEnabled(true);
 
-const logger = getLogger('RunKitLogger');
+const logger = new Logger('RunKitLogger');
 
 logger.debug('test');
 // "2021-03-15T21:13:42.356Z [DEBUG] [RunKitLogger] test"
 
-logger.info('some object info: ', {myValueIs: 42, isOptionalParam: true, someOtherValue: 'yep'});
+logger.info('some object info: ', { myValueIs: 42, isOptionalParam: true, someOtherValue: 'yep' });
 // "2021-03-15T21:13:42.360Z [INFO] [RunKitLogger] some object info: "
 // Object {myValueIs: 42, isOptionalParam: true, someOtherValue: "yep"}
 
@@ -137,7 +114,7 @@ logger.verbose('im obnoxious');
 This module is customizable at each level thanks to generics:
 
 ```typescript
-import { LogEvent, LogEventDelegate, LogEventEmitter, RxConsole } from '@obsidize/rx-console';
+import { LogEvent, LogEventSink, Logger, getDefaultSink, type LogEventInterceptor } from '@obsidize/rx-console';
 
 class MyCustomLogEvent extends LogEvent {
 
@@ -145,7 +122,20 @@ class MyCustomLogEvent extends LogEvent {
 	specialSauceData: number = 42;
 }
 
-class MyCustomLogger extends LogEventEmitter<MyCustomLogEvent> {
+class MyCustomSink extends LogEventSink<MyCustomLogEvent> {
+
+	// Create a main instance for your loggers to report back to
+	public static readonly main = new MyCustomSink();
+}
+
+class MyCustomLogger extends Logger<MyCustomLogEvent> {
+
+	constructor(
+		name: string,
+		aggregator: LogEventInterceptor<MyCustomLogEvent> = MyCustomSink.main
+	) {
+		super(name, aggregator);
+	}
 
 	// Override the createEvent() method to generate your custom event type.
 	protected createEvent(level: number, message: string, params: any[]): MyCustomLogEvent {
@@ -153,27 +143,39 @@ class MyCustomLogger extends LogEventEmitter<MyCustomLogEvent> {
 	}
 }
 
-class MyCustomConsole extends RxConsole<MyCustomLogEvent, MyCustomLogger> {
+MyCustomSink.main.onNext.add(ev => {
 
-	// Override the createLogger() method to generate your custom subject type.
-	protected createLogger(name: string): MyCustomLogger {
-		return new MyCustomLogger(this, name);
-	}
-}
-
-const myConsoleInstance = new MyCustomConsole();
-const logger = myConsoleInstance.getLogger('TestLogger');
-
-myConsoleInstance.listeners.add(ev => {
 	console.log(ev.message); // 'custom log'
 	console.log(ev.specialSauceData); // 42
+
+	// uses the default output transforms
+	// (or your custom ones if supplied in the MyCustomConsole class)
+	ev.broadcastTo(console);
 });
 
-logger.info('custom log');
+// NOTE: You can also wire your custom console back into the default main instance
+MyCustomSink.main.pipeTo(getDefaultSink());
 
-// NOTE: You can also wire your custom console back into the main instance
-myConsoleInstance.listeners.add(RxConsole.main.proxy as LogEventDelegate);
+const logger = new MyCustomLogger('TestLogger');
+
+logger.info('custom log');
 ```
+
+## Why Did I Make This Module?
+
+[Winston](https://www.npmjs.com/package/winston) 
+and [Bunyan](https://www.npmjs.com/package/bunyan)
+are excellent tools for creating a complex logger heirarchy and routing log traffic to external transports.
+However, they have (completely unnecessary) mandatory dependencies to node-specific things like fs and stream utilities. 
+This may lead one down the rabbit-hole of trying to shim or "fake" these dependencies in order to get all the other 
+benefits of using these logging modules, which in turn leads to bundling pain and misery.
+
+On the other side of the spectrum we have the
+[debug](https://www.npmjs.com/package/debug) 
+and [loglevel](https://www.npmjs.com/package/loglevel) modules, which are super-light-weight browser-compatible loggers with no concept of transports.
+(Honestly if you don't need transport abstractions, consider using one of these)
+
+I needed a middle ground between these two types of modules, and this is the result.
 
 ## API
 
