@@ -1,6 +1,8 @@
-import { RxConsoleUtility, ConsoleLike, EventEmitterLike } from '../src';
+import { ConsoleLike, EventEmitterLike } from '../src';
 
-const { identity } = RxConsoleUtility;
+function identity(input: any, ..._extras: any[]) {
+	return input;
+}
 
 export const noopAggregator: EventEmitterLike<any> = { emit: identity };
 

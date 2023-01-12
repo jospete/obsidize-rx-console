@@ -1,6 +1,5 @@
-import { ConsoleLike } from './console-like';
-import { LogEventLike } from './log-event-like';
-import { RxConsoleUtility } from './rx-console-utility';
+import { type ConsoleLike, callConsoleDynamic } from './console-like';
+import { type LogEventLike, stringifyLogEvent, stringifyLogEventBaseValues } from './log-event-like';
 
 /**
  * Single event instance, typically spawned by a LogEventSubject.
@@ -30,7 +29,7 @@ export class LogEvent implements LogEventLike {
 	 * Override this in a sub-class to cusotmize output data.
 	 */
 	public broadcastTo(console: ConsoleLike): void {
-		RxConsoleUtility.callConsoleDynamic(console, this.level, this.getBroadcastMessage(), this.params);
+		callConsoleDynamic(console, this.level, this.getBroadcastMessage(), this.params);
 	}
 
 	/**
@@ -41,7 +40,7 @@ export class LogEvent implements LogEventLike {
 	 * Override this in a sub-class to cusotmize output data.
 	 */
 	public getBroadcastMessage(): string {
-		return RxConsoleUtility.stringifyLogEventBaseValues(this);
+		return stringifyLogEventBaseValues(this);
 	}
 
 	/**
@@ -51,6 +50,6 @@ export class LogEvent implements LogEventLike {
 	 * Override this in a sub-class to cusotmize output data.
 	 */
 	public toString(): string {
-		return RxConsoleUtility.stringifyLogEvent(this);
+		return stringifyLogEvent(this);
 	}
 }

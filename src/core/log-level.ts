@@ -16,7 +16,7 @@ export enum LogLevel {
  * Translate a level to its named counterpart.
  * Useful for tagging levels in stringified LogEvent instances.
  */
-export const getLogLevelName = (level: number): string => {
+export function getLogLevelName(level: number): string {
 	switch (level) {
 		case LogLevel.VERBOSE: return 'VERBOSE';
 		case LogLevel.TRACE: return 'TRACE';
