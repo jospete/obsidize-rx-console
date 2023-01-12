@@ -6,7 +6,7 @@ import { type LogEventInterceptor } from './log-event-interceptor';
 
 /**
  * Standard method for constucting loggers.
- * Uses ```getDefaultSink()``` as the default aggregator.
+ * Uses ```getDefaultLoggerSink()``` as the default aggregator.
  */
 export class Logger<T extends LogEvent = LogEvent> implements ConsoleLike {
 

@@ -19,7 +19,7 @@ export class LogEvent implements LogEventLike {
 	 * Default behaviour for handling events.
 	 * Sends events to the global ```window.console``` instance.
 	 */
-	public static performDefaultBroadcast<R extends LogEvent>(ev: R): void {
+	public static performDefaultBroadcast<E extends LogEvent>(ev: E): void {
 		ev.broadcastTo(console);
 	}
 

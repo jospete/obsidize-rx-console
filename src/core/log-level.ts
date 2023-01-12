@@ -12,7 +12,7 @@ export const LogLevel = {
 	FATAL: 1000
 } as const;
 
-const nameMap = new Map<number, string>(
+const namesByLevel = new Map<number, string>(
 	Object.entries(LogLevel).map(([k, v]) => [v, k])
 );
 
@@ -21,5 +21,5 @@ const nameMap = new Map<number, string>(
  * Useful for tagging levels in stringified LogEvent instances.
  */
 export function getLogLevelName(level: number): string {
-	return nameMap.get(level) || ('L-' + level);
+	return namesByLevel.get(level) || ('L-' + level);
 };

@@ -17,6 +17,7 @@ export interface LogEventLike {
  * for the optional params on the event.
  */
 export function stringifyLogEventBaseValues(ev: LogEventLike): string {
+	if (!ev) return (ev + '');
 	const { timestamp, level, tag, message } = ev;
 	const timestampJson = new Date(timestamp).toJSON();
 	const levelStr = getLogLevelName(level);
@@ -28,9 +29,9 @@ export function stringifyLogEventBaseValues(ev: LogEventLike): string {
  * the optional params.
  */
 export function stringifyLogEvent(ev: LogEventLike): string {
-	const safeEvent = (ev || {}) as any;
-	const { params } = safeEvent;
-	const baseMessage = stringifyLogEventBaseValues(safeEvent);
+	if (!ev) return (ev + '');
+	const { params } = ev;
+	const baseMessage = stringifyLogEventBaseValues(ev);
 	const paramsStr = stringifyOptionalParams(params);
 	return baseMessage + paramsStr;
 }

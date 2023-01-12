@@ -21,7 +21,9 @@ export function callConsoleDynamic(
 	params: any[]
 ): void {
 
-	// ** This waters down the levels to ones that are definitely defined on 99% of clients.
+	// Only use .error(), .warn(), and .log() to reduce chance of 
+	// reference errors on the given console object.
+	// (also reduces overall cost of this operation)
 
 	if (level >= LogLevel.ERROR) {
 		console.error(message, ...params);
