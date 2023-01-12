@@ -1,11 +1,11 @@
 # @obsidize/rx-console
 
 A logging library that is more configurable than something like [debug](https://www.npmjs.com/package/debug),
-without the platform locking of something like [Winston](https://www.npmjs.com/package/winston).
+without the platform locking of something like [winston](https://www.npmjs.com/package/winston).
 
 #### Highlights
 
-- Zero dependencies
+- Only one dependency (tslib to play nice with typescript projects)
 - Compatible on both Browser / NodeJS
 - Compact (~4Kb es5 file)
 

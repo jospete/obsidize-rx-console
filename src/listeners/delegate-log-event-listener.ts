@@ -25,6 +25,10 @@ let windowConsoleBroadcast: DelegateLogEventListener;
  */
 export function setDefaultBroadcastEnabled(enabled: boolean): void {
 
+	// if we haven't created an instance yet, don't do anything when enabled=false
+	if (!enabled && !windowConsoleBroadcast)
+		return;
+
 	if (!windowConsoleBroadcast)
 		windowConsoleBroadcast = new DelegateLogEventListener(LogEvent.performDefaultBroadcast);
 
