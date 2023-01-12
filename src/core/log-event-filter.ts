@@ -6,24 +6,23 @@ import { LogLevel } from './log-level';
  */
 export class LogEventFilter<T extends LogEvent = LogEvent> {
 
-    private mMinLevel: number = LogLevel.VERBOSE;
+	private mMinLevel: number = LogLevel.VERBOSE;
 
-    public getMinLevel(): number {
+	public getMinLevel(): number {
 		return this.mMinLevel;
 	}
 
 	/**
-	 * Set the min possible level for this stream.
-	 * See setLevel() for more info.
-	 * 
-	 * NOTE: the minimum possible value will always be hard-capped to 0 to prevent negatives and/or maxLevel conflicts.
+	 * Set the minimum required level for events.
+	 * Events with a level below the given value will
+	 * be rejected by accepts().
 	 */
 	public setMinLevel(value: number): this {
 		this.mMinLevel = Math.max(LogLevel.VERBOSE, value);
 		return this;
 	}
 
-    public accepts(ev: T): boolean {
-        return !!ev && ev.level >= this.getMinLevel();
-    }
+	public accepts(ev: T): boolean {
+		return !!ev && ev.level >= this.getMinLevel();
+	}
 }
