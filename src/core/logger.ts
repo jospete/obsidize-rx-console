@@ -1,8 +1,8 @@
 import { LogLevel } from './log-level';
 import { LogEvent } from './log-event';
-import { getDefaultLoggerSink } from './log-event-sink';
+import { getDefaultLoggerSink } from './globals';
 import { type ConsoleLike } from './console-like';
-import { type LogEventInterceptor } from './log-event-interceptor';
+import { type LogEventInterceptor } from './log-event-sink';
 
 /**
  * Standard method for constucting loggers.

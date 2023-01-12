@@ -1,7 +1,13 @@
 import { LogEvent } from './log-event';
 import { EventEmitter, ObservableEventPatternGenerator } from './event-emitter';
-import { type LogEventInterceptor } from './log-event-interceptor';
 import { LogEventFilter } from './log-event-filter';
+
+/**
+ * Baseline type for things that capture log events.
+ */
+export interface LogEventInterceptor<T extends LogEvent = LogEvent> {
+	onInterceptLogEvent(ev: T): void;
+}
 
 /**
  * Collects events from arbitrary sources and re-broadcasts them
@@ -32,17 +38,4 @@ export class LogEventSink<T extends LogEvent = LogEvent> implements LogEventInte
 		if (this.enabled && this.filter.accepts(ev))
 			this.onNext.emit(ev);
 	}
-}
-
-let defaultSink: LogEventSink;
-
-/**
- * Get a reference to the default root sink used by all Logger instances.
- */
-export function getDefaultLoggerSink<T extends LogEvent = LogEvent>(): LogEventSink<T> {
-
-	if (!defaultSink)
-		defaultSink = new LogEventSink();
-
-	return defaultSink as any;
 }
