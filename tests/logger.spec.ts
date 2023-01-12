@@ -1,4 +1,4 @@
-import { Logger, LogEventSink, getDefaultSink } from '../src';
+import { Logger, LogEventSink, getDefaultLoggerSink } from '../src';
 
 describe('Logger', () => {
 
@@ -19,7 +19,7 @@ describe('Logger', () => {
 
 		const logger = new Logger('TestLogger2');
 		const eventSpy = jasmine.createSpy('eventSpy');
-		const defaultSink = getDefaultSink();
+		const defaultSink = getDefaultLoggerSink();
 
 		defaultSink.onNext.add(eventSpy);
 		expect(eventSpy).not.toHaveBeenCalled();

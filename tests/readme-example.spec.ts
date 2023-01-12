@@ -5,8 +5,8 @@ import {
 	LogEvent,
 	LogLevel,
 	Logger,
-	getDefaultSink,
-	setDefaultBroadcastEnabled,
+	getDefaultLoggerSink,
+	setDefaultLoggerBroadcastEnabled,
 	LogEventSink,
 	type LogEventInterceptor
 } from '../src';
@@ -16,7 +16,7 @@ describe('README Examples', () => {
 	it('can execute the TLDR example', () => {
 
 		// turn on default `window.console` usage
-		setDefaultBroadcastEnabled(true);
+		setDefaultLoggerBroadcastEnabled(true);
 
 		class MyServiceThing {
 
@@ -35,7 +35,7 @@ describe('README Examples', () => {
 
 		// noop function for example purposes
 		const writeToFile = (..._args: any[]) => { };
-		const sink = getDefaultSink();
+		const sink = getDefaultLoggerSink();
 
 		sink.asObservable<Observable<LogEvent>>(fromEventPattern).pipe(
 
@@ -54,8 +54,8 @@ describe('README Examples', () => {
 
 	it('can execute the vanilla JS example', () => {
 
-		getDefaultSink().filter.setMinLevel(LogLevel.DEBUG);
-		setDefaultBroadcastEnabled(true);
+		getDefaultLoggerSink().filter.setMinLevel(LogLevel.DEBUG);
+		setDefaultLoggerBroadcastEnabled(true);
 
 		const logger = new Logger('RunKitLogger');
 
@@ -113,7 +113,7 @@ describe('README Examples', () => {
 		});
 
 		// NOTE: You can also wire your custom console back into the default main instance
-		MyCustomSink.main.pipeTo(getDefaultSink());
+		MyCustomSink.main.pipeTo(getDefaultLoggerSink());
 
 		const logger = new MyCustomLogger('TestLogger');
 

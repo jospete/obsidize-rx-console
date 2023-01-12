@@ -1,6 +1,6 @@
 import { LogLevel } from './log-level';
 import { LogEvent } from './log-event';
-import { getDefaultSink } from './log-event-sink';
+import { getDefaultLoggerSink } from './log-event-sink';
 import { type ConsoleLike } from './console-like';
 import { type LogEventInterceptor } from './log-event-interceptor';
 
@@ -12,7 +12,7 @@ export class Logger<T extends LogEvent = LogEvent> implements ConsoleLike {
 
 	constructor(
 		public readonly name: string,
-		private readonly aggregator: LogEventInterceptor<T> = getDefaultSink<T>()
+		private readonly aggregator: LogEventInterceptor<T> = getDefaultLoggerSink<T>()
 	) {
 	}
 
@@ -48,11 +48,11 @@ export class Logger<T extends LogEvent = LogEvent> implements ConsoleLike {
 		this.emitWithLevel(LogLevel.FATAL, message, params);
 	}
 
-	protected createEvent(level: LogLevel, message: string, params: any[]): T {
+	protected createEvent(level: number, message: string, params: any[]): T {
 		return new LogEvent(level, message, params, this.name) as T;
 	}
 
-	private emitWithLevel(level: LogLevel, message: string, params: any[]): void {
+	private emitWithLevel(level: number, message: string, params: any[]): void {
 		this.emit(this.createEvent(level, message, params));
 	}
 

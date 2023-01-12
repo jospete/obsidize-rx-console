@@ -1,6 +1,6 @@
 import { LogEventFilter, LogEvent, LogLevel } from '../src';
 
-function createLogEventWithLevel(level: LogLevel): LogEvent {
+function createLogEventWithLevel(level: number): LogEvent {
 	return new LogEvent(level, 'test', [], 'root');
 }
 

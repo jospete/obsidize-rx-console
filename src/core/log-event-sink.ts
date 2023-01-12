@@ -39,7 +39,7 @@ let defaultSink: LogEventSink;
 /**
  * Get a reference to the default root sink used by all Logger instances.
  */
-export function getDefaultSink<T extends LogEvent = LogEvent>(): LogEventSink<T> {
+export function getDefaultLoggerSink<T extends LogEvent = LogEvent>(): LogEventSink<T> {
 
 	if (!defaultSink)
 		defaultSink = new LogEventSink();

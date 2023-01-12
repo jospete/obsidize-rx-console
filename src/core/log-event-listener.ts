@@ -1,6 +1,6 @@
 import { LogEvent } from './log-event';
 import { type LogEventInterceptor } from './log-event-interceptor';
-import { LogEventSink, getDefaultSink } from './log-event-sink';
+import { LogEventSink, getDefaultLoggerSink } from './log-event-sink';
 
 /**
  * Baseline for anything that wants to listen for / respond to events.
@@ -10,7 +10,7 @@ export abstract class LogEventListener<T extends LogEvent = LogEvent> implements
 	private readonly proxy = this.onInterceptLogEvent.bind(this);
 
 	constructor(
-		private readonly source: LogEventSink<T> = getDefaultSink<T>(),
+		private readonly source: LogEventSink<T> = getDefaultLoggerSink<T>(),
 		autoWatch: boolean = true
 	) {
 		this.enabled = autoWatch;

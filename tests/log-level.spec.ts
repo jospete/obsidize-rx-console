@@ -14,7 +14,7 @@ describe('LogLevel', () => {
 				{ level: LogLevel.WARN, value: 'WARN' },
 				{ level: LogLevel.ERROR, value: 'ERROR' },
 				{ level: LogLevel.FATAL, value: 'FATAL' },
-				{ level: 1234, value: 'CUSTOM-LEVEL-1234' }
+				{ level: 1234, value: 'L-1234' }
 			];
 
 			targets.forEach(target => {

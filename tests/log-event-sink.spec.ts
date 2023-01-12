@@ -1,8 +1,8 @@
-import { fromEventPattern, Observable } from 'rxjs';
+import { fromEventPattern, lastValueFrom, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import {
-	getDefaultSink,
+	getDefaultLoggerSink,
 	LogEvent,
 	LogLevel,
 	Logger,
@@ -12,7 +12,7 @@ import {
 describe('LogEventSink', () => {
 
 	it('has a default main instance', () => {
-		expect(getDefaultSink()).toBeTruthy();
+		expect(getDefaultLoggerSink()).toBeTruthy();
 	});
 
 	it('emits emits child logger events on the parent RxConsole instance', async () => {
@@ -22,7 +22,7 @@ describe('LogEventSink', () => {
 		const testMessage = 'a sample log message';
 		const logger = new Logger('MyCustomLogger', sink);
 		const events = sink.asObservable<Observable<LogEvent>>(fromEventPattern);
-		const eventPromise = events.pipe(take(1)).toPromise();
+		const eventPromise = lastValueFrom(events.pipe(take(1)));
 
 		logger.debug(testMessage);
 		const ev = await eventPromise;
@@ -63,7 +63,7 @@ describe('LogEventSink', () => {
 			const events = console2.asObservable<Observable<LogEvent>>(fromEventPattern);
 
 			console.pipeTo(console2);
-			const eventPromise = events.pipe(take(1)).toPromise();
+			const eventPromise = lastValueFrom(events.pipe(take(1)));
 
 			logger.debug(testMessage);
 
