@@ -1,7 +1,7 @@
 # @obsidize/rx-console
 
-A logging library that is more configurable than something like [debug](https://www.npmjs.com/package/debug),
-without the platform locking of something like [winston](https://www.npmjs.com/package/winston).
+A logging library that is more configurable than modules like [debug](https://www.npmjs.com/package/debug),
+without the restrictiveness / platform-locking of modules like [winston](https://www.npmjs.com/package/winston).
 
 #### Highlights
 
@@ -29,10 +29,10 @@ npm install -P -E @obsidize/rx-console
 Context-based loggers can be created like so:
 
 ```typescript
-import { Logger, setDefaultBroadcastEnabled } from '@obsidize/rx-console';
+import { Logger, setDefaultLoggerBroadcastEnabled } from '@obsidize/rx-console';
 
 // turn on default `window.console` usage
-setDefaultBroadcastEnabled(true);
+setDefaultLoggerBroadcastEnabled(true);
 
 class MyServiceThing {
 
@@ -47,23 +47,18 @@ const service = new MyServiceThing();
 service.test(); // 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!
 ```
 
-> "Well that was unnecessary, we could have just used _console.log('test');_ right ...?"
+## Usage (RxJS)
 
-Not exactly -- this approach offers a few advantages:
-
-1. Unlike ```console.log()```, LogEvent instances carry _context_ about where the log came from, so 
-we can infer more useful data in the output like what time the event happened and what class (AKA "logger name") it came from.
-2. This allows us to route events to a **file in cordova**, or to an **http server**, or just **buffer log events in memory**.
-3. This allows us to route events through RxJS operators, which in of itself has many benefits for stream transformation.
+Log events can be redirected to an rxjs stream like so:
 
 ```typescript
 import { Observable, fromEventPattern, inverval } from 'rxjs';
 import { buffer, map } from 'rxjs/operators';
-import { LogEvent, getDefaultSink } from '@obsidize/rx-console';
+import { LogEvent, getDefaultLoggerSink } from '@obsidize/rx-console';
 
 // noop function for example purposes
 const writeToFile = (..._args: any[]) => { };
-const sink = getDefaultSink();
+const sink = getDefaultLoggerSink();
 
 sink.asObservable<Observable<LogEvent>>(fromEventPattern).pipe(
 
@@ -88,10 +83,10 @@ The below snippet can be tested with runkit on NPM.
 
 ```javascript
 var rxConsole = require("@obsidize/rx-console");
-const {Logger, LogLevel, getDefaultSink} = rxConsole;
+const {Logger, LogLevel, getDefaultLoggerSink, setDefaultLoggerBroadcastEnabled} = rxConsole;
 
-getDefaultSink().filter.setMinLevel(LogLevel.DEBUG);
-setDefaultBroadcastEnabled(true);
+getDefaultLoggerSink().filter.setMinLevel(LogLevel.DEBUG);
+setDefaultLoggerBroadcastEnabled(true);
 
 const logger = new Logger('RunKitLogger');
 
@@ -114,7 +109,7 @@ logger.verbose('im obnoxious');
 This module is customizable at each level thanks to generics:
 
 ```typescript
-import { LogEvent, LogEventSink, Logger, getDefaultSink, type LogEventInterceptor } from '@obsidize/rx-console';
+import { LogEvent, LogEventSink, Logger, getDefaultLoggerSink, type LogEventInterceptor } from '@obsidize/rx-console';
 
 class MyCustomLogEvent extends LogEvent {
 
@@ -154,28 +149,12 @@ MyCustomSink.main.onNext.add(ev => {
 });
 
 // NOTE: You can also wire your custom console back into the default main instance
-MyCustomSink.main.pipeTo(getDefaultSink());
+MyCustomSink.main.pipeTo(getDefaultLoggerSink());
 
 const logger = new MyCustomLogger('TestLogger');
 
 logger.info('custom log');
 ```
-
-## Why Did I Make This Module?
-
-[Winston](https://www.npmjs.com/package/winston) 
-and [Bunyan](https://www.npmjs.com/package/bunyan)
-are excellent tools for creating a complex logger heirarchy and routing log traffic to external transports.
-However, they have (completely unnecessary) mandatory dependencies to node-specific things like fs and stream utilities. 
-This may lead one down the rabbit-hole of trying to shim or "fake" these dependencies in order to get all the other 
-benefits of using these logging modules, which in turn leads to bundling pain and misery.
-
-On the other side of the spectrum we have the
-[debug](https://www.npmjs.com/package/debug) 
-and [loglevel](https://www.npmjs.com/package/loglevel) modules, which are super-light-weight browser-compatible loggers with no concept of transports.
-(Honestly if you don't need transport abstractions, consider using one of these)
-
-I needed a middle ground between these two types of modules, and this is the result.
 
 ## API
 
