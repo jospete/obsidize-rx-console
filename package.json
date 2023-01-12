@@ -28,7 +28,7 @@
 		"release:prepare:patch": "npm version patch",
 		"bump": "run-s release:prepare:patch release:publish",
 		"docs": "typedoc ./src/index.ts --out ./docs --excludePrivate",
-		"docs:open": "open-cli \".\\docs\\index.html\""
+		"docs:open": "open-cli ./docs/index.html"
 	},
 	"repository": {
 		"type": "git",
