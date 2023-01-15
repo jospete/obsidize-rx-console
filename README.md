@@ -28,18 +28,31 @@ npm install -P -E @obsidize/rx-console
 The below snippet can be tested with runkit on NPM.
 
 ```javascript
-var {Logger, LogLevel, getPrimaryLoggerTransport} = require('@obsidize/rx-console');
+const {
+	Logger, 
+	LogLevel, 
+	getPrimaryLoggerTransport
+} = require('@obsidize/rx-console');
 
-getPrimaryLoggerTransport() // get a reference to the root log event transport
-	.setFilter(ev => ev.level >= LogLevel.DEBUG) // set custom filter for what events get emitted
-	.setDefaultBroadcastEnabled(true); // turn on default `window.console` usage
+// get a reference to the root log event transport
+getPrimaryLoggerTransport()
+	// set custom filter for what events get emitted
+	.setFilter(ev => ev.level >= LogLevel.DEBUG)
+	// turn on default global `console` variable usage
+	.setDefaultBroadcastEnabled(true);
 
 const logger = new Logger('RunKitLogger');
 
 logger.debug('test');
 // "2021-03-15T21:13:42.356Z [DEBUG] [RunKitLogger] test"
 
-logger.info('some object info: ', { myValueIs: 42, isOptionalParam: true, someOtherValue: 'yep' });
+const someObj = { 
+	myValueIs: 42, 
+	isOptionalParam: true, 
+	someOtherValue: 'yep' 
+};
+
+logger.info('some object info: ', someObj);
 // "2021-03-15T21:13:42.360Z [INFO] [RunKitLogger] some object info: "
 // Object {myValueIs: 42, isOptionalParam: true, someOtherValue: "yep"}
 
@@ -57,11 +70,12 @@ logger.verbose('im obnoxious');
 
 TypeScript usage is virtually identical to vanilla JavaScript.
 
-Here's an example of contextualizing a logger for a class:
+Here's an example of using a logger within the context of a class:
 
 ```typescript
 import { Logger, LogLevel, getPrimaryLoggerTransport } from '@obsidize/rx-console';
 
+// NOTE: this only needs to be done once, as a part of your app's main setup routine
 getPrimaryLoggerTransport() 
 	.setFilter(ev => ev.level >= LogLevel.DEBUG) 
 	.setDefaultBroadcastEnabled(true); 
