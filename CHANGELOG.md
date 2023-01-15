@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.0.x
+
+- Further API redesigns to see how small this library can get while maintaining core functionality
+
+## 4.0.x
+
+- Overhaul core design to be both simpler and more compact
+
 ## 3.1.0
 
 - Add new class ```LogEventAggregator``` to allow for more fluid customization options

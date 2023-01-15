@@ -1,62 +1,48 @@
 import { LogLevel } from './log-level';
-import { LogEvent } from './log-event';
-import { getDefaultLoggerSink } from './globals';
-import { type ConsoleLike } from './console-like';
-import { type LogEventInterceptor } from './log-event-sink';
+import { ConsoleLike } from './console';
+import { LoggerTransport, getPrimaryLoggerTransport } from './logger-transport';
 
-/**
- * Standard method for constucting loggers.
- * Uses ```getDefaultLoggerSink()``` as the default aggregator.
- */
-export class Logger<T extends LogEvent = LogEvent> implements ConsoleLike {
+export class Logger implements ConsoleLike {
 
 	constructor(
 		public readonly name: string,
-		private readonly aggregator: LogEventInterceptor<T> = getDefaultLoggerSink<T>()
+		protected readonly transport: LoggerTransport = getPrimaryLoggerTransport()
 	) {
 	}
 
 	public verbose(message: string, ...params: any[]): void {
-		this.emitWithLevel(LogLevel.VERBOSE, message, params);
+		this.emit(LogLevel.VERBOSE, message, params);
 	}
 
 	public trace(message: string, ...params: any[]): void {
-		this.emitWithLevel(LogLevel.TRACE, message, params);
+		this.emit(LogLevel.TRACE, message, params);
 	}
 
 	public debug(message: string, ...params: any[]): void {
-		this.emitWithLevel(LogLevel.DEBUG, message, params);
+		this.emit(LogLevel.DEBUG, message, params);
 	}
 
 	public log(message: string, ...params: any[]): void {
-		this.emitWithLevel(LogLevel.DEBUG, message, params);
+		this.emit(LogLevel.DEBUG, message, params);
 	}
 
 	public info(message: string, ...params: any[]): void {
-		this.emitWithLevel(LogLevel.INFO, message, params);
+		this.emit(LogLevel.INFO, message, params);
 	}
 
 	public warn(message: string, ...params: any[]): void {
-		this.emitWithLevel(LogLevel.WARN, message, params);
+		this.emit(LogLevel.WARN, message, params);
 	}
 
 	public error(message: string, ...params: any[]): void {
-		this.emitWithLevel(LogLevel.ERROR, message, params);
+		this.emit(LogLevel.ERROR, message, params);
 	}
 
 	public fatal(message: string, ...params: any[]): void {
-		this.emitWithLevel(LogLevel.FATAL, message, params);
+		this.emit(LogLevel.FATAL, message, params);
 	}
 
-	protected createEvent(level: number, message: string, params: any[]): T {
-		return new LogEvent(level, message, params, this.name) as T;
-	}
-
-	private emitWithLevel(level: number, message: string, params: any[]): void {
-		this.emit(this.createEvent(level, message, params));
-	}
-
-	private emit(ev: T): void {
-		this.aggregator.onInterceptLogEvent(ev);
+	protected emit(level: number, message: string, params: any[]): void {
+		this.transport.transmit(level, this.name, message, params);
 	}
 }

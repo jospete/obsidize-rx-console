@@ -6,33 +6,65 @@ without the restrictiveness / platform-locking of modules like [winston](https:/
 #### Highlights
 
 - Only one dependency (tslib to play nice with typescript projects)
-- Compatible on both Browser / NodeJS
-- Compact (~4Kb es5 file)
+- Compatible on anything that runs JavaScript
+- Compact (~3Kb es5 file)
 
 #### Goals
 
 - Allow runtime configuration of log levels
 - Ability to intercept log events, so they can be transported to a persistence source
 - Make no assumptions about the persistence layer (i.e. no dependency declarations that lock this module to node or the browser, like node 'fs' or 'stream' packages)
-- Configurability at each abstraction layer (Event / Sink / Listener)
+- Optional integration with RxJS
+- Configurability at each abstraction layer (example code shown further down)
 
 ## Installation
-
-- npm:
 
 ```bash
 npm install -P -E @obsidize/rx-console
 ```
 
+## Usage (NodeJS / Vanilla JavaScript)
+
+The below snippet can be tested with runkit on NPM.
+
+```javascript
+var {Logger, LogLevel, getPrimaryLoggerTransport} = require('@obsidize/rx-console');
+
+getPrimaryLoggerTransport() // get a reference to the root log event transport
+	.setFilter(ev => ev.level >= LogLevel.DEBUG) // set custom filter for what events get emitted
+	.setDefaultBroadcastEnabled(true); // turn on default `window.console` usage
+
+const logger = new Logger('RunKitLogger');
+
+logger.debug('test');
+// "2021-03-15T21:13:42.356Z [DEBUG] [RunKitLogger] test"
+
+logger.info('some object info: ', { myValueIs: 42, isOptionalParam: true, someOtherValue: 'yep' });
+// "2021-03-15T21:13:42.360Z [INFO] [RunKitLogger] some object info: "
+// Object {myValueIs: 42, isOptionalParam: true, someOtherValue: "yep"}
+
+logger.warn('something unusual happened');
+// "2021-03-15T21:13:42.363Z [WARN] [RunKitLogger] something unusual happened
+
+logger.fatal('EXPLOSIONS?!?!?!');
+// "2021-03-15T21:13:42.366Z [FATAL] [RunKitLogger] EXPLOSIONS?!?!?!"
+
+logger.verbose('im obnoxious');
+// Does not log anything because VERBOSE < DEBUG
+```
+
 ## Usage (TypeScript)
 
-Context-based loggers can be created like so:
+TypeScript usage is virtually identical to vanilla JavaScript.
+
+Here's an example of contextualizing a logger for a class:
 
 ```typescript
-import { Logger, setDefaultLoggerBroadcastEnabled } from '@obsidize/rx-console';
+import { Logger, LogLevel, getPrimaryLoggerTransport } from '@obsidize/rx-console';
 
-// turn on default `window.console` usage
-setDefaultLoggerBroadcastEnabled(true);
+getPrimaryLoggerTransport() 
+	.setFilter(ev => ev.level >= LogLevel.DEBUG) 
+	.setDefaultBroadcastEnabled(true); 
 
 class MyServiceThing {
 
@@ -53,20 +85,34 @@ Log events can be redirected to an rxjs stream like so:
 
 ```typescript
 import { Observable, fromEventPattern, inverval } from 'rxjs';
-import { buffer, map } from 'rxjs/operators';
-import { LogEvent, getDefaultLoggerSink } from '@obsidize/rx-console';
+import { buffer, map, filter } from 'rxjs/operators';
+import { LogEvent, getPrimaryLoggerTransport, stringifyLogEvent } from '@obsidize/rx-console';
 
-// noop function for example purposes
+// no-op function for example purposes
 const writeToFile = (..._args: any[]) => { };
-const sink = getDefaultLoggerSink();
 
-sink.asObservable<Observable<LogEvent>>(fromEventPattern).pipe(
+// combine the buffered events into a single string
+const serializeEvents = (events: LogEvent[]) => {
+	// customize this however you want
+	return events.map(ev => stringifyLogEvent(ev)).join('\n') + '\n';
+};
+
+// Wraps the transport's EventEmitter as an rxjs observable using 
+// the `fromEventPattern` rxjs creator function.
+const eventStream = getPrimaryLoggerTransport()
+	.events() // get a reference to the transport's EventEmitter instance
+	.asObservable<Observable<LogEvent>>(fromEventPattern);
+
+eventStream.pipe(
 
 	// accumulate log events for 5 seconds
 	buffer(interval(5000)),
 
+	// if we didn't get any new logs after 5 seconds, just skip this round
+	filter((events: LogEvent[]) => events.length > 0),
+
 	// stringify and concatenate the buffered events
-	map(bufferedEvents => bufferedEvents.map(e => e.toString()).join('\n'))
+	map((events: LogEvent[]) => serializeEvents(events))
 
 ).subscribe(outputString => {
 
@@ -75,95 +121,63 @@ sink.asObservable<Observable<LogEvent>>(fromEventPattern).pipe(
 });
 ```
 
-## Usage (NodeJS / Vanilla JavaScript)
-
-The same concepts in the TypeScript example also apply to NodeJS / vanilla JS usage.
-
-The below snippet can be tested with runkit on NPM.
-
-```javascript
-var rxConsole = require("@obsidize/rx-console");
-const {Logger, LogLevel, getDefaultLoggerSink, setDefaultLoggerBroadcastEnabled} = rxConsole;
-
-getDefaultLoggerSink().filter.setMinLevel(LogLevel.DEBUG);
-setDefaultLoggerBroadcastEnabled(true);
-
-const logger = new Logger('RunKitLogger');
-
-logger.debug('test');
-// "2021-03-15T21:13:42.356Z [DEBUG] [RunKitLogger] test"
-
-logger.info('some object info: ', { myValueIs: 42, isOptionalParam: true, someOtherValue: 'yep' });
-// "2021-03-15T21:13:42.360Z [INFO] [RunKitLogger] some object info: "
-// Object {myValueIs: 42, isOptionalParam: true, someOtherValue: "yep"}
-
-logger.fatal('EXPLOSIONS?!?!?!');
-// "2021-03-15T21:13:42.363Z [FATAL] [RunKitLogger] EXPLOSIONS?!?!?!"
-
-logger.verbose('im obnoxious');
-// Does not log anything because VERBOSE < DEBUG
-```
-
 ## Custom Extensions
 
-This module is customizable at each level thanks to generics:
+This module is fully customizable at each level.
+
+The below code snippet can be considered a TL;DR of how this module works under the hood.
 
 ```typescript
-import { LogEvent, LogEventSink, Logger, getDefaultLoggerSink, type LogEventInterceptor } from '@obsidize/rx-console';
+import { LogEvent, LoggerTransport, Logger, getPrimaryLoggerTransport } from '@obsidize/rx-console';
 
-class MyCustomLogEvent extends LogEvent {
+// Create a custom event type
+class CustomLogEvent extends LogEvent {
 
 	// Add some special sauce to your custom event instances.
 	specialSauceData: number = 42;
 }
 
-class MyCustomSink extends LogEventSink<MyCustomLogEvent> {
+// Create a custom transport that knows how to create your custom event type
+class CustomTransport extends LoggerTransport {
 
 	// Create a main instance for your loggers to report back to
-	public static readonly main = new MyCustomSink();
+	public static readonly main = new CustomTransport();
+
+	// override to return your custom event type
+	public createEvent(level: number, tag: string, message: string, params: any[]): CustomLogEvent {
+		return new CustomLogEvent(level, tag, message, params);
+	}
 }
 
-class MyCustomLogger extends Logger<MyCustomLogEvent> {
+// Create a custom logger that uses your custom transport as the default
+class CustomLogger extends Logger {
 
 	constructor(
 		name: string,
-		aggregator: LogEventInterceptor<MyCustomLogEvent> = MyCustomSink.main
+		transport: LoggerTransport = CustomTransport.main
 	) {
-		super(name, aggregator);
-	}
-
-	// Override the createEvent() method to generate your custom event type.
-	protected createEvent(level: number, message: string, params: any[]): MyCustomLogEvent {
-		return new MyCustomLogEvent(level, message, params, this.name);
+		super(name, transport);
 	}
 }
 
-MyCustomSink.main.onNext.add(ev => {
+const transport = CustomTransport.main;
 
+transport.events().addListener((ev: CustomLogEvent) => {
 	console.log(ev.message); // 'custom log'
 	console.log(ev.specialSauceData); // 42
-
-	// uses the default output transforms
-	// (or your custom ones if supplied in the MyCustomConsole class)
-	ev.broadcastTo(console);
 });
 
-// NOTE: You can also wire your custom console back into the default main instance
-MyCustomSink.main.pipeTo(getDefaultLoggerSink());
+// NOTE: You can also wire your custom transport back into the default instance
+const primaryTransport = getPrimaryLoggerTransport();
+transport.pipeTo(primaryTransport);
 
-const logger = new MyCustomLogger('TestLogger');
+// you can also break the connection to the default instance later on
+transport.setPipelineEnabled(primaryTransport, false);
 
+const logger = new CustomLogger('TestLogger');
 logger.info('custom log');
 ```
 
 ## API
 
 Source documentation can be found [here](https://jospete.github.io/obsidize-rx-console/)
-
-## Supplemental Notes
-
-It is important to note that this module is only creating and emitting the log data.
-Any logic that has to do with _transporting_ the data (AKA to a file or server) should be considered a separate entity.
-
-Available Transports
-- [@obsidize/rotating-file-stream](https://github.com/jospete/obsidize-rotating-file-stream) - spreads data seamlessly across multiple files in a rotating fashion

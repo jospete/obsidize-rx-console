@@ -1,14 +1,18 @@
-import { Logger, LogEventSink, getDefaultLoggerSink } from '../src';
+import {
+	Logger,
+	LoggerTransport,
+	getPrimaryLoggerTransport
+} from '../src';
 
 describe('Logger', () => {
 
 	it('is the standard way to perform context-based logging in this module', () => {
 
-		const aggregator = new LogEventSink();
-		const logger = new Logger('TestLogger', aggregator);
+		const transport = new LoggerTransport();
+		const logger = new Logger('TestLogger', transport);
 		const eventSpy = jasmine.createSpy('eventSpy');
 
-		aggregator.onNext.add(eventSpy);
+		transport.events().addListener(eventSpy);
 		expect(eventSpy).not.toHaveBeenCalled();
 
 		logger.debug('Hello, World!');
@@ -19,24 +23,24 @@ describe('Logger', () => {
 
 		const logger = new Logger('TestLogger2');
 		const eventSpy = jasmine.createSpy('eventSpy');
-		const defaultSink = getDefaultLoggerSink();
+		const transport = getPrimaryLoggerTransport();
 
-		defaultSink.onNext.add(eventSpy);
+		transport.events().addListener(eventSpy);
 		expect(eventSpy).not.toHaveBeenCalled();
 
 		logger.debug('Hello, World!');
 		expect(eventSpy).toHaveBeenCalled();
 
-		defaultSink.onNext.remove(eventSpy);
+		transport.events().removeListener(eventSpy);
 	});
 
 	it('implements the ConsoleLike interface', () => {
 
-		const sink = new LogEventSink();
-		const logger = new Logger('TestLogger', sink);
+		const transport = new LoggerTransport();
+		const logger = new Logger('TestLogger', transport);
 		const spy = jasmine.createSpy('sinkListener');
 
-		sink.onNext.add(spy);
+		transport.events().addListener(spy);
 
 		expect(() => logger.verbose('verbose')).not.toThrowError();
 		expect(() => logger.trace('trace')).not.toThrowError();

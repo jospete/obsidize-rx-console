@@ -1,22 +1,47 @@
 import { Observable, fromEventPattern, interval } from 'rxjs';
-import { buffer, map } from 'rxjs/operators';
+import { buffer, filter, map } from 'rxjs/operators';
 
 import {
-	LogEvent,
 	LogLevel,
+	LogEvent,
 	Logger,
-	getDefaultLoggerSink,
-	setDefaultLoggerBroadcastEnabled,
-	LogEventSink,
-	type LogEventInterceptor
+	LoggerTransport,
+	getPrimaryLoggerTransport,
+	stringifyLogEvent
 } from '../src';
 
 describe('README Examples', () => {
 
-	it('can execute the TLDR example', () => {
+	it('can execute the vanilla JS example', () => {
 
-		// turn on default `window.console` usage
-		setDefaultLoggerBroadcastEnabled(true);
+		getPrimaryLoggerTransport() // get a reference to the root log event transport
+			.setFilter(ev => ev.level >= LogLevel.DEBUG) // set custom filter for what events get emitted
+			.setDefaultBroadcastEnabled(true); // turn on default `window.console` usage
+
+		const logger = new Logger('RunKitLogger');
+
+		logger.debug('test');
+		// "2021-03-15T21:13:42.356Z [DEBUG] [RunKitLogger] test"
+
+		logger.info('some object info: ', { myValueIs: 42, isOptionalParam: true, someOtherValue: 'yep' });
+		// "2021-03-15T21:13:42.360Z [INFO] [RunKitLogger] some object info: "
+		// Object {myValueIs: 42, isOptionalParam: true, someOtherValue: "yep"}
+
+		logger.warn('something unusual happened');
+		// "2021-03-15T21:13:42.363Z [WARN] [RunKitLogger] something unusual happened
+
+		logger.fatal('EXPLOSIONS?!?!?!');
+		// "2021-03-15T21:13:42.366Z [FATAL] [RunKitLogger] EXPLOSIONS?!?!?!"
+
+		logger.verbose('im obnoxious');
+		// Does not log anything because VERBOSE < DEBUG
+	});
+
+	it('can execute the typescript example', () => {
+
+		getPrimaryLoggerTransport() // get a reference to the root log event transport
+			.setFilter(ev => ev.level >= LogLevel.DEBUG) // set custom filter for what events get emitted
+			.setDefaultBroadcastEnabled(true); // turn on default `window.console` usage
 
 		class MyServiceThing {
 
@@ -33,17 +58,31 @@ describe('README Examples', () => {
 
 	it('can execute the rxjs example', () => {
 
-		// noop function for example purposes
+		// no-op function for example purposes
 		const writeToFile = (..._args: any[]) => { };
-		const sink = getDefaultLoggerSink();
 
-		sink.asObservable<Observable<LogEvent>>(fromEventPattern).pipe(
+		// combine the buffered events into a single string
+		const serializeEvents = (events: LogEvent[]) => {
+			// customize this however you want
+			return events.map(ev => stringifyLogEvent(ev)).join('\n') + '\n';
+		};
+
+		// Wraps the transport's EventEmitter as an rxjs observable using 
+		// the `fromEventPattern` rxjs creator function.
+		const eventStream = getPrimaryLoggerTransport()
+			.events() // get a reference to the transport's EventEmitter instance
+			.asObservable<Observable<LogEvent>>(fromEventPattern);
+
+		eventStream.pipe(
 
 			// accumulate log events for 5 seconds
 			buffer(interval(5000)),
 
+			// if we didn't get any new logs after 5 seconds, just skip this round
+			filter((events: LogEvent[]) => events.length > 0),
+
 			// stringify and concatenate the buffered events
-			map(bufferedEvents => bufferedEvents.map(e => e.toString()).join('\n'))
+			map((events: LogEvent[]) => serializeEvents(events))
 
 		).subscribe(outputString => {
 
@@ -52,71 +91,53 @@ describe('README Examples', () => {
 		});
 	});
 
-	it('can execute the vanilla JS example', () => {
+	it('can execute the customization example', () => {
 
-		getDefaultLoggerSink().filter.setMinLevel(LogLevel.DEBUG);
-		setDefaultLoggerBroadcastEnabled(true);
-
-		const logger = new Logger('RunKitLogger');
-
-		logger.debug('test');
-		// "2021-03-15T21:13:42.356Z [DEBUG] [RunKitLogger] test"
-
-		logger.info('some object info: ', { myValueIs: 42, isOptionalParam: true, someOtherValue: 'yep' });
-		// "2021-03-15T21:13:42.360Z [INFO] [RunKitLogger] some object info: "
-		// Object {myValueIs: 42, isOptionalParam: true, someOtherValue: "yep"}
-
-		logger.fatal('EXPLOSIONS?!?!?!');
-		// "2021-03-15T21:13:42.363Z [FATAL] [RunKitLogger] EXPLOSIONS?!?!?!"
-
-		logger.verbose('im obnoxious');
-		// Does not log anything because VERBOSE < DEBUG
-	});
-
-	it('can execute the custom extensions example', () => {
-
-		class MyCustomLogEvent extends LogEvent {
+		// Create a custom event type
+		class CustomLogEvent extends LogEvent {
 
 			// Add some special sauce to your custom event instances.
 			specialSauceData: number = 42;
 		}
 
-		class MyCustomSink extends LogEventSink<MyCustomLogEvent> {
+		// Create a custom transport that knows how to create your custom event type
+		class CustomTransport extends LoggerTransport {
 
 			// Create a main instance for your loggers to report back to
-			public static readonly main = new MyCustomSink();
+			public static readonly main = new CustomTransport();
+
+			// override to return your custom event type
+			public createEvent(level: number, tag: string, message: string, params: any[]): CustomLogEvent {
+				return new CustomLogEvent(level, tag, message, params);
+			}
 		}
 
-		class MyCustomLogger extends Logger<MyCustomLogEvent> {
+		// Create a custom logger that uses your custom transport as the default
+		class CustomLogger extends Logger {
 
 			constructor(
 				name: string,
-				aggregator: LogEventInterceptor<MyCustomLogEvent> = MyCustomSink.main
+				transport: LoggerTransport = CustomTransport.main
 			) {
-				super(name, aggregator);
-			}
-
-			// Override the createEvent() method to generate your custom event type.
-			protected createEvent(level: number, message: string, params: any[]): MyCustomLogEvent {
-				return new MyCustomLogEvent(level, message, params, this.name);
+				super(name, transport);
 			}
 		}
 
-		MyCustomSink.main.onNext.add(ev => {
+		const transport = CustomTransport.main;
 
+		transport.events().addListener((ev: CustomLogEvent) => {
 			console.log(ev.message); // 'custom log'
 			console.log(ev.specialSauceData); // 42
-
-			// uses the default output transforms
-			// (or your custom ones if supplied in the MyCustomConsole class)
-			ev.broadcastTo(console);
 		});
 
-		// NOTE: You can also wire your custom console back into the default main instance
-		MyCustomSink.main.pipeTo(getDefaultLoggerSink());
+		// NOTE: You can also wire your custom transport back into the default instance
+		const primaryTransport = getPrimaryLoggerTransport();
+		transport.pipeTo(primaryTransport);
 
-		const logger = new MyCustomLogger('TestLogger');
+		// you can also break the connection to the default instance later on
+		transport.setPipelineEnabled(primaryTransport, false);
 
+		const logger = new CustomLogger('TestLogger');
 		logger.info('custom log');
 	});
 });

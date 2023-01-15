@@ -1,8 +1,5 @@
 import { LogLevel } from './log-level';
 
-/**
- * Watered-down version of the default browser window.console object.
- */
 export interface ConsoleLike {
 	verbose?(message: string, ...params: any[]): void;
 	trace(message: string, ...params: any[]): void;
@@ -15,25 +12,25 @@ export interface ConsoleLike {
 }
 
 export function callConsoleDynamic(
-	console: ConsoleLike,
+	target: ConsoleLike,
 	level: number,
 	message: string,
 	params: any[]
 ): void {
 
 	// Only use .error(), .warn(), and .log() to reduce chance of 
-	// reference errors on the given console object.
+	// reference errors on the given target object.
 	// (also reduces overall cost of this operation)
 
 	if (level >= LogLevel.ERROR) {
-		console.error(message, ...params);
+		target.error(message, ...params);
 		return;
 	}
 
 	if (level >= LogLevel.WARN) {
-		console.warn(message, ...params);
+		target.warn(message, ...params);
 		return;
 	}
 
-	console.log(message, ...params);
+	target.log(message, ...params);
 }

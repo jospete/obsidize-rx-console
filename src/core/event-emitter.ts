@@ -1,60 +1,44 @@
 import { isFunction } from './utility';
 
-/**
- * Callback type for EventEmitter instances.
- */
 export type EventEmitterDelegate<T> = (value: T) => any;
 
-/**
- * General interface for emitting event values.
- */
-export interface EventEmitterLike<T> {
-	emit(ev: T): void;
-}
-
-/**
- * Alias for a generator function similar to (or equal to) the rxjs fromEventPattern() function.
- * We have this set as an alias so as to avoid dragging in rxjs as a required dependency.
- */
 export type ObservableEventPatternGenerator<T> = (
 	addHandler: (listener: any) => any,
 	removeHandler: (listener: any) => any
 ) => T;
 
-/**
- * Simple event emitter utility used to track callbacks in this module.
- * Can also be transformed into an Observable type using the asObservable() method.
- * 
- * Note that this utility class does not have anything to do directly with
- * log events, and is just a baseline observable / observer pattern.
- */
-export class EventEmitter<T> implements EventEmitterLike<T> {
+export class EventEmitter<T> {
 
 	private readonly mListeners: Set<EventEmitterDelegate<T>> = new Set();
 
-	public get count(): number {
+	public get listenerCount(): number {
 		return this.mListeners.size;
 	}
-
-	public emit(value: T): void {
+	public emit<R extends T = T>(value: R): void {
 		this.mListeners.forEach(listener => listener(value));
 	}
 
-	public has(listener: EventEmitterDelegate<T>): boolean {
-		return this.mListeners.has(listener);
+	public hasListener<R extends T = T>(listener: EventEmitterDelegate<R>): boolean {
+		return this.mListeners.has(listener as any);
 	}
 
-	public add(listener: EventEmitterDelegate<T>): this {
-		if (isFunction(listener)) this.mListeners.add(listener);
+	public addListener<R extends T = T>(listener: EventEmitterDelegate<R>): this {
+		if (isFunction(listener)) this.mListeners.add(listener as any);
 		return this;
 	}
 
-	public remove(listener: EventEmitterDelegate<T>): this {
-		this.mListeners.delete(listener);
+	public removeListener<R extends T = T>(listener: EventEmitterDelegate<R>): this {
+		this.mListeners.delete(listener as any);
 		return this;
 	}
 
-	public clear(): this {
+	public toggleListener<R extends T = T>(listener: EventEmitterDelegate<R>, active: boolean): this {
+		if (active) this.addListener(listener);
+		else this.removeListener(listener);
+		return this;
+	}
+
+	public removeAllListeners(): this {
 		this.mListeners.clear();
 		return this;
 	}
@@ -63,8 +47,8 @@ export class EventEmitter<T> implements EventEmitterLike<T> {
 		generator: ObservableEventPatternGenerator<ObservableType>
 	): ObservableType {
 		return generator(
-			listener => this.add(listener),
-			listener => this.remove(listener)
+			listener => this.addListener(listener),
+			listener => this.removeListener(listener)
 		);
 	}
 }

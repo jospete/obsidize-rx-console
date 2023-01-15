@@ -1,55 +1,54 @@
-import { type ConsoleLike, callConsoleDynamic } from './console-like';
-import { type LogEventLike, stringifyLogEvent, stringifyLogEventBaseValues } from './log-event-like';
+import { callConsoleDynamic, ConsoleLike } from './console';
+import { getLogLevelName } from './log-level';
+import { stringifyAndJoin } from './utility';
 
-/**
- * Single event instance, typically spawned by a LogEventSubject.
- */
+export interface LogEventLike {
+	readonly level: number;
+	readonly tag: string;
+	readonly message: string;
+	readonly params: any[];
+	readonly timestamp: number;
+}
+
+export type LogEventSerializer = (ev: LogEventLike) => string;
+export type LogEventFilterPredicate = (ev: LogEventLike) => boolean;
+
+export function stringifyLogEventBaseValues(ev: LogEventLike): string {
+	if (!ev) return (ev + '');
+	const { tag, level, message, timestamp } = ev;
+	const timestampJson = new Date(timestamp).toJSON();
+	const levelStr = getLogLevelName(level);
+	return `${timestampJson} [${levelStr}] [${tag}] ${message}`;
+}
+
+export function stringifyLogEvent(ev: LogEventLike): string {
+	if (!ev) return (ev + '');
+	const baseMessage = stringifyLogEventBaseValues(ev);
+	const paramsStr = stringifyAndJoin(ev.params);
+	return baseMessage + paramsStr;
+}
+
+export function broadcastLogEvent(
+	ev: LogEventLike,
+	serialize: LogEventSerializer = stringifyLogEventBaseValues,
+	target: ConsoleLike = console
+): void {
+	callConsoleDynamic(
+		target,
+		ev.level,
+		serialize(ev),
+		ev.params
+	);
+}
+
 export class LogEvent implements LogEventLike {
 
 	constructor(
 		public readonly level: number,
-		public readonly message: string,
-		public readonly params: any[],
 		public readonly tag: string,
+		public readonly message: string,
+		public readonly params: any[] = [],
 		public readonly timestamp: number = Date.now()
 	) {
-	}
-
-	/**
-	 * Default behaviour for handling events.
-	 * Sends events to the global ```window.console``` instance.
-	 */
-	public static performDefaultBroadcast<E extends LogEvent>(ev: E): void {
-		ev.broadcastTo(console);
-	}
-
-	/**
-	 * Send this event to a ConsoleLike structure to be printed to some stdout stream.
-	 * 
-	 * Override this in a sub-class to cusotmize output data.
-	 */
-	public broadcastTo(console: ConsoleLike): void {
-		callConsoleDynamic(console, this.level, this.getBroadcastMessage(), this.params);
-	}
-
-	/**
-	 * Generates a message string based on the constructor inputs.
-	 * Does NOT include 'params' values in the output - this is the prefix string
-	 * to be given as the first argument to ConsoleLike structures.
-	 * 
-	 * Override this in a sub-class to cusotmize output data.
-	 */
-	public getBroadcastMessage(): string {
-		return stringifyLogEventBaseValues(this);
-	}
-
-	/**
-	 * Generates a loggable string based on the constructor inputs.
-	 * Includes 'params' values in the output.
-	 * 
-	 * Override this in a sub-class to cusotmize output data.
-	 */
-	public toString(): string {
-		return stringifyLogEvent(this);
 	}
 }

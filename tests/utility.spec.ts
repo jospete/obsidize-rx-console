@@ -1,4 +1,4 @@
-import { stringifyOptionalParams, stringifySafe, truncate } from '../src';
+import { stringifyAndJoin, stringify, truncate } from '../src';
 
 describe('utility', () => {
 
@@ -10,21 +10,21 @@ describe('utility', () => {
 		});
 	});
 
-	describe('stringifySafe', () => {
+	describe('stringify', () => {
 
 		it('attempts to stringify an object, but does not explode on error', () => {
-			expect(stringifySafe({ hello: 'test' })).toBe('{"hello":"test"}');
+			expect(stringify({ hello: 'test' })).toBe('{"hello":"test"}');
 			const circularObject = { parent: null };
 			circularObject.parent = circularObject as any;
-			expect(stringifySafe(circularObject)).toBe('[object Object]');
+			expect(stringify(circularObject)).toBe('[object Object]');
 		});
 	});
 
-	describe('stringifyOptionalParams()', () => {
+	describe('stringifyAndJoin()', () => {
 
 		it('uses the join string and max length when they are given', () => {
-			expect(stringifyOptionalParams([{ test: true }, 42])).toEqual(' :: {"test":true} :: 42');
-			expect(stringifyOptionalParams([{ test: true }, 42], ' | ', 5)).toEqual(' | {"tes... | 42');
+			expect(stringifyAndJoin([{ test: true }, 42])).toEqual(' :: {"test":true} :: 42');
+			expect(stringifyAndJoin([{ test: true }, 42], ' | ', 5)).toEqual(' | {"tes... | 42');
 		});
 	});
 });

@@ -2,27 +2,87 @@ import { EventEmitter } from '../src';
 
 describe('EventEmitter', () => {
 
-	describe('general usage', () => {
+	it('starts with no listeners attached', () => {
+		const emitter = new EventEmitter<any>();
+		expect(emitter.listenerCount).toBe(0);
+	});
 
-		it('properly tracks callbacks for mass broadcasting', () => {
+	it('can add a listener', () => {
+		const emitter = new EventEmitter<any>();
+		const listener = () => { };
+		emitter.addListener(listener);
+		expect(emitter.listenerCount).toBe(1);
+	});
 
-			const emitter = new EventEmitter<any>();
+	it('does not add duplicate listeners', () => {
+		const emitter = new EventEmitter<any>();
+		const listener = () => { };
+		emitter.addListener(listener);
+		emitter.addListener(listener);
+		expect(emitter.listenerCount).toBe(1);
+	});
 
-			expect(() => emitter.add(null as any)).not.toThrowError();
-			expect(emitter.count).toBe(0);
-			expect(() => emitter.emit('test')).not.toThrowError();
+	it('can remove a listener', () => {
+		const emitter = new EventEmitter<any>();
+		const listener = () => { };
+		emitter.addListener(listener);
+		expect(emitter.listenerCount).toBe(1);
+		emitter.removeListener(listener);
+		expect(emitter.listenerCount).toBe(0);
+	});
 
-			const sampleFn = jasmine.createSpy('testEmitterSpy');
-			expect(() => emitter.add(sampleFn)).not.toThrowError();
-			expect(emitter.count).toBe(1);
-			expect(emitter.has(sampleFn)).toBe(true);
-			expect(sampleFn).not.toHaveBeenCalled();
-			expect(() => emitter.emit('test')).not.toThrowError();
-			expect(sampleFn).toHaveBeenCalledTimes(1);
+	it('does nothing when removing a listener that does not exist', () => {
+		const emitter = new EventEmitter<any>();
+		const listener = () => { };
+		emitter.addListener(listener);
+		expect(emitter.listenerCount).toBe(1);
+		emitter.removeListener(listener);
+		emitter.removeListener(listener);
+		expect(emitter.listenerCount).toBe(0);
+	});
 
-			emitter.clear();
-			expect(() => emitter.emit('test')).not.toThrowError();
-			expect(sampleFn).toHaveBeenCalledTimes(1);
-		});
+	it('does not add listener values which are not a function', () => {
+		const emitter = new EventEmitter<any>();
+		emitter.addListener(null as any);
+		emitter.addListener('' as any);
+		emitter.addListener({} as any);
+		emitter.addListener(true as any);
+		emitter.addListener(0 as any);
+		emitter.addListener(1 as any);
+		expect(emitter.listenerCount).toBe(0);
+	});
+
+	it('emits to all listeners exactly once per emit() call', () => {
+
+		const spyCount = 4;
+		const emitter = new EventEmitter<any>();
+		const spies: jasmine.Spy<jasmine.Func>[] = [];
+
+		for (let i = 0; i < spyCount; i++) {
+			emitter.addListener(spies[i] = jasmine.createSpy(`spy${i}`));
+		}
+
+		expect(emitter.listenerCount).toBe(spyCount);
+
+		emitter.emit('test');
+
+		for (const spy of spies) {
+			expect(spy).toHaveBeenCalledOnceWith('test');
+		}
+	});
+
+	it('can remove all listeners at once', () => {
+
+		const spyCount = 3;
+		const emitter = new EventEmitter<any>();
+
+		for (let i = 0; i < spyCount; i++) {
+			emitter.addListener(() => { });
+		}
+
+		expect(emitter.listenerCount).toBe(spyCount);
+
+		emitter.removeAllListeners();
+		expect(emitter.listenerCount).toBe(0);
 	});
 });
