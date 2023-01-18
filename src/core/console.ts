@@ -1,5 +1,9 @@
 import { LogLevel } from './log-level';
 
+/**
+ * Baseline interface shared between Logger class and the standard
+ * `console` javascript global.
+ */
 export interface ConsoleLike {
 	verbose?(message: string, ...params: any[]): void;
 	trace(message: string, ...params: any[]): void;
@@ -11,6 +15,10 @@ export interface ConsoleLike {
 	fatal?(message: string, ...params: any[]): void;
 }
 
+/**
+ * Calls the appropriate method on the given target,
+ * based on the given level (See `LogLevel` for presets).
+ */
 export function callConsoleDynamic(
 	target: ConsoleLike,
 	level: number,

@@ -11,19 +11,19 @@ function performDefaultBroadcast(ev: LogEvent): void {
 	broadcastLogEvent(ev);
 }
 
+/**
+ * Core mechanism that allows many `Logger` instances to report back to a shared resource.
+ * 
+ * Primary entrypoints:
+ * - `events()` - the shared `EventEmitter` of this tranport
+ * - `setFilter(...)` - determines which events get emitted
+ * - `setDefaultBroadcastEnabled(...)` - toggles global `console` variable usage
+ */
 export class LoggerTransport {
 
 	private readonly mEvents: EventEmitter<LogEvent> = new EventEmitter<LogEvent>();
 	private readonly interceptProxy = this.onInterceptLogEvent.bind(this);
 	private mFilter: LogEventFilterPredicate = tautology;
-
-	protected onInterceptLogEvent(ev: LogEvent): void {
-		if (this.accepts(ev)) this.mEvents.emit(ev);
-	}
-
-	protected createEvent(level: number, tag: string, message: string, params: any[]): LogEvent {
-		return new LogEvent(level, tag, message, params);
-	}
 
 	public events(): EventEmitter<LogEvent> {
 		return this.mEvents;
@@ -61,10 +61,24 @@ export class LoggerTransport {
 		this.onInterceptLogEvent(ev);
 		return this;
 	}
+
+	protected createEvent(level: number, tag: string, message: string, params: any[]): LogEvent {
+		return new LogEvent(level, tag, message, params);
+	}
+
+	protected onInterceptLogEvent(ev: LogEvent): void {
+		if (this.accepts(ev)) this.mEvents.emit(ev);
+	}
 }
 
 let mDefaultTransport: LoggerTransport | undefined = undefined;
 
+/**
+ * Root level transport used by all `Logger` instances by default.
+ * 
+ * Defined as a getter function rather than as a static property on `LoggerTransport`
+ * to avoid potential conflicts with static members in sub-classes of `LoggerTransport`.
+ */
 export function getPrimaryLoggerTransport(): LoggerTransport {
 	return (mDefaultTransport === undefined)
 		? (mDefaultTransport = new LoggerTransport())

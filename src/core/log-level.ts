@@ -1,3 +1,8 @@
+/**
+ * Default levels provided by this module.
+ * Values are spaced out so more granular levels
+ * can be defined between them if desired.
+ */
 export const LogLevel = {
 	VERBOSE: 100,
 	TRACE: 200,
@@ -12,6 +17,9 @@ const namesByLevel = new Map<number, string>(
 	Object.entries(LogLevel).map(([k, v]) => [v, k])
 );
 
+/**
+ * Converts the given level to a string for serialization purposes.
+ */
 export function getLogLevelName(level: number): string {
 	return namesByLevel.get(level) || ('L-' + level);
 }
