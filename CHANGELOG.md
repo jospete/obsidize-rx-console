@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.1.0
+
+- Refactor Logger transport to be configurable after creation
+- Add enabled flag to LoggerTransport
+- Streamline LoggerTransport piping interface
+
 ## 5.0.x
 
 - Further API redesigns to see how small this library can get while maintaining core functionality
