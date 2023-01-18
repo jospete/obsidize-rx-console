@@ -15,6 +15,16 @@
 <li><a href="../modules.html">@obsidize/rx-console</a></li>
 <li><a href="Logger.html">Logger</a></li></ul>
 <h1>Class Logger</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>Stand-in for <code>console</code> object usage.</p>
+<p>Instead of calling console.log() / console.warn() / etc. and losing
+the information immediately to the javascript runtime, this will
+pack the information in the call into a <code>LogEvent</code>, which can then
+have zero or more post-processing routines run on it, and be emitted
+to zero or more event observers in the parent <code>LoggerTransport</code>.</p>
+<p>In general, there should be at least one new <code>Logger</code> instance per
+file and / or scope in your project.</p>
+</div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
@@ -24,7 +34,7 @@
 <ul class="tsd-hierarchy">
 <li><a href="../interfaces/ConsoleLike.html" class="tsd-signature-type" data-tsd-kind="Interface">ConsoleLike</a></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/348bb1e/src/core/logger.ts#L5">core/logger.ts:5</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4faa522/src/core/logger.ts#L17">core/logger.ts:17</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -67,19 +77,19 @@
 <h5>transport: <a href="LoggerTransport.html" class="tsd-signature-type" data-tsd-kind="Class">LoggerTransport</a><span class="tsd-signature-symbol"> = ...</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Logger.html" class="tsd-signature-type" data-tsd-kind="Class">Logger</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/348bb1e/src/core/logger.ts#L7">core/logger.ts:7</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4faa522/src/core/logger.ts#L19">core/logger.ts:19</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="name" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagReadonly">Readonly</code> <span>name</span><a href="#name" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/348bb1e/src/core/logger.ts#L8">core/logger.ts:8</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4faa522/src/core/logger.ts#L20">core/logger.ts:20</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a id="transport" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <code class="tsd-tag ts-flagReadonly">Readonly</code> <span>transport</span><a href="#transport" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">transport<span class="tsd-signature-symbol">:</span> <a href="LoggerTransport.html" class="tsd-signature-type" data-tsd-kind="Class">LoggerTransport</a><span class="tsd-signature-symbol"> = ...</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/348bb1e/src/core/logger.ts#L9">core/logger.ts:9</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4faa522/src/core/logger.ts#L21">core/logger.ts:21</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="debug" class="tsd-anchor"></a>
@@ -97,7 +107,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/ConsoleLike.html">ConsoleLike</a>.<a href="../interfaces/ConsoleLike.html#debug">debug</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/348bb1e/src/core/logger.ts#L21">core/logger.ts:21</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4faa522/src/core/logger.ts#L33">core/logger.ts:33</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="emit" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>emit</span><a href="#emit" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
@@ -114,7 +124,7 @@
 <h5>params: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/348bb1e/src/core/logger.ts#L45">core/logger.ts:45</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4faa522/src/core/logger.ts#L57">core/logger.ts:57</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="error" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>error</span><a href="#error" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -130,7 +140,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/ConsoleLike.html">ConsoleLike</a>.<a href="../interfaces/ConsoleLike.html#error">error</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/348bb1e/src/core/logger.ts#L37">core/logger.ts:37</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4faa522/src/core/logger.ts#L49">core/logger.ts:49</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="fatal" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>fatal</span><a href="#fatal" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -146,7 +156,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/ConsoleLike.html">ConsoleLike</a>.<a href="../interfaces/ConsoleLike.html#fatal">fatal</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/348bb1e/src/core/logger.ts#L41">core/logger.ts:41</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4faa522/src/core/logger.ts#L53">core/logger.ts:53</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="info" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>info</span><a href="#info" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -162,7 +172,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/ConsoleLike.html">ConsoleLike</a>.<a href="../interfaces/ConsoleLike.html#info">info</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/348bb1e/src/core/logger.ts#L29">core/logger.ts:29</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4faa522/src/core/logger.ts#L41">core/logger.ts:41</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="log" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>log</span><a href="#log" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -178,7 +188,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/ConsoleLike.html">ConsoleLike</a>.<a href="../interfaces/ConsoleLike.html#log">log</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/348bb1e/src/core/logger.ts#L25">core/logger.ts:25</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4faa522/src/core/logger.ts#L37">core/logger.ts:37</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="trace" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>trace</span><a href="#trace" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -194,7 +204,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/ConsoleLike.html">ConsoleLike</a>.<a href="../interfaces/ConsoleLike.html#trace">trace</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/348bb1e/src/core/logger.ts#L17">core/logger.ts:17</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4faa522/src/core/logger.ts#L29">core/logger.ts:29</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="verbose" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>verbose</span><a href="#verbose" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -210,7 +220,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/ConsoleLike.html">ConsoleLike</a>.<a href="../interfaces/ConsoleLike.html#verbose">verbose</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/348bb1e/src/core/logger.ts#L13">core/logger.ts:13</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4faa522/src/core/logger.ts#L25">core/logger.ts:25</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="warn" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>warn</span><a href="#warn" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -226,7 +236,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/ConsoleLike.html">ConsoleLike</a>.<a href="../interfaces/ConsoleLike.html#warn">warn</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/348bb1e/src/core/logger.ts#L33">core/logger.ts:33</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/4faa522/src/core/logger.ts#L45">core/logger.ts:45</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
