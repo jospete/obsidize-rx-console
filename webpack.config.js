@@ -1,14 +1,11 @@
 const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
 	entry: './src/index.ts',
 	mode: 'production',
 	target: 'node',
-	externals: [
-		'tslib',
-		'rxjs',
-		'rxjs/operators'
-	],
+	externals: [],
 	module: {
 		rules: [
 			{
@@ -19,7 +16,17 @@ module.exports = {
 		],
 	},
 	resolve: {
-		extensions: ['.tsx', '.ts', '.js'],
+		extensions: ['.ts'],
+	},
+	optimization: {
+		minimize: true,
+		minimizer: [
+			new TerserPlugin({
+				terserOptions: {
+					keep_classnames: true
+				}
+			})
+		],
 	},
 	output: {
 		filename: 'es5.js',
