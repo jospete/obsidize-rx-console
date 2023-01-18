@@ -1,5 +1,5 @@
-import { tautology } from './utility';
-import { EventEmitter } from './event-emitter';
+import { isFunction, tautology } from './utility';
+import { EventEmitter, EventEmitterDelegate } from './event-emitter';
 
 import {
 	LogEvent,
@@ -22,38 +22,72 @@ function performDefaultBroadcast(ev: LogEvent): void {
 export class LoggerTransport {
 
 	private readonly mEvents: EventEmitter<LogEvent> = new EventEmitter<LogEvent>();
-	private readonly interceptProxy = this.onInterceptLogEvent.bind(this);
+	private readonly interceptProxy: EventEmitterDelegate<LogEvent> = this.onInterceptLogEvent.bind(this);
 	private mFilter: LogEventFilterPredicate = tautology;
+	private mEnabled: boolean = true;
 
 	public events(): EventEmitter<LogEvent> {
 		return this.mEvents;
 	}
 
 	public accepts(ev: LogEvent): boolean {
-		return this.mFilter(ev);
+		return this.mEnabled && this.filterAccepts(ev);
+	}
+
+	public isEnabled(): boolean {
+		return this.mEnabled;
+	}
+
+	public setEnabled(enabled: boolean): this {
+		this.mEnabled = !!enabled;
+		return this;
+	}
+
+	public filterAccepts(ev: LogEvent): boolean {
+		return !!this.mFilter(ev);
+	}
+
+	public setFilter(value: LogEventFilterPredicate | null): this {
+		this.mFilter = isFunction(value) ? value! : tautology;
+		return this;
 	}
 
 	public pipeTo(other: LoggerTransport): this {
-		return this.setPipelineEnabled(other, true);
+		this.mEvents.addListener(other.interceptProxy);
+		return this;
 	}
 
-	public setFilter(value: LogEventFilterPredicate): this {
-		this.mFilter = value;
+	public unpipeFrom(other: LoggerTransport): this {
+		this.mEvents.removeListener(other.interceptProxy);
 		return this;
+	}
+
+	public pipeToDefault(): this {
+		return this.pipeTo(getPrimaryLoggerTransport());
+	}
+
+	public unpipeFromDefault(): this {
+		return this.unpipeFrom(getPrimaryLoggerTransport());
 	}
 
 	public isDefaultBroadcastEnabled(): boolean {
-		return this.events().hasListener(performDefaultBroadcast);
+		return this.mEvents.hasListener(performDefaultBroadcast);
+	}
+
+	public enableDefaultBroadcast(): this {
+		this.mEvents.addListener(performDefaultBroadcast);
+		return this;
+	}
+
+	public disableDefaultBroadcast(): this {
+		this.mEvents.removeListener(performDefaultBroadcast);
+		return this;
 	}
 
 	public setDefaultBroadcastEnabled(enabled: boolean): this {
-		this.events().toggleListener(performDefaultBroadcast, enabled);
-		return this;
-	}
-
-	public setPipelineEnabled(other: LoggerTransport, enabled: boolean): this {
-		this.events().toggleListener(other.interceptProxy, enabled);
-		return this;
+		return enabled
+			? this.enableDefaultBroadcast()
+			: this.disableDefaultBroadcast();
 	}
 
 	public transmit(level: number, tag: string, message: string, params: any[]): this {

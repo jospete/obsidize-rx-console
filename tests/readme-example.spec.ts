@@ -51,6 +51,7 @@ describe('README Examples', () => {
 		// NOTE: this only needs to be done once, as a part of your app's main setup routine
 		getPrimaryLoggerTransport()
 			.setFilter(ev => ev.level >= LogLevel.DEBUG)
+			// can also be fed in a 'prod' flag from your app
 			.setDefaultBroadcastEnabled(true);
 
 		class MyServiceThing {
@@ -72,7 +73,7 @@ describe('README Examples', () => {
 		const writeToFile = (..._args: any[]) => { };
 
 		// combine the buffered events into a single string
-		const serializeEvents = (events: LogEvent[]) => {
+		const serializeEvents = (events: LogEvent[]): string => {
 			// customize this however you want
 			return events.map(ev => stringifyLogEvent(ev)).join('\n') + '\n';
 		};
@@ -127,7 +128,7 @@ describe('README Examples', () => {
 
 			constructor(
 				name: string,
-				transport: LoggerTransport = CustomTransport.main
+				transport: CustomTransport = CustomTransport.main
 			) {
 				super(name, transport);
 			}
@@ -141,13 +142,12 @@ describe('README Examples', () => {
 		});
 
 		// NOTE: You can also wire your custom transport back into the default instance
-		const primaryTransport = getPrimaryLoggerTransport();
-		transport.pipeTo(primaryTransport);
-
-		// you can also break the connection to the default instance later on
-		transport.setPipelineEnabled(primaryTransport, false);
+		transport.pipeToDefault();
 
 		const logger = new CustomLogger('TestLogger');
 		logger.info('custom log');
+
+		// you can also break the connection to the default instance later on
+		transport.unpipeFromDefault();
 	});
 });

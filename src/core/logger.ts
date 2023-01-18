@@ -18,8 +18,13 @@ export class Logger implements ConsoleLike {
 
 	constructor(
 		public readonly name: string,
-		protected readonly transport: LoggerTransport = getPrimaryLoggerTransport()
+		public transport: LoggerTransport = getPrimaryLoggerTransport()
 	) {
+	}
+
+	public use(transport: LoggerTransport): this {
+		this.transport = transport;
+		return this;
 	}
 
 	public verbose(message: string, ...params: any[]): void {

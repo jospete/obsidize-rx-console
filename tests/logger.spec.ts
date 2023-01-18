@@ -53,4 +53,14 @@ describe('Logger', () => {
 
 		expect(spy).toHaveBeenCalledTimes(8);
 	});
+
+	it('can swap out its transport after creation', () => {
+
+		const transport = new LoggerTransport();
+		const transport2 = new LoggerTransport();
+		const logger = new Logger('TestLogger', transport);
+
+		logger.use(transport2);
+		expect(logger.transport).toBe(transport2);
+	});
 });

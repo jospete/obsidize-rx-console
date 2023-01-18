@@ -3,6 +3,24 @@ import { LogEvent, Logger, LoggerTransport, LogLevel } from '../src';
 
 describe('LoggerTransport', () => {
 
+	it('can use setFilter() and setEnabled() to customize acceptance behavior', () => {
+
+		const transport = new LoggerTransport()
+			.setFilter(ev => ev.level >= LogLevel.INFO)
+			.setEnabled(false);
+
+		const ev = new LogEvent(LogLevel.DEBUG, 'test-event', 'some stuff');
+		expect(transport.accepts(ev)).toBe(false);
+
+		transport.setFilter(null);
+		expect(transport.accepts(ev)).toBe(false);
+		expect(transport.isEnabled()).toBe(false);
+
+		transport.setEnabled(1 as any);
+		expect(transport.accepts(ev)).toBe(true);
+		expect(transport.isEnabled()).toBe(true);
+	});
+
 	describe('setDefaultBroadcastEnabled()', () => {
 
 		it('registers the default window.console broadcast function', async () => {

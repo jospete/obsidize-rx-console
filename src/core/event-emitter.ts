@@ -60,12 +60,6 @@ export class EventEmitter<T> {
 		return this;
 	}
 
-	public toggleListener<R extends T = T>(listener: EventEmitterDelegate<R>, active: boolean): this {
-		if (active) this.addListener(listener);
-		else this.removeListener(listener);
-		return this;
-	}
-
 	public asObservable<ObservableType>(
 		generator: ObservableEventPatternGenerator<ObservableType>
 	): ObservableType {
