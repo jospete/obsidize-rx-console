@@ -8,7 +8,7 @@ function range(size: number): number[] {
 
 describe('utility', () => {
 
-	describe('truncate', () => {
+	describe('truncate()', () => {
 
 		it('shortens the length of strings that exceed the given target length', () => {
 			expect(truncate('hello', 5)).toBe('hello');
@@ -16,7 +16,7 @@ describe('utility', () => {
 		});
 	});
 
-	describe('jsonStringifySafe', () => {
+	describe('jsonStringifySafe()', () => {
 
 		it('attempts to stringify an object, but does not explode on error', () => {
 			expect(jsonStringifySafe({ hello: 'test' })).toBe('{"hello":"test"}');
@@ -26,7 +26,7 @@ describe('utility', () => {
 		});
 	});
 
-	describe('stringify', () => {
+	describe('stringify()', () => {
 
 		it('stringifies the given value, and truncates the result', () => {
 			expect(stringify({ hello: 'test' })).toBe('{"hello":"test"}');

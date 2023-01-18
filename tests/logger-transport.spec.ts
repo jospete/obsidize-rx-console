@@ -3,7 +3,7 @@ import { LogEvent, Logger, LoggerTransport, LogLevel } from '../src';
 
 describe('LoggerTransport', () => {
 
-	describe('setDefaultBroadcastEnabled', () => {
+	describe('setDefaultBroadcastEnabled()', () => {
 
 		it('registers the default window.console broadcast function', async () => {
 
@@ -18,7 +18,7 @@ describe('LoggerTransport', () => {
 		});
 	});
 
-	describe('pipeTo', () => {
+	describe('pipeTo()', () => {
 
 		it('can route events to other instances', async () => {
 

@@ -1,19 +1,16 @@
-import { callConsoleDynamic, Logger, LoggerTransport, LogLevel } from '../src';
+import { callConsoleDynamic, ConsoleLike, Logger, LoggerTransport, LogLevel } from '../src';
 
-class MockConsole extends Logger {
-
-	constructor(name: string = 'MockConsole', transport: LoggerTransport = new LoggerTransport()) {
-		super(name, transport);
-	}
+function createMockConsole(): ConsoleLike {
+	return new Logger('MockConsole', new LoggerTransport());
 }
 
 describe('ConsoleLike', () => {
 
-	describe('callConsoleDynamic', () => {
+	describe('callConsoleDynamic()', () => {
 
 		it('calls error on levels that meet or exceed "error" value', () => {
 
-			const mockConsole = new MockConsole();
+			const mockConsole = createMockConsole();
 			spyOn(mockConsole, 'error').and.callThrough();
 
 			callConsoleDynamic(mockConsole, LogLevel.WARN, 'test warn', []);
@@ -34,7 +31,7 @@ describe('ConsoleLike', () => {
 
 		it('calls warn on levels inbetween "warn" and "error"', () => {
 
-			const mockConsole = new MockConsole();
+			const mockConsole = createMockConsole();
 			spyOn(mockConsole, 'warn').and.callThrough();
 
 			callConsoleDynamic(mockConsole, LogLevel.FATAL, 'test FATAL', []);
@@ -55,7 +52,7 @@ describe('ConsoleLike', () => {
 
 		it('calls log on levels below "warn"', () => {
 
-			const mockConsole = new MockConsole();
+			const mockConsole = createMockConsole();
 			spyOn(mockConsole, 'log').and.callThrough();
 
 			callConsoleDynamic(mockConsole, LogLevel.WARN, 'test warn', []);
