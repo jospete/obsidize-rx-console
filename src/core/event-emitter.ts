@@ -38,7 +38,7 @@ export class EventEmitter<T> {
 	}
 
 	public emit<R extends T = T>(value: R): void {
-		for (const listener of this.mListeners.values()) listener(value);
+		this.mListeners.forEach(listener => listener(value));
 	}
 
 	public hasListener<R extends T = T>(listener: EventEmitterDelegate<R>): boolean {
