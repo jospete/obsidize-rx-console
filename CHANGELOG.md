@@ -1,4 +1,8 @@
 # Changelog
+## 5.2.0
+
+- Add LogEventGuard and LogEventGuardContext constructs to encapsulate log event filtering logic
+- Refactor Logger and LoggerTransport classes to extend LogEventGuardContext so they can share the same type of event filtering functionality
 
 ## 5.1.0
 
