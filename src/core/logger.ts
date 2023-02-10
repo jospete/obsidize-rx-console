@@ -1,6 +1,8 @@
 import { LogLevel } from './log-level';
 import { ConsoleLike } from './console';
 import { LoggerTransport, getPrimaryLoggerTransport } from './logger-transport';
+import { LogEventGuardContext } from './log-event-guard-context';
+import { LogEvent } from './log-event';
 
 /**
  * Stand-in for `console` object usage.
@@ -14,12 +16,13 @@ import { LoggerTransport, getPrimaryLoggerTransport } from './logger-transport';
  * In general, there should be at least one new `Logger` instance per
  * file and / or scope in your project.
  */
-export class Logger implements ConsoleLike {
+export class Logger extends LogEventGuardContext implements ConsoleLike {
 
 	constructor(
 		public readonly name: string,
 		public transport: LoggerTransport = getPrimaryLoggerTransport()
 	) {
+		super();
 	}
 
 	public use(transport: LoggerTransport): this {
@@ -59,7 +62,16 @@ export class Logger implements ConsoleLike {
 		this.emit(LogLevel.FATAL, message, params);
 	}
 
+	// default to using the transport's creator function
+	// can be customized in sub-classes
+	protected createEvent(level: number, message: string, params: any[]): LogEvent {
+		return this.transport.createEvent(level, this.name, message, params);
+	}
+
+	// can be customized in sub-classes
 	protected emit(level: number, message: string, params: any[]): void {
-		this.transport.transmit(level, this.name, message, params);
+		const ev = this.createEvent(level, message, params);
+		if (this.accepts(ev))
+			this.transport.transmit(ev);
 	}
 }

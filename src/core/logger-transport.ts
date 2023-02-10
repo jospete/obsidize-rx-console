@@ -1,11 +1,6 @@
-import { isFunction, tautology } from './utility';
 import { EventEmitter, EventEmitterDelegate } from './event-emitter';
-
-import {
-	LogEvent,
-	LogEventFilterPredicate,
-	broadcastLogEvent
-} from './log-event';
+import { LogEvent, broadcastLogEvent } from './log-event';
+import { LogEventGuardContext } from './log-event-guard-context';
 
 function performDefaultBroadcast(ev: LogEvent): void {
 	broadcastLogEvent(ev);
@@ -19,37 +14,13 @@ function performDefaultBroadcast(ev: LogEvent): void {
  * - `setFilter(...)` - determines which events get emitted
  * - `setDefaultBroadcastEnabled(...)` - toggles global `console` variable usage
  */
-export class LoggerTransport {
+export class LoggerTransport extends LogEventGuardContext {
 
 	private readonly mEvents: EventEmitter<LogEvent> = new EventEmitter<LogEvent>();
-	private readonly interceptProxy: EventEmitterDelegate<LogEvent> = this.onInterceptLogEvent.bind(this);
-	private mFilter: LogEventFilterPredicate = tautology;
-	private mEnabled: boolean = true;
+	private readonly interceptProxy: EventEmitterDelegate<LogEvent> = this.transmit.bind(this);
 
 	public events(): EventEmitter<LogEvent> {
 		return this.mEvents;
-	}
-
-	public accepts(ev: LogEvent): boolean {
-		return this.mEnabled && this.filterAccepts(ev);
-	}
-
-	public isEnabled(): boolean {
-		return this.mEnabled;
-	}
-
-	public setEnabled(enabled: boolean): this {
-		this.mEnabled = !!enabled;
-		return this;
-	}
-
-	public filterAccepts(ev: LogEvent): boolean {
-		return !!this.mFilter(ev);
-	}
-
-	public setFilter(value: LogEventFilterPredicate | null): this {
-		this.mFilter = isFunction(value) ? value! : tautology;
-		return this;
 	}
 
 	public pipeTo(other: LoggerTransport): this {
@@ -90,18 +61,12 @@ export class LoggerTransport {
 			: this.disableDefaultBroadcast();
 	}
 
-	public transmit(level: number, tag: string, message: string, params: any[]): this {
-		const ev = this.createEvent(level, tag, message, params);
-		this.onInterceptLogEvent(ev);
-		return this;
-	}
-
-	protected createEvent(level: number, tag: string, message: string, params: any[]): LogEvent {
-		return new LogEvent(level, tag, message, params);
-	}
-
-	protected onInterceptLogEvent(ev: LogEvent): void {
+	public transmit(ev: LogEvent): void {
 		if (this.accepts(ev)) this.mEvents.emit(ev);
+	}
+
+	public createEvent(level: number, context: string, message: string, params: any[]): LogEvent {
+		return new LogEvent(level, context, message, params);
 	}
 }
 

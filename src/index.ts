@@ -9,6 +9,13 @@ export {
 	EventEmitterDelegate,
 	ObservableEventPatternGenerator
 } from './core/event-emitter';
+export { 
+	LogEventGuard,
+	LogEventGuardMode
+} from './core/log-event-guard';
+export {
+	LogEventGuardContext
+} from './core/log-event-guard-context';
 export {
 	ConsoleLike,
 	callConsoleDynamic

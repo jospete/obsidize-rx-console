@@ -1,7 +1,8 @@
 import {
 	Logger,
 	LoggerTransport,
-	getPrimaryLoggerTransport
+	getPrimaryLoggerTransport,
+	LogLevel
 } from '../src';
 
 describe('Logger', () => {
@@ -62,5 +63,21 @@ describe('Logger', () => {
 
 		logger.use(transport2);
 		expect(logger.transport).toBe(transport2);
+	});
+
+	it('can have a custom filter applied', () => {
+
+		const spy = jasmine.createSpy('sinkListener');
+		const transport = new LoggerTransport();
+		const logger = new Logger('TestLogger', transport)
+			.setFilter(ev => ev.level >= LogLevel.INFO);
+
+		transport.events().addListener(spy);
+		logger.trace('should not emit trace');
+		logger.debug('should not emit debug');
+		logger.info('should emit info');
+		logger.warn('should emit warn');
+
+		expect(spy).toHaveBeenCalledTimes(2);
 	});
 });
