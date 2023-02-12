@@ -31,7 +31,7 @@
 <ul class="tsd-hierarchy">
 <li><span class="target">LoggerTransport</span></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/db1a4ad/src/core/logger-transport.ts#L17">core/logger-transport.ts:17</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/logger-transport.ts#L13">core/logger-transport.ts:13</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -56,6 +56,7 @@
 <a href="LoggerTransport.html#isEnabled" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>is<wbr/>Enabled</span></a>
 <a href="LoggerTransport.html#pipeTo" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>pipe<wbr/>To</span></a>
 <a href="LoggerTransport.html#pipeToDefault" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>pipe<wbr/>To<wbr/>Default</span></a>
+<a href="LoggerTransport.html#send" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>send</span></a>
 <a href="LoggerTransport.html#setDefaultBroadcastEnabled" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Default<wbr/>Broadcast<wbr/>Enabled</span></a>
 <a href="LoggerTransport.html#setEnabled" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Enabled</span></a>
 <a href="LoggerTransport.html#setFilter" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Filter</span></a>
@@ -79,7 +80,7 @@
 <div class="tsd-signature">guard<span class="tsd-signature-symbol">:</span> <a href="LogEventGuard.html" class="tsd-signature-type" data-tsd-kind="Class">LogEventGuard</a><span class="tsd-signature-symbol"> = ...</span></div><aside class="tsd-sources">
 <p>Inherited from <a href="LogEventGuardContext.html">LogEventGuardContext</a>.<a href="LogEventGuardContext.html#guard">guard</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/db1a4ad/src/core/log-event-guard-context.ts#L9">core/log-event-guard-context.ts:9</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/log-event-guard-context.ts#L9">core/log-event-guard-context.ts:9</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="accepts" class="tsd-anchor"></a>
@@ -87,6 +88,9 @@
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 <li class="tsd-signature tsd-anchor-link" id="accepts.accepts-1">accepts<span class="tsd-signature-symbol">(</span>ev<span class="tsd-signature-symbol">: </span><a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#accepts.accepts-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Returns true if the underlying guard accepts the given event
+based on its current mode and custom filter function (if any).</p>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
@@ -95,12 +99,15 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="LogEventGuardContext.html">LogEventGuardContext</a>.<a href="LogEventGuardContext.html#accepts">accepts</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/db1a4ad/src/core/log-event-guard-context.ts#L26">core/log-event-guard-context.ts:26</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/log-event-guard-context.ts#L23">core/log-event-guard-context.ts:23</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="createEvent" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>create<wbr/>Event</span><a href="#createEvent" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="createEvent.createEvent-1">create<wbr/>Event<span class="tsd-signature-symbol">(</span>level<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, context<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a><a href="#createEvent.createEvent-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Default creator function used by the <code>Logger</code> class.
+Can be customized in sub-classes of LoggerTransport.</p>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
@@ -114,7 +121,7 @@
 <h5>params: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/db1a4ad/src/core/logger-transport.ts#L68">core/logger-transport.ts:68</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/logger-transport.ts#L65">core/logger-transport.ts:65</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="disableDefaultBroadcast" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>disable<wbr/>Default<wbr/>Broadcast</span><a href="#disableDefaultBroadcast" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -122,7 +129,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <a href="LoggerTransport.html" class="tsd-signature-type" data-tsd-kind="Class">LoggerTransport</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/db1a4ad/src/core/logger-transport.ts#L53">core/logger-transport.ts:53</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/logger-transport.ts#L50">core/logger-transport.ts:50</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="enableDefaultBroadcast" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>enable<wbr/>Default<wbr/>Broadcast</span><a href="#enableDefaultBroadcast" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -130,7 +137,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <a href="LoggerTransport.html" class="tsd-signature-type" data-tsd-kind="Class">LoggerTransport</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/db1a4ad/src/core/logger-transport.ts#L48">core/logger-transport.ts:48</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/logger-transport.ts#L45">core/logger-transport.ts:45</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="events" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>events</span><a href="#events" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -138,7 +145,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <a href="EventEmitter.html" class="tsd-signature-type" data-tsd-kind="Class">EventEmitter</a><span class="tsd-signature-symbol">&lt;</span><a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/db1a4ad/src/core/logger-transport.ts#L22">core/logger-transport.ts:22</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/logger-transport.ts#L19">core/logger-transport.ts:19</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="isDefaultBroadcastEnabled" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Default<wbr/>Broadcast<wbr/>Enabled</span><a href="#isDefaultBroadcastEnabled" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -146,16 +153,19 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/db1a4ad/src/core/logger-transport.ts#L44">core/logger-transport.ts:44</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/logger-transport.ts#L41">core/logger-transport.ts:41</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="isEnabled" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Enabled</span><a href="#isEnabled" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 <li class="tsd-signature tsd-anchor-link" id="isEnabled.isEnabled-1">is<wbr/>Enabled<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#isEnabled.isEnabled-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Returns true if the underling guard is set to any mode
+other than BLOCK_ALL.</p>
+</div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="LogEventGuardContext.html">LogEventGuardContext</a>.<a href="LogEventGuardContext.html#isEnabled">isEnabled</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/db1a4ad/src/core/log-event-guard-context.ts#L11">core/log-event-guard-context.ts:11</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/log-event-guard-context.ts#L15">core/log-event-guard-context.ts:15</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="pipeTo" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>pipe<wbr/>To</span><a href="#pipeTo" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -168,7 +178,7 @@
 <h5>other: <a href="LoggerTransport.html" class="tsd-signature-type" data-tsd-kind="Class">LoggerTransport</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="LoggerTransport.html" class="tsd-signature-type" data-tsd-kind="Class">LoggerTransport</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/db1a4ad/src/core/logger-transport.ts#L26">core/logger-transport.ts:26</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/logger-transport.ts#L23">core/logger-transport.ts:23</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="pipeToDefault" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>pipe<wbr/>To<wbr/>Default</span><a href="#pipeToDefault" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -176,7 +186,24 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <a href="LoggerTransport.html" class="tsd-signature-type" data-tsd-kind="Class">LoggerTransport</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/db1a4ad/src/core/logger-transport.ts#L36">core/logger-transport.ts:36</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/logger-transport.ts#L33">core/logger-transport.ts:33</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="send" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>send</span><a href="#send" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="send.send-1">send<span class="tsd-signature-symbol">(</span>ev<span class="tsd-signature-symbol">: </span><a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#send.send-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>If the transport can accept the given event, sends the event
+to all listeners in the <code>events()</code> EventEmitter instance.
+If the event is <em>not</em> accepted, this does nothing.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>ev: <a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/logger-transport.ts#L74">core/logger-transport.ts:74</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="setDefaultBroadcastEnabled" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Default<wbr/>Broadcast<wbr/>Enabled</span><a href="#setDefaultBroadcastEnabled" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -189,12 +216,20 @@
 <h5>enabled: <span class="tsd-signature-type">boolean</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="LoggerTransport.html" class="tsd-signature-type" data-tsd-kind="Class">LoggerTransport</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/db1a4ad/src/core/logger-transport.ts#L58">core/logger-transport.ts:58</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/logger-transport.ts#L55">core/logger-transport.ts:55</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="setEnabled" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Enabled</span><a href="#setEnabled" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 <li class="tsd-signature tsd-anchor-link" id="setEnabled.setEnabled-1">set<wbr/>Enabled<span class="tsd-signature-symbol">(</span>enabled<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="LoggerTransport.html" class="tsd-signature-type" data-tsd-kind="Class">LoggerTransport</a><a href="#setEnabled.setEnabled-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Set the enabled state of this instance, regarding whether or not it will
+emit any log events. When true, emits events as normal; when false,
+suppresses all events.</p>
+<p>The main benefit of this is to temorarily suppress all events on this
+instance, while keeping the currently set filter in-tact.</p>
+<p>e.g. If this instance has a custom filter set, and then is disabled,
+when this is re-enabled later it will continue using the custom filter.</p>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
@@ -203,12 +238,17 @@
 <h4 class="tsd-returns-title">Returns <a href="LoggerTransport.html" class="tsd-signature-type" data-tsd-kind="Class">LoggerTransport</a></h4><aside class="tsd-sources">
 <p>Inherited from <a href="LogEventGuardContext.html">LogEventGuardContext</a>.<a href="LogEventGuardContext.html#setEnabled">setEnabled</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/db1a4ad/src/core/log-event-guard-context.ts#L15">core/log-event-guard-context.ts:15</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/log-event-guard-context.ts#L50">core/log-event-guard-context.ts:50</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="setFilter" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Filter</span><a href="#setFilter" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 <li class="tsd-signature tsd-anchor-link" id="setFilter.setFilter-1">set<wbr/>Filter<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="../types/LogEventFilterPredicate.html" class="tsd-signature-type" data-tsd-kind="Type alias">LogEventFilterPredicate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="LoggerTransport.html" class="tsd-signature-type" data-tsd-kind="Class">LoggerTransport</a><a href="#setFilter.setFilter-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Customize which log events should be ignored by this instance.
+If the given predicate returns truthy, the event will be passed along
+to any registered listeners or transports; otherwise it will be suppressed.</p>
+<p>Pass <code>null</code> to reset the filter.</p>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
@@ -217,12 +257,18 @@
 <h4 class="tsd-returns-title">Returns <a href="LoggerTransport.html" class="tsd-signature-type" data-tsd-kind="Class">LoggerTransport</a></h4><aside class="tsd-sources">
 <p>Inherited from <a href="LogEventGuardContext.html">LogEventGuardContext</a>.<a href="LogEventGuardContext.html#setFilter">setFilter</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/db1a4ad/src/core/log-event-guard-context.ts#L21">core/log-event-guard-context.ts:21</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/log-event-guard-context.ts#L34">core/log-event-guard-context.ts:34</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="transmit" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>transmit</span><a href="#transmit" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 <li class="tsd-signature tsd-anchor-link" id="transmit.transmit-1">transmit<span class="tsd-signature-symbol">(</span>ev<span class="tsd-signature-symbol">: </span><a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#transmit.transmit-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Alias for <code>send</code></p>
+
+<h3>Deprecated</h3><ul>
+<li>use <code>send</code> instead, this will be removed in the next major release.</li>
+</ul>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
@@ -230,7 +276,7 @@
 <h5>ev: <a href="LogEvent.html" class="tsd-signature-type" data-tsd-kind="Class">LogEvent</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/db1a4ad/src/core/logger-transport.ts#L64">core/logger-transport.ts:64</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/logger-transport.ts#L82">core/logger-transport.ts:82</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="unpipeFrom" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>unpipe<wbr/>From</span><a href="#unpipeFrom" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -243,7 +289,7 @@
 <h5>other: <a href="LoggerTransport.html" class="tsd-signature-type" data-tsd-kind="Class">LoggerTransport</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="LoggerTransport.html" class="tsd-signature-type" data-tsd-kind="Class">LoggerTransport</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/db1a4ad/src/core/logger-transport.ts#L31">core/logger-transport.ts:31</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/logger-transport.ts#L28">core/logger-transport.ts:28</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="unpipeFromDefault" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>unpipe<wbr/>From<wbr/>Default</span><a href="#unpipeFromDefault" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -251,7 +297,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <a href="LoggerTransport.html" class="tsd-signature-type" data-tsd-kind="Class">LoggerTransport</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/db1a4ad/src/core/logger-transport.ts#L40">core/logger-transport.ts:40</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/jospete/obsidize-rx-console/blob/0524305/src/core/logger-transport.ts#L37">core/logger-transport.ts:37</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -287,6 +333,7 @@
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="LoggerTransport.html#isEnabled" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>is<wbr/>Enabled</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="LoggerTransport.html#pipeTo" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>pipe<wbr/>To</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="LoggerTransport.html#pipeToDefault" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>pipe<wbr/>To<wbr/>Default</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="LoggerTransport.html#send" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>send</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="LoggerTransport.html#setDefaultBroadcastEnabled" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Default<wbr/>Broadcast<wbr/>Enabled</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="LoggerTransport.html#setEnabled" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Enabled</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="LoggerTransport.html#setFilter" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Filter</a></li>
