@@ -9,7 +9,7 @@ without the restrictiveness / platform-locking of modules like [winston](https:/
 
 - Zero dependencies
 - Compatible on anything that runs JavaScript
-- Compact (~4Kb es5 file)
+- Compact (~5Kb es5 file)
 
 #### Goals
 
@@ -136,6 +136,34 @@ eventStream.pipe(
 	// Dump the buffer to a file, or send to a server, or wherever.
 	writeToFile(outputString);
 });
+```
+
+## Runtime Event Filtering
+
+Both `LoggerTransport` and `Logger` extend the `LogEventGuardContext` class,
+which allows you to suppress events both on the transport side 
+(shared between loggers that use the transport) and on the logger side (one-off filtering).
+
+```typescript
+import { Logger, LogLevel, getPrimaryLoggerTransport } from '@obsidize/rx-console';
+
+getPrimaryLoggerTransport()
+	.setFilter(ev => ev.level >= LogLevel.DEBUG);
+
+const logger1 = new Logger('TestLogger')
+	.setFilter(ev => ev.level >= LogLevel.TRACE);
+
+const logger2 = new Logger('TestLogger')
+	.setFilter(ev => ev.level >= LogLevel.INFO);
+
+logger1.trace('trace test'); // suppressed because the transport's guard caught it
+logger1.debug('debug test'); // "debug test"
+
+logger2.debug('debug test'); // suppressed because this logger's guard caught it
+logger2.info('info test'); // "info test"
+
+logger2.setEnabled(false);
+logger2.error('BOOM!!!'); // suppressed because the logger is disabled
 ```
 
 ## Custom Extensions
