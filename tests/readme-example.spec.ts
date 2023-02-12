@@ -67,6 +67,30 @@ describe('README Examples', () => {
 		service.test(); // 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!
 	});
 
+	it('can execute the event filtering example', () => {
+
+		getPrimaryLoggerTransport()
+			.setFilter(ev => ev.level >= LogLevel.DEBUG);
+
+		const logger1 = new Logger('TestLogger')
+			.setFilter(ev => ev.level >= LogLevel.TRACE);
+
+		const logger2 = new Logger('TestLogger')
+			.setFilter(ev => ev.level >= LogLevel.INFO);
+
+		logger1.trace('trace test'); // suppressed because the transport's guard caught it
+		logger1.debug('debug test'); // "debug test"
+
+		logger2.debug('debug test'); // suppressed because this logger's guard caught it
+		logger2.info('info test'); // "info test"
+
+		logger2.setEnabled(false);
+		logger2.error('BOOM!!!'); // suppressed because the logger is disabled
+
+		getPrimaryLoggerTransport()
+			.setFilter(null); // reset the primary transport's filter to not break other tests
+	});
+
 	it('can execute the rxjs example', () => {
 
 		// no-op function for example purposes
