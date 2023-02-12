@@ -19,6 +19,7 @@ describe('LoggerTransport', () => {
 		transport.setEnabled(1 as any);
 		expect(transport.accepts(ev)).toBe(true);
 		expect(transport.isEnabled()).toBe(true);
+		expect(() => transport.setEnabled(transport.isEnabled())).not.toThrowError();
 	});
 
 	describe('setDefaultBroadcastEnabled()', () => {
@@ -55,6 +56,17 @@ describe('LoggerTransport', () => {
 			expect(ev.tag).toBe(logger.name);
 			expect(ev.level).toBe(LogLevel.DEBUG);
 			expect(ev.message).toBe(testMessage);
+		});
+		
+		it('does nothing when passed a reference to itself (help avoid infinite loops)', async () => {
+
+			const transport = new LoggerTransport();
+			const testMessage = 'a sample log message';
+			const logger = new Logger('MyCustomLogger', transport);
+
+			transport.pipeTo(transport);
+
+			expect(() => logger.debug(testMessage)).not.toThrowError();
 		});
 	});
 });

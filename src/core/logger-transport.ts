@@ -1,10 +1,7 @@
 import { EventEmitter, EventEmitterDelegate } from './event-emitter';
-import { LogEvent, broadcastLogEvent } from './log-event';
+import { LogEvent, LogEventAction, broadcastLogEvent } from './log-event';
 import { LogEventGuardContext } from './log-event-guard-context';
-
-function performDefaultBroadcast(ev: LogEvent): void {
-	broadcastLogEvent(ev);
-}
+import { isFunction } from './utility';
 
 /**
  * Core mechanism that allows many `Logger` instances to report back to a shared resource.
@@ -17,19 +14,20 @@ function performDefaultBroadcast(ev: LogEvent): void {
 export class LoggerTransport extends LogEventGuardContext {
 
 	private readonly mEvents: EventEmitter<LogEvent> = new EventEmitter<LogEvent>();
-	private readonly interceptProxy: EventEmitterDelegate<LogEvent> = this.transmit.bind(this);
+	private readonly mInterceptProxy: EventEmitterDelegate<LogEvent> = this.send.bind(this);
+	private readonly mDefaultBroadcastDelegate: LogEventAction = broadcastLogEvent;
 
 	public events(): EventEmitter<LogEvent> {
 		return this.mEvents;
 	}
 
 	public pipeTo(other: LoggerTransport): this {
-		this.mEvents.addListener(other.interceptProxy);
+		if (other !== this) this.mEvents.addListener(other.mInterceptProxy);
 		return this;
 	}
 
 	public unpipeFrom(other: LoggerTransport): this {
-		this.mEvents.removeListener(other.interceptProxy);
+		this.mEvents.removeListener(other.mInterceptProxy);
 		return this;
 	}
 
@@ -42,16 +40,16 @@ export class LoggerTransport extends LogEventGuardContext {
 	}
 
 	public isDefaultBroadcastEnabled(): boolean {
-		return this.mEvents.hasListener(performDefaultBroadcast);
+		return this.mEvents.hasListener(this.mDefaultBroadcastDelegate);
 	}
 
 	public enableDefaultBroadcast(): this {
-		this.mEvents.addListener(performDefaultBroadcast);
+		this.mEvents.addListener(this.mDefaultBroadcastDelegate);
 		return this;
 	}
 
 	public disableDefaultBroadcast(): this {
-		this.mEvents.removeListener(performDefaultBroadcast);
+		this.mEvents.removeListener(this.mDefaultBroadcastDelegate);
 		return this;
 	}
 
@@ -61,12 +59,29 @@ export class LoggerTransport extends LogEventGuardContext {
 			: this.disableDefaultBroadcast();
 	}
 
-	public transmit(ev: LogEvent): void {
+	/**
+	 * Default creator function used by the `Logger` class.
+	 * Can be customized in sub-classes of LoggerTransport.
+	 */
+	public createEvent(level: number, context: string, message: string, params: any[]): LogEvent {
+		return new LogEvent(level, context, message, params);
+	}
+
+	/**
+	 * If the transport can accept the given event, sends the event
+	 * to all listeners in the `events()` EventEmitter instance.
+	 * If the event is _not_ accepted, this does nothing.
+	 */
+	public send(ev: LogEvent): void {
 		if (this.accepts(ev)) this.mEvents.emit(ev);
 	}
 
-	public createEvent(level: number, context: string, message: string, params: any[]): LogEvent {
-		return new LogEvent(level, context, message, params);
+	/**
+	 * Alias for `send`
+	 * @deprecated - use `send` instead, this will be removed in the next major release.
+	 */
+	public transmit(ev: LogEvent): void {
+		this.send(ev);
 	}
 }
 
@@ -79,7 +94,7 @@ let mDefaultTransport: LoggerTransport | undefined = undefined;
  * to avoid potential conflicts with static members in sub-classes of `LoggerTransport`.
  */
 export function getPrimaryLoggerTransport(): LoggerTransport {
-	return (mDefaultTransport === undefined)
-		? (mDefaultTransport = new LoggerTransport())
-		: mDefaultTransport;
+	if (mDefaultTransport === undefined)
+		mDefaultTransport = new LoggerTransport();
+	return mDefaultTransport;
 }

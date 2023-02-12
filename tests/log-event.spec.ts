@@ -43,6 +43,20 @@ describe('LogEvent', () => {
 		});
 	});
 
+	describe('stringify()', () => {
+
+		const now = new Date();
+		const sampleEvent1 = new LogEvent(LogLevel.DEBUG, 'custom-tag', 'test message', [{test: true}], now.getTime());
+
+		it('uses stringifyLogEvent', () => {
+			expect(LogEvent.stringify(sampleEvent1)).toEqual(stringifyLogEvent(sampleEvent1));
+		});
+
+		it('uses stringifyLogEventBaseValues', () => {
+			expect(LogEvent.stringify(sampleEvent1, true)).toEqual(stringifyLogEventBaseValues(sampleEvent1));
+		});
+	});
+
 	describe('broadcastLogEvent()', () => {
 
 		it('can accept a custom console-like target and serializer', () => {

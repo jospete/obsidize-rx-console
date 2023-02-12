@@ -22,10 +22,15 @@ export {
 } from './core/console';
 export {
 	LogLevel,
-	getLogLevelName
+	getLogLevelName,
+	CustomLevelNameDelegate,
+	LogLevelNameConfig,
+	LogLevelNameMap,
+	getSharedLogLevelNameMap
 } from './core/log-level';
 export {
 	LogEventLike,
+	LogEventAction,
 	LogEventSerializer,
 	LogEventFilterPredicate,
 	LogEvent,

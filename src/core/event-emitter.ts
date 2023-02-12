@@ -60,6 +60,13 @@ export class EventEmitter<T> {
 		return this;
 	}
 
+	/**
+	 * Transform this instance into an observable stream, using the given
+	 * generator function.
+	 * 
+	 * This caters mainly towards the fromEventPattern creator function
+	 * provided by RxJS.
+	 */
 	public asObservable<ObservableType>(
 		generator: ObservableEventPatternGenerator<ObservableType>
 	): ObservableType {

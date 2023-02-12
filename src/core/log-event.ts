@@ -1,5 +1,5 @@
 import { callConsoleDynamic, ConsoleLike } from './console';
-import { getLogLevelName } from './log-level';
+import { getSharedLogLevelNameMap } from './log-level';
 import { stringifyAndJoin } from './utility';
 
 /**
@@ -14,6 +14,7 @@ export interface LogEventLike {
 	readonly timestamp: number;
 }
 
+export type LogEventAction = (ev: LogEventLike) => void;
 export type LogEventSerializer = (ev: LogEventLike) => string;
 export type LogEventFilterPredicate = (ev: LogEventLike) => boolean;
 
@@ -24,7 +25,7 @@ export function stringifyLogEventBaseValues(ev: LogEventLike): string {
 	if (!ev) return (ev + '');
 	const { tag, level, message, timestamp } = ev;
 	const timestampJson = new Date(timestamp).toJSON();
-	const levelStr = getLogLevelName(level);
+	const levelStr = getSharedLogLevelNameMap().get(level);
 	return `${timestampJson} [${levelStr}] [${tag}] ${message}`;
 }
 
@@ -76,5 +77,12 @@ export class LogEvent implements LogEventLike {
 		public readonly params: any[] = [],
 		public readonly timestamp: number = Date.now()
 	) {
+	}
+
+	/**
+	 * Convenience api akin to JSON.stringify().
+	 */
+	public static stringify(ev: LogEventLike, ignoreParams?: boolean): string {
+		return ignoreParams ? stringifyLogEventBaseValues(ev) : stringifyLogEvent(ev);
 	}
 }

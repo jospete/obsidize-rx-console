@@ -72,6 +72,6 @@ export class Logger extends LogEventGuardContext implements ConsoleLike {
 	protected emit(level: number, message: string, params: any[]): void {
 		const ev = this.createEvent(level, message, params);
 		if (this.accepts(ev))
-			this.transport.transmit(ev);
+			this.transport.send(ev);
 	}
 }
