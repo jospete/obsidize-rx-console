@@ -1,4 +1,13 @@
 # Changelog
+
+## 5.3.0
+
+- Add ability to customize log level names at runtime via `LogLevelNameMap.main.update(...)`
+- Add `LogEvent.stringify(...)` and `LogEvent.toString()` convenience options
+- Deprecate `getLogLevelName()` in favor of `LogLevelNameMap.main.get(...)`
+- Deprecate `LoggerTransport.transmit()` in favor of `LoggerTransport.send()`
+- Code cleanup and documentation
+
 ## 5.2.0
 
 - Add LogEventGuard and LogEventGuardContext constructs to encapsulate log event filtering logic
