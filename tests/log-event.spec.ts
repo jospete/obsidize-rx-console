@@ -39,7 +39,7 @@ describe('LogEvent', () => {
 
 			const sampleEvent2 = new LogEvent(LogLevel.DEBUG, 'custom-tag', 'another message', [{ testValue: true }], now.getTime());
 			const logMessage2 = `${now.toJSON()} [DEBUG] [custom-tag] another message :: {"testValue":true}`;
-			expect(stringifyLogEvent(sampleEvent2)).toBe(logMessage2);
+			expect(sampleEvent2.toString()).toBe(logMessage2);
 		});
 	});
 
