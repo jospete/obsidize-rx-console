@@ -1,7 +1,6 @@
 import { EventEmitter, EventEmitterDelegate } from './event-emitter';
 import { LogEvent, LogEventAction, broadcastLogEvent } from './log-event';
 import { LogEventGuardContext } from './log-event-guard-context';
-import { isFunction } from './utility';
 
 /**
  * Core mechanism that allows many `Logger` instances to report back to a shared resource.

@@ -1,10 +1,10 @@
-import { LogLevel, getSharedLogLevelNameMap, LogLevelNameMap } from '../src';
+import { LogLevel, LogLevelNameMap } from '../src';
 
 describe('LogLevel', () => {
 
 	describe('getLogLevelName()', () => {
 
-		const nameMap = getSharedLogLevelNameMap();
+		const nameMap = LogLevelNameMap.main;
 
 		it('is a convenience for converting numeric levels to their associated name', () => {
 

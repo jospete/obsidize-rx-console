@@ -21,13 +21,14 @@ export {
 	callConsoleDynamic
 } from './core/console';
 export {
-	LogLevel,
+	LogLevel
+} from './core/log-level';
+export {
 	getLogLevelName,
 	CustomLevelNameDelegate,
 	LogLevelNameConfig,
-	LogLevelNameMap,
-	getSharedLogLevelNameMap
-} from './core/log-level';
+	LogLevelNameMap
+} from './core/log-level-name-map';
 export {
 	LogEventLike,
 	LogEventAction,

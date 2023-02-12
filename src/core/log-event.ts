@@ -1,5 +1,5 @@
 import { callConsoleDynamic, ConsoleLike } from './console';
-import { getSharedLogLevelNameMap } from './log-level';
+import { LogLevelNameMap } from './log-level-name-map';
 import { stringifyAndJoin } from './utility';
 
 /**
@@ -25,7 +25,7 @@ export function stringifyLogEventBaseValues(ev: LogEventLike): string {
 	if (!ev) return (ev + '');
 	const { tag, level, message, timestamp } = ev;
 	const timestampJson = new Date(timestamp).toJSON();
-	const levelStr = getSharedLogLevelNameMap().get(level);
+	const levelStr = LogLevelNameMap.main.get(level);
 	return `${timestampJson} [${levelStr}] [${tag}] ${message}`;
 }
 
@@ -84,5 +84,9 @@ export class LogEvent implements LogEventLike {
 	 */
 	public static stringify(ev: LogEventLike, ignoreParams?: boolean): string {
 		return ignoreParams ? stringifyLogEventBaseValues(ev) : stringifyLogEvent(ev);
+	}
+
+	public toString(ignoreParams?: boolean): string {
+		return LogEvent.stringify(this, ignoreParams);
 	}
 }
