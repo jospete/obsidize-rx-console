@@ -24,7 +24,6 @@ export {
 	LogLevel
 } from './core/log-level';
 export {
-	getLogLevelName,
 	CustomLevelNameDelegate,
 	LogLevelNameConfig,
 	LogLevelNameMap

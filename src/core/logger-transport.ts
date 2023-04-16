@@ -74,14 +74,6 @@ export class LoggerTransport extends LogEventGuardContext {
 	public send(ev: LogEvent): void {
 		if (this.accepts(ev)) this.mEvents.emit(ev);
 	}
-
-	/**
-	 * Alias for `send`
-	 * @deprecated - use `send` instead, this will be removed in the next major release.
-	 */
-	public transmit(ev: LogEvent): void {
-		this.send(ev);
-	}
 }
 
 let mDefaultTransport: LoggerTransport | undefined = undefined;

@@ -58,12 +58,12 @@ export function stringify(value: any, maxLength: number = 250): string {
  * them together with the given separator.
  */
 export function stringifyAndJoin(
-	values: any[],
+	values: any[] | undefined,
 	separator: string = ' :: ',
 	maxLength?: number
 ): string {
 
-	if (Array.isArray(values) && values.length > 0) {	
+	if (Array.isArray(values) && values.length > 0) {
 		const stringifiedValues = values.map(p => stringify(p, maxLength));
 		return separator + stringifiedValues.join(separator);
 	}

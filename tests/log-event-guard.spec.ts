@@ -1,4 +1,4 @@
-import { LogEvent, LogEventGuard, LogEventGuardMode, LogLevel } from '../src';
+import { LogEvent, LogEventLike, LogEventGuard, LogEventGuardMode, LogLevel } from '../src';
 
 describe('LogEventGuard', () => {
 
@@ -7,7 +7,7 @@ describe('LogEventGuard', () => {
 		const guard = new LogEventGuard();
 		expect(guard.mode).toBe(LogEventGuardMode.DEFAULT);
 
-		function exampleFilter(ev: LogEvent): boolean {
+		function exampleFilter(ev: LogEventLike): boolean {
 			return ev.tag === 'test';
 		}
 

@@ -44,11 +44,3 @@ export class LogLevelNameMap {
 		}
 	}
 }
-
-/**
- * Converts the given level to a string for serialization purposes.
- * @deprecated - use `getSharedLogLevelNameMap()` instead. This will be removed in the next major release.
- */
-export function getLogLevelName(level: number): string {
-	return LogLevelNameMap.main.get(level);
-}

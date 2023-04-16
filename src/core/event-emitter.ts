@@ -31,32 +31,37 @@ export type ObservableEventPatternGenerator<T> = (
  */
 export class EventEmitter<T> {
 
-	private readonly mListeners: Set<EventEmitterDelegate<T>> = new Set();
+	private mListeners: EventEmitterDelegate<T>[] = [];
 
 	public get listenerCount(): number {
-		return this.mListeners.size;
+		return this.mListeners.length;
 	}
 
 	public emit<R extends T = T>(value: R): void {
-		this.mListeners.forEach(listener => listener(value));
+		for (const listener of this.mListeners)
+			listener(value);
 	}
 
 	public hasListener<R extends T = T>(listener: EventEmitterDelegate<R>): boolean {
-		return this.mListeners.has(listener as any);
+		return this.mListeners.indexOf(listener as any) >= 0;
 	}
 
 	public addListener<R extends T = T>(listener: EventEmitterDelegate<R>): this {
-		if (isFunction(listener)) this.mListeners.add(listener as any);
+		if (isFunction(listener) && !this.hasListener(listener))
+			this.mListeners.push(listener as any);
 		return this;
 	}
 
 	public removeListener<R extends T = T>(listener: EventEmitterDelegate<R>): this {
-		this.mListeners.delete(listener as any);
+		const index = this.mListeners.indexOf(listener as any);
+		if (index >= 0)
+			this.mListeners.splice(index, 1);
 		return this;
 	}
 
 	public removeAllListeners(): this {
-		this.mListeners.clear();
+		while (this.mListeners.length > 0)
+			this.mListeners.pop();
 		return this;
 	}
 

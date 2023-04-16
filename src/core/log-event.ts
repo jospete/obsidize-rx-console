@@ -10,7 +10,7 @@ export interface LogEventLike {
 	readonly level: number;
 	readonly tag: string;
 	readonly message: string;
-	readonly params: any[];
+	readonly params: any[] | undefined;
 	readonly timestamp: number;
 }
 
@@ -70,13 +70,26 @@ export function broadcastLogEvent(
  */
 export class LogEvent implements LogEventLike {
 
+	public level!: number;
+	public tag!: string;
+	public message!: string;
+	public params!: any[] | undefined;
+	public timestamp!: number;
+
 	constructor(
-		public readonly level: number,
-		public readonly tag: string,
-		public readonly message: string,
-		public readonly params: any[] = [],
-		public readonly timestamp: number = Date.now()
+		level: number,
+		tag: string,
+		message: string,
+		params?: any[],
+		timestamp?: number
 	) {
+		this.initialize(
+			level,
+			tag,
+			message,
+			params,
+			timestamp
+		);
 	}
 
 	/**
@@ -88,5 +101,19 @@ export class LogEvent implements LogEventLike {
 
 	public toString(ignoreParams?: boolean): string {
 		return LogEvent.stringify(this, ignoreParams);
+	}
+
+	public initialize(
+		level: number,
+		tag: string,
+		message: string,
+		params: any[] | undefined = undefined,
+		timestamp: number = Date.now()
+	): void {
+		this.level = level;
+		this.tag = tag;
+		this.message = message;
+		this.params = params;
+		this.timestamp = timestamp;
 	}
 }

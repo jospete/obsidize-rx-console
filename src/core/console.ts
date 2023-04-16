@@ -15,6 +15,8 @@ export interface ConsoleLike {
 	fatal?(message: string, ...params: any[]): void;
 }
 
+const NO_PARAMS: any[] = [];
+
 /**
  * Calls the appropriate method on the given target,
  * based on the given level (See `LogLevel` for presets).
@@ -23,7 +25,7 @@ export function callConsoleDynamic(
 	target: ConsoleLike,
 	level: number,
 	message: string,
-	params: any[]
+	params: any[] = NO_PARAMS
 ): void {
 
 	// Only use .error(), .warn(), and .log() to reduce chance of 
