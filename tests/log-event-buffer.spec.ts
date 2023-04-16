@@ -57,4 +57,31 @@ describe('LogEventBuffer', () => {
 		const ev3 = buffer.get(0, 'test', 'message', []);
 		expect(ev3 instanceof MyLogEvent).toBe(false);
 	});
+
+	it('can be cleared', () => {
+		
+		const buffer = new LogEventBuffer();
+		buffer.capacity = 2;
+
+		const ev1 = buffer.get(0, 'test', 'message', []);
+		const ev2 = buffer.get(0, 'test', 'another message', []);
+		const ev3 = buffer.get(0, 'test', 'another message', []);
+		const ev4 = buffer.get(0, 'test', 'another message', []);
+
+		expect(ev1).not.toBe(ev2);
+		expect(ev1).toBe(ev3);
+		expect(ev2).not.toBe(ev3);
+		expect(ev2).toBe(ev4);
+
+		buffer.clear();
+
+		const ev5 = buffer.get(0, 'test', 'another message', []);
+		const ev6 = buffer.get(0, 'test', 'another message', []);
+		
+		expect(ev5).not.toBe(ev1);
+		expect(ev5).not.toBe(ev2);
+		expect(ev5).not.toBe(ev6);
+		expect(ev6).not.toBe(ev1);
+		expect(ev6).not.toBe(ev2);
+	});
 });

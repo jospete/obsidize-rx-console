@@ -3,6 +3,24 @@ import { LogEvent, Logger, LoggerTransport, LogLevel } from '../src';
 
 describe('LoggerTransport', () => {
 
+	it('can have event caching disabled', () => {
+
+		const transport = new LoggerTransport();
+
+		const ev1 = transport.createEvent(0, 'test', 'message', []);
+		const ev2 = transport.createEvent(0, 'test', 'message', []);
+		expect(ev1).toBe(ev2);
+		
+		transport.disableEventCaching();
+
+		const ev3 = transport.createEvent(0, 'test', 'message', []);
+		const ev4 = transport.createEvent(0, 'test', 'message', []);
+
+		expect(ev1).not.toBe(ev3);
+		expect(ev1).not.toBe(ev4);
+		expect(ev3).not.toBe(ev4);
+	});
+
 	it('can use setFilter() and setEnabled() to customize acceptance behavior', () => {
 
 		const transport = new LoggerTransport()
