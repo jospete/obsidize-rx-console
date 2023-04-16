@@ -9,6 +9,10 @@ export {
 	EventEmitterDelegate,
 	ObservableEventPatternGenerator
 } from './core/event-emitter';
+export {
+	LogEventBuffer,
+	LogEventCreator
+} from './core/log-event-buffer';
 export { 
 	LogEventGuard,
 	LogEventGuardMode

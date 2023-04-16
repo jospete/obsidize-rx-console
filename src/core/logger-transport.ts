@@ -1,6 +1,7 @@
 import { EventEmitter, EventEmitterDelegate } from './event-emitter';
 import { LogEvent, LogEventAction, broadcastLogEvent } from './log-event';
 import { LogEventGuardContext } from './log-event-guard-context';
+import { LogEventBuffer } from './log-event-buffer';
 
 /**
  * Core mechanism that allows many `Logger` instances to report back to a shared resource.
@@ -9,6 +10,8 @@ import { LogEventGuardContext } from './log-event-guard-context';
  * - `events()` - the shared `EventEmitter` of this tranport
  * - `setFilter(...)` - determines which events get emitted
  * - `setDefaultBroadcastEnabled(...)` - toggles global `console` variable usage
+ * 
+ * NOTE: Call `disableEventCaching()` to revert to v5.x non-event-caching behavior.
  */
 export class LoggerTransport extends LogEventGuardContext {
 
@@ -16,8 +19,19 @@ export class LoggerTransport extends LogEventGuardContext {
 	private readonly mInterceptProxy: EventEmitterDelegate<LogEvent> = this.send.bind(this);
 	private readonly mDefaultBroadcastDelegate: LogEventAction = broadcastLogEvent;
 
+	/**
+	 * Data source responsible for producing new events, or
+	 * recycling previously created ones.
+	 */
+	public readonly buffer: LogEventBuffer = new LogEventBuffer();
+
 	public events(): EventEmitter<LogEvent> {
 		return this.mEvents;
+	}
+
+	public disableEventCaching(): this {
+		this.buffer.capacity = 0;
+		return this;
 	}
 
 	public pipeTo(other: LoggerTransport): this {
@@ -60,10 +74,9 @@ export class LoggerTransport extends LogEventGuardContext {
 
 	/**
 	 * Default creator function used by the `Logger` class.
-	 * Can be customized in sub-classes of LoggerTransport.
 	 */
 	public createEvent(level: number, context: string, message: string, params: any[]): LogEvent {
-		return new LogEvent(level, context, message, params);
+		return this.buffer.get(level, context, message, params);
 	}
 
 	/**
@@ -72,7 +85,8 @@ export class LoggerTransport extends LogEventGuardContext {
 	 * If the event is _not_ accepted, this does nothing.
 	 */
 	public send(ev: LogEvent): void {
-		if (this.accepts(ev)) this.mEvents.emit(ev);
+		if (this.accepts(ev))
+			this.mEvents.emit(ev);
 	}
 }
 

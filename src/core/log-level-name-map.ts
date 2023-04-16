@@ -35,7 +35,7 @@ export class LogLevelNameMap {
 	public update(config: LogLevelNameConfig): void {
 
 		if (!isObject(config))
-		return;
+			return;
 
 		for (const [name, level] of Object.entries(config)) {
 			if (isString(name) && isNumber(level)) {
