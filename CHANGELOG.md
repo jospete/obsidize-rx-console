@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.0.0
+
+- Remove deprecated features from v5.x
+- Introduce event caching to optimize memory footprint (can be disabled via `LoggerTransport.disableEventCaching()`)
+- General internal changes to avoid creating closures and any unnecessary garbage
+
 ## 5.3.0
 
 - Add ability to customize log level names at runtime via `LogLevelNameMap.main.update(...)`

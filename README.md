@@ -9,7 +9,7 @@ without the restrictiveness / platform-locking of modules like [winston](https:/
 
 - Zero dependencies
 - Compatible on anything that runs JavaScript
-- Compact (~5Kb es5 file)
+- Compact (~6Kb es5 file)
 
 #### Goals
 
