@@ -1,5 +1,12 @@
 # Changelog
 
+## 6.1.0
+
+- Refactor `stringifyLogEventBaseValues()` to optionally take a custom `LogLevelNameMap` instance
+- Expose log level -> name conversion customizer function
+- Refactor core event creation hooks to accept a timestamp as a parameter
+- Add new method `emitEvent()` to `Logger` class to allow users to emit custom rolled events such as proxy events from other logging systems
+
 ## 6.0.0
 
 - Remove deprecated features from v5.x
