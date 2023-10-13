@@ -1,10 +1,10 @@
 import { LogEvent } from './log-event';
 import { isFunction, isNumber } from './utility';
 
-export type LogEventCreator = (level: number, context: string, message: string, params: any[]) => LogEvent;
+export type LogEventCreator = (level: number, context: string, message: string, params?: any[], timestamp?: number) => LogEvent;
 
-function createDefaultEvent(level: number, context: string, message: string, params: any[]): LogEvent {
-	return new LogEvent(level, context, message, params);
+function createDefaultEvent(level: number, context: string, message: string, params?: any[], timestamp?: number): LogEvent {
+	return new LogEvent(level, context, message, params, timestamp);
 }
 
 /**
@@ -49,19 +49,19 @@ export class LogEventBuffer {
 		this.mCursor = 0;
 	}
 
-	public get(level: number, context: string, message: string, params: any[]): LogEvent {
+	public get(level: number, context: string, message: string, params?: any[], timestamp?: number): LogEvent {
 
 		if (this.capacity <= 0)
-			return this.onCreateEvent(level, context, message, params);
+			return this.onCreateEvent(level, context, message, params, timestamp);
 
 		if (this.items.length < this.capacity) {
-			const result = this.onCreateEvent(level, context, message, params);
+			const result = this.onCreateEvent(level, context, message, params, timestamp);
 			this.items.push(result);
 			return result;
 		}
 
 		const cachedItem = this.items[this.mCursor];
-		cachedItem.initialize(level, context, message, params);
+		cachedItem.initialize(level, context, message, params, timestamp);
 
 		this.mCursor = (this.mCursor + 1) % this.items.length;
 

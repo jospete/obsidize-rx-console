@@ -64,13 +64,18 @@ export class Logger extends LogEventGuardContext implements ConsoleLike {
 
 	// default to using the transport's creator function
 	// can be customized in sub-classes
-	protected createEvent(level: number, message: string, params: any[]): LogEvent {
-		return this.transport.createEvent(level, this.name, message, params);
+	public createEvent(level: number, message: string, params?: any[], timestamp?: number): LogEvent {
+		return this.transport.createEvent(level, this.name, message, params, timestamp);
 	}
 
 	// can be customized in sub-classes
-	protected emit(level: number, message: string, params: any[]): void {
-		const ev = this.createEvent(level, message, params);
+	public emit(level: number, message: string, params?: any[], timestamp?: number): void {
+		const ev = this.createEvent(level, message, params, timestamp);
+		this.emitEvent(ev);
+	}
+
+	// can be customized in sub-classes
+	public emitEvent(ev: LogEvent): void {
 		if (this.accepts(ev))
 			this.transport.send(ev);
 	}

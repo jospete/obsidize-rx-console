@@ -75,8 +75,8 @@ export class LoggerTransport extends LogEventGuardContext {
 	/**
 	 * Default creator function used by the `Logger` class.
 	 */
-	public createEvent(level: number, context: string, message: string, params: any[]): LogEvent {
-		return this.buffer.get(level, context, message, params);
+	public createEvent(level: number, context: string, message: string, params?: any[], timestamp?: number): LogEvent {
+		return this.buffer.get(level, context, message, params, timestamp);
 	}
 
 	/**
