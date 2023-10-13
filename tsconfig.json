@@ -5,6 +5,7 @@
 		"stripInternal": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
+		"noUnusedLocals": true,
 		"skipLibCheck": true,
 		"strict": true,
 		"importHelpers": true,
