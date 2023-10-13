@@ -2,6 +2,7 @@ import {
 	Logger,
 	LoggerTransport,
 	getPrimaryLoggerTransport,
+	LogEvent,
 	LogLevel
 } from '../src';
 
@@ -79,5 +80,19 @@ describe('Logger', () => {
 		logger.warn('should emit warn');
 
 		expect(spy).toHaveBeenCalledTimes(2);
+	});
+
+	it('can have a custom timestamp specified when emitting raw event data', () => {
+
+		const transport = new LoggerTransport();
+		const logger = new Logger('TestLogger', transport);
+		const fixedTimestamp = 1697220318412;
+		let capturedEvent: LogEvent | null = null;
+
+		transport.events().addListener(ev => capturedEvent = ev);
+		logger.emit(LogLevel.DEBUG, 'custom timestamp test', [], fixedTimestamp);
+
+		expect(capturedEvent).toBeTruthy();
+		expect(capturedEvent!.timestamp).toBe(fixedTimestamp);
 	});
 });
