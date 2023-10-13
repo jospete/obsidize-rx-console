@@ -1,4 +1,4 @@
-import { LogEvent, LogEventLike, Logger, LoggerTransport, LogLevel, stringifyLogEvent, stringifyLogEventBaseValues } from '../src';
+import { LogEvent, LogEventLike, Logger, LoggerTransport, LogLevel, LogLevelNameMap, stringifyLogEvent, stringifyLogEventBaseValues } from '../src';
 import { broadcastLogEvent } from '../src/core/log-event';
 
 describe('LogEvent', () => {
@@ -20,6 +20,16 @@ describe('LogEvent', () => {
 			const sampleEvent2 = new LogEvent(LogLevel.DEBUG, 'custom-tag', 'another message', [{ testValue: true }], now.getTime());
 			const logMessage2 = `${now.toJSON()} [DEBUG] [custom-tag] another message`;
 			expect(stringifyLogEventBaseValues(sampleEvent2)).toBe(logMessage2);
+		});
+
+		it('can accept a custom LogLevelNameMap instance', () => {
+
+			const now = new Date();
+			const map = new LogLevelNameMap();
+			const ev = new LogEvent(2, 'custom-tag', 'test message', [], now.getTime());
+
+			map.update({ BANANA: 1, CHERRY: 2, POTATO: 3});
+			expect(ev.toString(true, map)).toBe(`${now.toJSON()} [CHERRY] [custom-tag] test message`);
 		});
 	});
 

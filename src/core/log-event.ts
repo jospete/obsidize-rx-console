@@ -21,11 +21,14 @@ export type LogEventFilterPredicate = (ev: LogEventLike) => boolean;
 /**
  * Serializes the given log event, using all values except for `params`.
  */
-export function stringifyLogEventBaseValues(ev: LogEventLike): string {
+export function stringifyLogEventBaseValues(
+	ev: LogEventLike, 
+	levelNameMap: LogLevelNameMap = LogLevelNameMap.main
+): string {
 	if (!ev) return (ev + '');
 	const { tag, level, message, timestamp } = ev;
 	const timestampJson = new Date(timestamp).toJSON();
-	const levelStr = LogLevelNameMap.main.get(level);
+	const levelStr = levelNameMap.get(level);
 	return `${timestampJson} [${levelStr}] [${tag}] ${message}`;
 }
 
@@ -37,9 +40,12 @@ export function stringifyLogEventBaseValues(ev: LogEventLike): string {
  * For more details on how `params` is serialized, 
  * see the `stringifyAndJoin` utility function.
  */
-export function stringifyLogEvent(ev: LogEventLike): string {
+export function stringifyLogEvent(
+	ev: LogEventLike, 
+	levelNameMap?: LogLevelNameMap
+): string {
 	if (!ev) return (ev + '');
-	const baseMessage = stringifyLogEventBaseValues(ev);
+	const baseMessage = stringifyLogEventBaseValues(ev, levelNameMap);
 	const paramsStr = stringifyAndJoin(ev.params);
 	return baseMessage + paramsStr;
 }
@@ -100,12 +106,12 @@ export class LogEvent implements LogEventLike {
 	/**
 	 * Convenience api akin to JSON.stringify().
 	 */
-	public static stringify(ev: LogEventLike, ignoreParams?: boolean): string {
-		return ignoreParams ? stringifyLogEventBaseValues(ev) : stringifyLogEvent(ev);
+	public static stringify(ev: LogEventLike, ignoreParams?: boolean, levelNameMap?: LogLevelNameMap): string {
+		return ignoreParams ? stringifyLogEventBaseValues(ev, levelNameMap) : stringifyLogEvent(ev, levelNameMap);
 	}
 
-	public toString(ignoreParams?: boolean): string {
-		return LogEvent.stringify(this, ignoreParams);
+	public toString(ignoreParams?: boolean, levelNameMap?: LogLevelNameMap): string {
+		return LogEvent.stringify(this, ignoreParams, levelNameMap);
 	}
 
 	/**
