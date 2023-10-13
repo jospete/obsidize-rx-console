@@ -1,5 +1,5 @@
 import { LogLevel } from './log-level';
-import { isNumber, isObject, isString } from './utility';
+import { isFunction, isNumber, isObject, isString } from './utility';
 
 export type LogLevelNameConfig = Record<string, number>;
 export type CustomLevelNameDelegate = (level: number) => string;
@@ -17,10 +17,21 @@ export class LogLevelNameMap {
 
 	private readonly namesByLevel = new Map<number, string>();
 	private readonly config: LogLevelNameConfig = LogLevel;
-	private readonly customizer: CustomLevelNameDelegate = generateCustomLevelName;
+	private mCustomizer: CustomLevelNameDelegate = generateCustomLevelName;
 
 	constructor() {
 		this.reset();
+	}
+
+	public get customizer(): CustomLevelNameDelegate {
+		return this.mCustomizer;
+	}
+
+	/**
+	 * Set to null to revert to the default customizer function.
+	 */
+	public set customizer(value: CustomLevelNameDelegate | null) {
+		this.mCustomizer = isFunction(value) ? value! : generateCustomLevelName;
 	}
 
 	public get(level: number): string {
