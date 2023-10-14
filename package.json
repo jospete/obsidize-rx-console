@@ -1,6 +1,6 @@
 {
 	"name": "@obsidize/rx-console",
-	"version": "6.1.1",
+	"version": "6.1.2",
 	"description": "A logging library that is tiny, highly configurable, and platform-agnostic",
 	"main": "es5.js",
 	"module": "index.js",
