@@ -5,17 +5,20 @@ const fs = require('fs-extra');
 const { execSync } = require('child_process');
 const { version } = require('../package.json');
 
-const run = (distDirectory, outputDirectory) => {
+const run = async (distDirectory, outputDirectory) => {
 
-    const packFile = execSync(`npm pack`, { cwd: distDirectory }).toString();
+	fs.rmSync(outputDirectory, {recursive: true});
+	fs.mkdirSync(outputDirectory);
+
+	// need the replacer here to get rid of newlines at the end of the command output
+    const packFile = execSync(`npm pack ${distDirectory} --pack-destination=${outputDirectory}`).toString().replace(/\s/g, '');
     console.log(`pack file = ${packFile}`);
 
-    const outputFile = packFile.replace(`-${version}`, '');
-    const srcPath = path.join(distDirectory, packFile).trim();
-    const destPath = path.join(outputDirectory, outputFile).trim();
+	const packFilePath = path.resolve(outputDirectory, packFile);
+    const renameTarget = packFilePath.replace(`-${version}`, '');
 
-    console.log(`copy "${srcPath}" -> "${destPath}"`);
-    fs.copySync(srcPath, destPath);
+	console.log(`rename ${packFilePath} -> ${renameTarget}`);
+	fs.renameSync(packFilePath, renameTarget);
 };
 
 run('./dist', './packed');
