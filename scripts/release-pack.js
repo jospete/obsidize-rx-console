@@ -7,7 +7,11 @@ const { version } = require('../package.json');
 
 const run = async (distDirectory, outputDirectory) => {
 
-	fs.rmSync(outputDirectory, {recursive: true});
+	if (fs.existsSync(outputDirectory)) {
+		// kill any previously packed files so we only ever have one
+		fs.rmSync(outputDirectory, {recursive: true});
+	}
+
 	fs.mkdirSync(outputDirectory);
 
 	// need the replacer here to get rid of newlines at the end of the command output
