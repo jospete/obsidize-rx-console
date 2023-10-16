@@ -1,5 +1,17 @@
 # Changelog
 
+## 6.1.3
+
+- Expose `broadcastLogEvent()` function to further increase customizability
+
+## 6.1.2
+
+- Add static packed tarball asset to this repo to circumvent latency with npm publishes
+
+## 6.1.1
+
+- Attempt to fix publish issues
+
 ## 6.1.0
 
 - Refactor `stringifyLogEventBaseValues()` to optionally take a custom `LogLevelNameMap` instance
