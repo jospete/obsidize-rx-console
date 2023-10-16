@@ -1,5 +1,14 @@
-import { LogEvent, LogEventLike, Logger, LoggerTransport, LogLevel, LogLevelNameMap, stringifyLogEvent, stringifyLogEventBaseValues } from '../src';
-import { broadcastLogEvent } from '../src/core/log-event';
+import { 
+	LogEvent, 
+	LogEventLike, 
+	Logger, 
+	LoggerTransport, 
+	LogLevel, 
+	LogLevelNameMap, 
+	stringifyLogEvent, 
+	stringifyLogEventBaseValues, 
+	broadcastLogEvent 
+} from '../src';
 
 describe('LogEvent', () => {
 

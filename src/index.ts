@@ -39,7 +39,8 @@ export {
 	LogEventFilterPredicate,
 	LogEvent,
 	stringifyLogEvent,
-	stringifyLogEventBaseValues
+	stringifyLogEventBaseValues,
+	broadcastLogEvent
 } from './core/log-event';
 export {
 	LoggerTransport,
