@@ -110,8 +110,12 @@ describe('README Examples', () => {
 
 		eventStream.pipe(
 
-			// accumulate log events for 5 seconds
-			buffer(interval(5000)),
+			// required if event caching is not disabled
+			// (caching is enabled by default)
+			map((event: LogEvent) => event.clone()),
+
+			// accumulate log events for 1 second
+			buffer(interval(1000)),
 
 			// if we didn't get any new logs after 5 seconds, just skip this round
 			filter((events: LogEvent[]) => events.length > 0),
