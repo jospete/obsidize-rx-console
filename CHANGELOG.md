@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.1.4
+
+- Add `LogEvent.clone()` function to handle log event buffering when event cache is enabled
+
 ## 6.1.3
 
 - Expose `broadcastLogEvent()` function to further increase customizability
