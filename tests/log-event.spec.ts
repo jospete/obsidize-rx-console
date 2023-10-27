@@ -92,4 +92,16 @@ describe('LogEvent', () => {
 			expect(mockConsole.log).toHaveBeenCalledOnceWith(ev.message);
 		});
 	});
+
+	describe('clone()', () => {
+
+		it('makes an exact copy of an instance', () => {
+			
+			const ev = new LogEvent(LogLevel.DEBUG, 'custom-tag', 'some sample info');
+			const cloned = ev.clone();
+			
+			expect(cloned).toEqual(ev);
+			expect(cloned).not.toBe(ev);
+		});
+	});
 });

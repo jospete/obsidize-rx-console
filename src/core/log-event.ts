@@ -115,6 +115,21 @@ export class LogEvent implements LogEventLike {
 	}
 
 	/**
+	 * Make a copy of this instance.
+	 * Useful if you want to buffer events without 
+	 * disabling event caching at the transport level.
+	 */
+	public clone(): LogEvent {
+		return new LogEvent(
+			this.level,
+			this.tag,
+			this.message,
+			this.params,
+			this.timestamp
+		);
+	}
+
+	/**
 	 * Used by the caching system to recycle existing event instances.
 	 * It is not recommended to use this directly.
 	 */
