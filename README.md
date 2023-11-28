@@ -25,6 +25,10 @@ without the restrictiveness / platform-locking of modules like [winston](https:/
 npm install -P -E @obsidize/rx-console
 ```
 
+## API
+
+Source documentation can be found [here](https://jospete.github.io/obsidize-rx-console/)
+
 ## Usage (NodeJS / Vanilla JavaScript)
 
 The below snippet can be tested with runkit on NPM.
@@ -224,6 +228,6 @@ logger.info('custom log');
 transport.unpipeFromDefault();
 ```
 
-## API
+### Examples
 
-Source documentation can be found [here](https://jospete.github.io/obsidize-rx-console/)
+- [Capacitor Mobile App](https://github.com/jospete/ionic-native-file-logging-example)
