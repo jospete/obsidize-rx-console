@@ -1,5 +1,10 @@
 # Changelog
 
+## 6.1.5
+
+- Refactor primary transport ref to be placed on the global/window object so it doesn't get lost between module scopes
+- Add convenience accessors for event listener add/remove on `LoggerTransport` class
+
 ## 6.1.4
 
 - Add `LogEvent.clone()` function to handle log event buffering when event cache is enabled
