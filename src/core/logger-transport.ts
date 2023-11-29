@@ -90,7 +90,7 @@ export class LoggerTransport extends LogEventGuardContext {
 	}
 }
 
-let mDefaultTransport: LoggerTransport | undefined = undefined;
+declare var global: any;
 
 /**
  * Root level transport used by all `Logger` instances by default.
@@ -99,7 +99,13 @@ let mDefaultTransport: LoggerTransport | undefined = undefined;
  * to avoid potential conflicts with static members in sub-classes of `LoggerTransport`.
  */
 export function getPrimaryLoggerTransport(): LoggerTransport {
-	if (mDefaultTransport === undefined)
-		mDefaultTransport = new LoggerTransport();
-	return mDefaultTransport;
+	const target: any = window || global;
+	const key = `__obsidize_rx-console_LoggerTransport_MAIN`;
+	let value = target[key];
+
+	if (!(value && (value instanceof LoggerTransport))) {
+		value = target[key] = new LoggerTransport();
+	}
+
+	return value;
 }

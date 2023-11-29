@@ -1,5 +1,5 @@
 import { fromEventPattern, lastValueFrom, Observable, take } from 'rxjs';
-import { LogEvent, Logger, LoggerTransport, LogLevel } from '../src';
+import { getPrimaryLoggerTransport, LogEvent, Logger, LoggerTransport, LogLevel } from '../src';
 
 describe('LoggerTransport', () => {
 
@@ -10,7 +10,7 @@ describe('LoggerTransport', () => {
 		const ev1 = transport.createEvent(0, 'test', 'message', []);
 		const ev2 = transport.createEvent(0, 'test', 'message', []);
 		expect(ev1).toBe(ev2);
-		
+
 		transport.disableEventCaching();
 
 		const ev3 = transport.createEvent(0, 'test', 'message', []);
@@ -75,7 +75,7 @@ describe('LoggerTransport', () => {
 			expect(ev.level).toBe(LogLevel.DEBUG);
 			expect(ev.message).toBe(testMessage);
 		});
-		
+
 		it('does nothing when passed a reference to itself (help avoid infinite loops)', async () => {
 
 			const transport = new LoggerTransport();
@@ -85,6 +85,22 @@ describe('LoggerTransport', () => {
 			transport.pipeTo(transport);
 
 			expect(() => logger.debug(testMessage)).not.toThrowError();
+		});
+	});
+
+	describe('getPrimaryLoggerTransport()', () => {
+
+		it('should return a valid instance', () => {
+			const transport = getPrimaryLoggerTransport();
+			expect(transport instanceof LoggerTransport).toBe(true);
+		});
+
+		it('should return the same instance from multiple calls', () => {
+			const transport1 = getPrimaryLoggerTransport();
+			const transport2 = getPrimaryLoggerTransport();
+			const transport3 = getPrimaryLoggerTransport();
+			expect(transport1).toBe(transport2);
+			expect(transport2).toBe(transport3);
 		});
 	});
 });
