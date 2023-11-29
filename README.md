@@ -213,7 +213,7 @@ class CustomLogger extends Logger {
 
 const transport = CustomTransport.main;
 
-transport.events().addListener((ev: CustomLogEvent) => {
+transport.addListener((ev: CustomLogEvent) => {
 	console.log(ev.message); // 'custom log'
 	console.log(ev.specialSauceData); // 42
 });
