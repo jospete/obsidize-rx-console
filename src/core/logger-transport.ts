@@ -29,6 +29,21 @@ export class LoggerTransport extends LogEventGuardContext {
 		return this.mEvents;
 	}
 
+	public addListener<R extends LogEvent = LogEvent>(listener: EventEmitterDelegate<R>): this {
+		this.mEvents.addListener(listener);
+		return this;
+	}
+
+	public removeListener<R extends LogEvent = LogEvent>(listener: EventEmitterDelegate<R>): this {
+		this.mEvents.removeListener(listener);
+		return this;
+	}
+
+	public removeAllListeners(): this {
+		this.mEvents.removeAllListeners();
+		return this;
+	}
+
 	public disableEventCaching(): this {
 		this.buffer.capacity = 0;
 		return this;

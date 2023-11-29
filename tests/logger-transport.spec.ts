@@ -3,6 +3,25 @@ import { getPrimaryLoggerTransport, LogEvent, Logger, LoggerTransport, LogLevel 
 
 describe('LoggerTransport', () => {
 
+	it('has convenience accessors for event listeners', () => {
+
+		const transport = new LoggerTransport();
+		const emitter = transport.events();
+		const noop = () => { };
+
+		spyOn(emitter, 'addListener').and.callThrough();
+		transport.addListener(noop);
+		expect(emitter.addListener).toHaveBeenCalledWith(noop);
+
+		spyOn(emitter, 'removeListener').and.callThrough();
+		transport.removeListener(noop);
+		expect(emitter.removeListener).toHaveBeenCalledWith(noop);
+
+		spyOn(emitter, 'removeAllListeners').and.callThrough();
+		transport.removeAllListeners();
+		expect(emitter.removeAllListeners).toHaveBeenCalled();
+	});
+
 	it('can have event caching disabled', () => {
 
 		const transport = new LoggerTransport();
