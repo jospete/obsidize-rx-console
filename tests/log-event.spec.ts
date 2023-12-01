@@ -1,13 +1,13 @@
-import { 
-	LogEvent, 
-	LogEventLike, 
-	Logger, 
-	LoggerTransport, 
-	LogLevel, 
-	LogLevelNameMap, 
-	stringifyLogEvent, 
-	stringifyLogEventBaseValues, 
-	broadcastLogEvent 
+import {
+	LogEvent,
+	LogEventLike,
+	Logger,
+	LoggerTransport,
+	LogLevel,
+	LogLevelNameMap,
+	stringifyLogEvent,
+	stringifyLogEventBaseValues,
+	broadcastLogEvent
 } from '../src';
 
 describe('LogEvent', () => {
@@ -37,7 +37,7 @@ describe('LogEvent', () => {
 			const map = new LogLevelNameMap();
 			const ev = new LogEvent(2, 'custom-tag', 'test message', [], now.getTime());
 
-			map.update({ BANANA: 1, CHERRY: 2, POTATO: 3});
+			map.update({ BANANA: 1, CHERRY: 2, POTATO: 3 });
 			expect(ev.toString(true, map)).toBe(`${now.toJSON()} [CHERRY] [custom-tag] test message`);
 		});
 	});
@@ -65,7 +65,7 @@ describe('LogEvent', () => {
 	describe('stringify()', () => {
 
 		const now = new Date();
-		const sampleEvent1 = new LogEvent(LogLevel.DEBUG, 'custom-tag', 'test message', [{test: true}], now.getTime());
+		const sampleEvent1 = new LogEvent(LogLevel.DEBUG, 'custom-tag', 'test message', [{ test: true }], now.getTime());
 
 		it('uses stringifyLogEvent', () => {
 			expect(LogEvent.stringify(sampleEvent1)).toEqual(stringifyLogEvent(sampleEvent1));
@@ -96,12 +96,20 @@ describe('LogEvent', () => {
 	describe('clone()', () => {
 
 		it('makes an exact copy of an instance', () => {
-			
+
 			const ev = new LogEvent(LogLevel.DEBUG, 'custom-tag', 'some sample info');
 			const cloned = ev.clone();
-			
+
 			expect(cloned).toEqual(ev);
 			expect(cloned).not.toBe(ev);
+		});
+	});
+
+	describe('getMessageWithParams()', () => {
+
+		it('generates a string with the message and parameters combined', () => {
+			const ev = new LogEvent(LogLevel.DEBUG, 'custom-tag', 'some sample info', [{ test: true }]);
+			expect(ev.getMessageWithParams()).toEqual('some sample info :: {"test":true}');
 		});
 	});
 });

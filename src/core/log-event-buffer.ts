@@ -1,9 +1,21 @@
 import { LogEvent } from './log-event';
 import { isFunction, isNumber } from './utility';
 
-export type LogEventCreator = (level: number, context: string, message: string, params?: any[], timestamp?: number) => LogEvent;
+export type LogEventCreator = (
+	level: number,
+	context: string,
+	message: string,
+	params?: any[],
+	timestamp?: number
+) => LogEvent;
 
-function createDefaultEvent(level: number, context: string, message: string, params?: any[], timestamp?: number): LogEvent {
+function createDefaultEvent(
+	level: number,
+	context: string,
+	message: string,
+	params?: any[],
+	timestamp?: number
+): LogEvent {
 	return new LogEvent(level, context, message, params, timestamp);
 }
 
@@ -29,8 +41,9 @@ export class LogEventBuffer {
 	}
 
 	public set capacity(value: number) {
-		if (isNumber(value))
+		if (isNumber(value)) {
 			this.mCapacity = Math.max(0, Math.round(value));
+		}
 	}
 
 	public get onCreateEvent(): LogEventCreator {
@@ -42,17 +55,25 @@ export class LogEventBuffer {
 	}
 
 	public clear(): void {
-		
-		while (this.items.length > 0)
+
+		while (this.items.length > 0) {
 			this.items.pop();
+		}
 
 		this.mCursor = 0;
 	}
 
-	public get(level: number, context: string, message: string, params?: any[], timestamp?: number): LogEvent {
+	public get(
+		level: number,
+		context: string,
+		message: string,
+		params?: any[],
+		timestamp?: number
+	): LogEvent {
 
-		if (this.capacity <= 0)
+		if (this.capacity <= 0) {
 			return this.onCreateEvent(level, context, message, params, timestamp);
+		}
 
 		if (this.items.length < this.capacity) {
 			const result = this.onCreateEvent(level, context, message, params, timestamp);

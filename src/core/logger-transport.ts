@@ -50,7 +50,9 @@ export class LoggerTransport extends LogEventGuardContext {
 	}
 
 	public pipeTo(other: LoggerTransport): this {
-		if (other !== this) this.mEvents.addListener(other.mInterceptProxy);
+		if (other !== this) {
+			this.mEvents.addListener(other.mInterceptProxy);
+		}
 		return this;
 	}
 
@@ -100,8 +102,9 @@ export class LoggerTransport extends LogEventGuardContext {
 	 * If the event is _not_ accepted, this does nothing.
 	 */
 	public send(ev: LogEvent): void {
-		if (this.accepts(ev))
+		if (this.accepts(ev)) {
 			this.mEvents.emit(ev);
+		}
 	}
 }
 

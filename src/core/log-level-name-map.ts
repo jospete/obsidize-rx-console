@@ -16,10 +16,11 @@ export class LogLevelNameMap {
 	public static readonly main = new LogLevelNameMap();
 
 	private readonly namesByLevel = new Map<number, string>();
-	private readonly config: LogLevelNameConfig = LogLevel;
 	private mCustomizer: CustomLevelNameDelegate = generateCustomLevelName;
 
-	constructor() {
+	constructor(
+		private readonly defaultConfig: LogLevelNameConfig = LogLevel
+	) {
 		this.reset();
 	}
 
@@ -40,13 +41,14 @@ export class LogLevelNameMap {
 
 	public reset(): void {
 		this.namesByLevel.clear();
-		this.update(this.config);
+		this.update(this.defaultConfig);
 	}
 
 	public update(config: LogLevelNameConfig): void {
 
-		if (!isObject(config))
+		if (!isObject(config)) {
 			return;
+		}
 
 		for (const [name, level] of Object.entries(config)) {
 			if (isString(name) && isNumber(level)) {

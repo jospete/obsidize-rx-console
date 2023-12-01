@@ -22,13 +22,18 @@ export type LogEventFilterPredicate = (ev: LogEventLike) => boolean;
  * Serializes the given log event, using all values except for `params`.
  */
 export function stringifyLogEventBaseValues(
-	ev: LogEventLike, 
+	ev: LogEventLike,
 	levelNameMap: LogLevelNameMap = LogLevelNameMap.main
 ): string {
-	if (!ev) return (ev + '');
+
+	if (!ev) {
+		return (ev + '');
+	}
+
 	const { tag, level, message, timestamp } = ev;
 	const timestampJson = new Date(timestamp).toJSON();
 	const levelStr = levelNameMap.get(level);
+
 	return `${timestampJson} [${levelStr}] [${tag}] ${message}`;
 }
 
@@ -41,12 +46,17 @@ export function stringifyLogEventBaseValues(
  * see the `stringifyAndJoin` utility function.
  */
 export function stringifyLogEvent(
-	ev: LogEventLike, 
+	ev: LogEventLike,
 	levelNameMap?: LogLevelNameMap
 ): string {
-	if (!ev) return (ev + '');
+
+	if (!ev) {
+		return (ev + '');
+	}
+
 	const baseMessage = stringifyLogEventBaseValues(ev, levelNameMap);
 	const paramsStr = stringifyAndJoin(ev.params);
+
 	return baseMessage + paramsStr;
 }
 
@@ -108,6 +118,13 @@ export class LogEvent implements LogEventLike {
 	 */
 	public static stringify(ev: LogEventLike, ignoreParams?: boolean, levelNameMap?: LogLevelNameMap): string {
 		return ignoreParams ? stringifyLogEventBaseValues(ev, levelNameMap) : stringifyLogEvent(ev, levelNameMap);
+	}
+
+	/**
+	 * See `stringifyAndJoin` for argument details.
+	 */
+	public getMessageWithParams(separator?: string, maxParamLength?: number): string {
+		return this.message + stringifyAndJoin(this.params, separator, maxParamLength);
 	}
 
 	public toString(ignoreParams?: boolean, levelNameMap?: LogLevelNameMap): string {

@@ -76,7 +76,8 @@ export class Logger extends LogEventGuardContext implements ConsoleLike {
 
 	// can be customized in sub-classes
 	public emitEvent(ev: LogEvent): void {
-		if (this.accepts(ev))
+		if (this.accepts(ev)) {
 			this.transport.send(ev);
+		}
 	}
 }

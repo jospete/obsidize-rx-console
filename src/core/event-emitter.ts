@@ -37,19 +37,24 @@ export class EventEmitter<T> {
 		return this.mListeners.length;
 	}
 
-	public emit<R extends T = T>(value: R): void {
-		for (const listener of this.mListeners)
-			listener(value);
-	}
-
 	public hasListener<R extends T = T>(listener: EventEmitterDelegate<R>): boolean {
 		return this.mListeners.indexOf(listener as any) >= 0;
 	}
 
+	public emit<R extends T = T>(value: R): this {
+
+		for (const listener of this.mListeners) {
+			listener(value);
+		}
+
+		return this;
+	}
+
 	public addListener<R extends T = T>(listener: EventEmitterDelegate<R>): this {
-		
-		if (isFunction(listener) && !this.hasListener(listener))
+
+		if (isFunction(listener) && !this.hasListener(listener)) {
 			this.mListeners.push(listener as any);
+		}
 
 		return this;
 	}
@@ -58,16 +63,18 @@ export class EventEmitter<T> {
 
 		const index = this.mListeners.indexOf(listener as any);
 
-		if (index >= 0)
+		if (index >= 0) {
 			this.mListeners.splice(index, 1);
+		}
 
 		return this;
 	}
 
 	public removeAllListeners(): this {
 
-		while (this.mListeners.length > 0)
+		while (this.mListeners.length > 0) {
 			this.mListeners.pop();
+		}
 
 		return this;
 	}

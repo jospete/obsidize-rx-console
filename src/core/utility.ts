@@ -1,3 +1,5 @@
+const DEFAULT_JOIN_STRING = ' :: ';
+
 /**
  * placeholder that always returns true, used by default in
  * most filter functions for this module.
@@ -27,9 +29,10 @@ export function isNumber(value: any): boolean {
  */
 export function truncate(str: string, targetLength: number): string {
 
-	if (isString(str) && str.length > targetLength)
+	if (isString(str) && str.length > targetLength) {
 		return `${str.substring(0, targetLength)}...`;
-	
+	}
+
 	return str;
 }
 
@@ -59,7 +62,7 @@ export function stringify(value: any, maxLength: number = 250): string {
  */
 export function stringifyAndJoin(
 	values: any[] | undefined,
-	separator: string = ' :: ',
+	separator: string = DEFAULT_JOIN_STRING,
 	maxLength?: number
 ): string {
 
@@ -67,6 +70,6 @@ export function stringifyAndJoin(
 		const stringifiedValues = values.map(p => stringify(p, maxLength));
 		return separator + stringifiedValues.join(separator);
 	}
-	
+
 	return '';
 }
