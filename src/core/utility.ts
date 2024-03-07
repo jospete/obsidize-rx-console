@@ -25,6 +25,18 @@ export function isNumber(value: any): boolean {
 	return typeof value === 'number' && !Number.isNaN(value);
 }
 
+export function isUndefined(value: any): boolean {
+	return typeof value === 'undefined';
+}
+
+export function isNil(value: any): boolean {
+	return isUndefined(value) || value === null;
+}
+
+export function optional<T>(value: T, fallback: T): T {
+	return isNil(value) ? fallback : value;
+}
+
 /**
  * Abbreviates the given string if it exceeds the target length.
  */

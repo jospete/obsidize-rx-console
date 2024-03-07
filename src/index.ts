@@ -13,7 +13,7 @@ export {
 	LogEventBuffer,
 	LogEventCreator
 } from './core/log-event-buffer';
-export { 
+export {
 	LogEventGuard,
 	LogEventGuardMode
 } from './core/log-event-guard';
@@ -47,3 +47,4 @@ export {
 	getPrimaryLoggerTransport
 } from './core/logger-transport';
 export { Logger } from './core/logger';
+export { Config } from './core/config';

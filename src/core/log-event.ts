@@ -1,6 +1,7 @@
+import { Config } from './config';
 import { callConsoleDynamic, ConsoleLike } from './console';
 import { LogLevelNameMap } from './log-level-name-map';
-import { stringifyAndJoin } from './utility';
+import { optional, stringifyAndJoin } from './utility';
 
 /**
  * General shape of a log event.
@@ -90,12 +91,13 @@ export function broadcastLogEvent(
  * mutated by external sources.
  */
 export class LogEvent implements LogEventLike {
-
 	public level!: number;
 	public tag!: string;
 	public message!: string;
 	public params!: any[] | undefined;
 	public timestamp!: number;
+
+	private readonly config: Config = Config.sharedInstance;
 
 	constructor(
 		level: number,
@@ -120,23 +122,36 @@ export class LogEvent implements LogEventLike {
 		ev: LogEventLike,
 		ignoreParams?: boolean,
 		levelNameMap?: LogLevelNameMap,
-		stringifySeparator?: string,
+		parameterSeparator?: string,
 		stringifyMaxLength?: number
 	): string {
 		return ignoreParams
 			? stringifyLogEventBaseValues(ev, levelNameMap)
-			: stringifyLogEvent(ev, levelNameMap, stringifySeparator, stringifyMaxLength);
+			: stringifyLogEvent(ev, levelNameMap, parameterSeparator, stringifyMaxLength);
 	}
 
 	/**
 	 * See `stringifyAndJoin` for argument details.
 	 */
-	public getMessageWithParams(separator?: string, maxParamLength?: number): string {
-		return this.message + stringifyAndJoin(this.params, separator, maxParamLength);
+	public getMessageWithParams(
+		parameterSeparator?: string,
+		stringifyMaxLength?: number
+	): string {
+		parameterSeparator = optional(parameterSeparator, this.config.parameterSeparator);
+		stringifyMaxLength = optional(stringifyMaxLength, this.config.stringifyMaxLength);
+		return this.message + stringifyAndJoin(this.params, parameterSeparator, stringifyMaxLength);
 	}
 
-	public toString(ignoreParams?: boolean, levelNameMap?: LogLevelNameMap): string {
-		return LogEvent.stringify(this, ignoreParams, levelNameMap);
+	public toString(
+		ignoreParams?: boolean,
+		levelNameMap?: LogLevelNameMap,
+		parameterSeparator?: string,
+		stringifyMaxLength?: number
+	): string {
+		levelNameMap = optional(levelNameMap, this.config.levelNameMap);
+		parameterSeparator = optional(parameterSeparator, this.config.parameterSeparator);
+		stringifyMaxLength = optional(stringifyMaxLength, this.config.stringifyMaxLength);
+		return LogEvent.stringify(this, ignoreParams, levelNameMap, parameterSeparator, stringifyMaxLength);
 	}
 
 	/**
