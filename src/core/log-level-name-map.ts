@@ -12,7 +12,6 @@ function generateCustomLevelName(level: number): string {
  * Utility to customize numeric level name mappings.
  */
 export class LogLevelNameMap {
-
 	public static readonly main = new LogLevelNameMap();
 
 	private readonly namesByLevel = new Map<number, string>();
@@ -45,7 +44,6 @@ export class LogLevelNameMap {
 	}
 
 	public update(config: LogLevelNameConfig): void {
-
 		if (!isObject(config)) {
 			return;
 		}

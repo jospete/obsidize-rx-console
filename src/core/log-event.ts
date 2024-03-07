@@ -25,7 +25,6 @@ export function stringifyLogEventBaseValues(
 	ev: LogEventLike,
 	levelNameMap: LogLevelNameMap = LogLevelNameMap.main
 ): string {
-
 	if (!ev) {
 		return (ev + '');
 	}
@@ -47,15 +46,16 @@ export function stringifyLogEventBaseValues(
  */
 export function stringifyLogEvent(
 	ev: LogEventLike,
-	levelNameMap?: LogLevelNameMap
+	levelNameMap?: LogLevelNameMap,
+	stringifySeparator?: string,
+	stringifyMaxLength?: number
 ): string {
-
 	if (!ev) {
 		return (ev + '');
 	}
 
 	const baseMessage = stringifyLogEventBaseValues(ev, levelNameMap);
-	const paramsStr = stringifyAndJoin(ev.params);
+	const paramsStr = stringifyAndJoin(ev.params, stringifySeparator, stringifyMaxLength);
 
 	return baseMessage + paramsStr;
 }
@@ -116,8 +116,16 @@ export class LogEvent implements LogEventLike {
 	/**
 	 * Convenience api akin to JSON.stringify().
 	 */
-	public static stringify(ev: LogEventLike, ignoreParams?: boolean, levelNameMap?: LogLevelNameMap): string {
-		return ignoreParams ? stringifyLogEventBaseValues(ev, levelNameMap) : stringifyLogEvent(ev, levelNameMap);
+	public static stringify(
+		ev: LogEventLike,
+		ignoreParams?: boolean,
+		levelNameMap?: LogLevelNameMap,
+		stringifySeparator?: string,
+		stringifyMaxLength?: number
+	): string {
+		return ignoreParams
+			? stringifyLogEventBaseValues(ev, levelNameMap)
+			: stringifyLogEvent(ev, levelNameMap, stringifySeparator, stringifyMaxLength);
 	}
 
 	/**

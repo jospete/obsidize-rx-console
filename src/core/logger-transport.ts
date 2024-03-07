@@ -15,7 +15,6 @@ import { getGlobalInstance } from './utility';
  * NOTE: Call `disableEventCaching()` to revert to v5.x non-event-caching behavior.
  */
 export class LoggerTransport extends LogEventGuardContext {
-
 	private readonly mEvents: EventEmitter<LogEvent> = new EventEmitter<LogEvent>();
 	private readonly mInterceptProxy: EventEmitterDelegate<LogEvent> = this.send.bind(this);
 	private readonly mDefaultBroadcastDelegate: LogEventAction = broadcastLogEvent;

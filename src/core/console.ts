@@ -27,7 +27,6 @@ export function callConsoleDynamic(
 	message: string,
 	params: any[] = NO_PARAMS
 ): void {
-
 	// Only use .error(), .warn(), and .log() to reduce chance of 
 	// reference errors on the given target object.
 	// (also reduces overall cost of this operation)

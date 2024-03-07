@@ -17,7 +17,6 @@ import { LogEvent } from './log-event';
  * file and / or scope in your project.
  */
 export class Logger extends LogEventGuardContext implements ConsoleLike {
-
 	constructor(
 		public readonly name: string,
 		public transport: LoggerTransport = getPrimaryLoggerTransport()

@@ -30,7 +30,6 @@ export type ObservableEventPatternGenerator<T> = (
  * - `emitter.on('error', ...)` -> onError: EventEmitter<any>;
  */
 export class EventEmitter<T> {
-
 	private mListeners: EventEmitterDelegate<T>[] = [];
 
 	public get listenerCount(): number {
@@ -42,7 +41,6 @@ export class EventEmitter<T> {
 	}
 
 	public emit<R extends T = T>(value: R): this {
-
 		for (const listener of this.mListeners) {
 			listener(value);
 		}
@@ -51,7 +49,6 @@ export class EventEmitter<T> {
 	}
 
 	public addListener<R extends T = T>(listener: EventEmitterDelegate<R>): this {
-
 		if (isFunction(listener) && !this.hasListener(listener)) {
 			this.mListeners.push(listener as any);
 		}
@@ -60,7 +57,6 @@ export class EventEmitter<T> {
 	}
 
 	public removeListener<R extends T = T>(listener: EventEmitterDelegate<R>): this {
-
 		const index = this.mListeners.indexOf(listener as any);
 
 		if (index >= 0) {
@@ -71,7 +67,6 @@ export class EventEmitter<T> {
 	}
 
 	public removeAllListeners(): this {
-
 		while (this.mListeners.length > 0) {
 			this.mListeners.pop();
 		}

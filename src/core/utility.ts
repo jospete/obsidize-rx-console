@@ -1,4 +1,5 @@
-const DEFAULT_JOIN_STRING = ' :: ';
+export const DEFAULT_JOIN_STRING = ' :: ';
+export const DEFAULT_STRINGIFY_MAX_LENGTH = 250;
 
 /**
  * placeholder that always returns true, used by default in
@@ -28,7 +29,6 @@ export function isNumber(value: any): boolean {
  * Abbreviates the given string if it exceeds the target length.
  */
 export function truncate(str: string, targetLength: number): string {
-
 	if (isString(str) && str.length > targetLength) {
 		return `${str.substring(0, targetLength)}...`;
 	}
@@ -52,7 +52,10 @@ export function jsonStringifySafe(value: any): string {
  * Performs `JSON.stringify()` on the given value, and truncates the result
  * if it exceeds the target maximum length.
  */
-export function stringify(value: any, maxLength: number = 250): string {
+export function stringify(
+	value: any,
+	maxLength: number = DEFAULT_STRINGIFY_MAX_LENGTH
+): string {
 	return truncate(jsonStringifySafe(value), maxLength);
 }
 
@@ -65,9 +68,11 @@ export function stringifyAndJoin(
 	separator: string = DEFAULT_JOIN_STRING,
 	maxLength?: number
 ): string {
-
 	if (Array.isArray(values) && values.length > 0) {
-		const stringifiedValues = values.map(p => stringify(p, maxLength));
+		const stringifiedValues: string[] = [];
+		for (const value of values) {
+			stringifiedValues.push(stringify(value, maxLength));
+		}
 		return separator + stringifiedValues.join(separator);
 	}
 

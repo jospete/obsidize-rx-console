@@ -5,12 +5,11 @@ import { isFunction, tautology } from './utility';
  * Configuration option for more granular control of guards.
  */
 export const enum LogEventGuardMode {
-	
 	/**
 	 * Standard mode that delegates filtering to the filter function.
 	 */
 	DEFAULT = 0,
-	
+
 	/**
 	 * Override mode that ignores the filter function and allows
 	 * all events to pass through.
@@ -29,7 +28,6 @@ export const enum LogEventGuardMode {
  * The primary entry point is the `accepts()` method.
  */
 export class LogEventGuard {
-
 	private mFilter: LogEventFilterPredicate = tautology;
 	public mode: LogEventGuardMode = LogEventGuardMode.DEFAULT;
 

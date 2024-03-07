@@ -30,7 +30,6 @@ function createDefaultEvent(
  * To disable caching completely, set capacity to zero (emulates v5.x behavior).
  */
 export class LogEventBuffer {
-
 	private items: LogEvent[] = [];
 	private mCapacity: number = 1;
 	private mCursor: number = 0;
@@ -55,7 +54,6 @@ export class LogEventBuffer {
 	}
 
 	public clear(): void {
-
 		while (this.items.length > 0) {
 			this.items.pop();
 		}
@@ -70,7 +68,6 @@ export class LogEventBuffer {
 		params?: any[],
 		timestamp?: number
 	): LogEvent {
-
 		if (this.capacity <= 0) {
 			return this.onCreateEvent(level, context, message, params, timestamp);
 		}

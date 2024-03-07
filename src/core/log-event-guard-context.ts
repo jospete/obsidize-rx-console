@@ -5,7 +5,6 @@ import { LogEventGuard, LogEventGuardMode } from './log-event-guard';
  * Base class for entities that want to be able to filter log event instances.
  */
 export class LogEventGuardContext {
-
 	public guard: LogEventGuard = new LogEventGuard();
 
 	/**
@@ -48,7 +47,6 @@ export class LogEventGuardContext {
 	 * when this is re-enabled later it will continue using the custom filter.
 	 */
 	public setEnabled(enabled: boolean): this {
-
 		if (enabled !== this.isEnabled()) {
 			const mode = enabled ? LogEventGuardMode.DEFAULT : LogEventGuardMode.BLOCK_ALL;
 			this.guard.setMode(mode);
