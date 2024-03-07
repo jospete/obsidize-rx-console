@@ -1,5 +1,14 @@
 # Changelog
 
+## 6.2.0
+
+- Add `Config` class to allow for global configuration of `LogEvent` serialization
+
+## 6.1.6
+
+- Add option to specify log level names in LogLevelNameMap constructor
+- Add method getMessageWithParams() on LogEvent class to get the message and params without tag or timestamp
+
 ## 6.1.5
 
 - Refactor primary transport ref to be placed on the global/window object so it doesn't get lost between module scopes
