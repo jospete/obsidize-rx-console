@@ -7,7 +7,8 @@ import {
 	Logger,
 	LoggerTransport,
 	getPrimaryLoggerTransport,
-	stringifyLogEvent
+	stringifyLogEvent,
+	Config
 } from '../src';
 
 describe('README Examples', () => {
@@ -172,4 +173,14 @@ describe('README Examples', () => {
 		// you can also break the connection to the default instance later on
 		transport.unpipeFromDefault();
 	});
+
+	it('should execute the config example', () => {
+		const sharedConfig = Config.sharedInstance;
+		sharedConfig.parameterSeparator = ', '; // join separator for additional log arguments (default ' :: ')
+		sharedConfig.stringifyMaxLength = 2000; // set 2000 characters before truncation (default 250)
+		sharedConfig.levelNameMap.update({ CUSTOM_LEVEL_NAME: 123 }); // Uses `LogLevelNameMap.main` by default
+
+		// optionally reset to defaults if needed
+		sharedConfig.reset();
+	})
 });

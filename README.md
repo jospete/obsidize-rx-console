@@ -174,6 +174,22 @@ logger2.setEnabled(false);
 logger2.error('BOOM!!!'); // suppressed because the logger is disabled
 ```
 
+## Custom Serialization
+
+The default serialization options can be configured via the shared `Config` instance in this module:
+
+```typescript
+import { Config } from '@obsidize/rx-console';
+
+const sharedConfig = Config.sharedInstance;
+sharedConfig.parameterSeparator = ', '; // join separator for additional log arguments (default ' :: ')
+sharedConfig.stringifyMaxLength = 2000; // set 2000 characters before truncation (default 250)
+sharedConfig.levelNameMap.update({ CUSTOM_LEVEL_NAME: 123 }); // Uses `LogLevelNameMap.main` by default
+
+// optionally reset to defaults if needed
+sharedConfig.reset();
+```
+
 ## Custom Extensions
 
 This module is fully customizable via class extensions:
