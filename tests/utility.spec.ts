@@ -7,18 +7,23 @@ function range(size: number): number[] {
 }
 
 describe('utility', () => {
-
 	describe('truncate()', () => {
+		it('should shorten the length of strings that exceed the given target length', () => {
+			const input = 'hello world';
+			expect(truncate(input, 5)).toBe('hello...');
+		});
 
-		it('shortens the length of strings that exceed the given target length', () => {
-			expect(truncate('hello', 5)).toBe('hello');
-			expect(truncate('hello', 4)).toBe('hell...');
+		it('should not shorten the length of the input if the ellipsis extension would cause it to be longer than the original string', () => {
+			const input = 'hello';
+			expect(truncate(input, 4)).toBe(input);
+			expect(truncate(input, 3)).toBe(input);
+			expect(truncate(input, 2)).toBe(input);
+			expect(truncate(input, 1)).toBe('h...');
 		});
 	});
 
 	describe('jsonStringifySafe()', () => {
-
-		it('attempts to stringify an object, but does not explode on error', () => {
+		it('should attempt to stringify an object, but does not explode on error', () => {
 			expect(jsonStringifySafe({ hello: 'test' })).toBe('{"hello":"test"}');
 			const circularObject = { parent: null };
 			circularObject.parent = circularObject as any;
@@ -27,8 +32,7 @@ describe('utility', () => {
 	});
 
 	describe('stringify()', () => {
-
-		it('stringifies the given value, and truncates the result', () => {
+		it('should stringify the given value, and truncates the result', () => {
 			expect(stringify({ hello: 'test' })).toBe('{"hello":"test"}');
 			const value = range(50);
 			expect(stringify(value, 10)).toBe('[0,1,2,3,4...');
@@ -36,8 +40,7 @@ describe('utility', () => {
 	});
 
 	describe('stringifyAndJoin()', () => {
-
-		it('uses the join string and max length when they are given', () => {
+		it('should use the join string and max length when they are given', () => {
 			expect(stringifyAndJoin([{ test: true }, 42])).toEqual(' :: {"test":true} :: 42');
 			expect(stringifyAndJoin([{ test: true }, 42], ' | ', 5)).toEqual(' | {"tes... | 42');
 		});

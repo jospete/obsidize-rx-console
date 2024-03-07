@@ -41,8 +41,10 @@ export function optional<T>(value: T, fallback: T): T {
  * Abbreviates the given string if it exceeds the target length.
  */
 export function truncate(str: string, targetLength: number): string {
-	if (isString(str) && str.length > targetLength) {
-		return `${str.substring(0, targetLength)}...`;
+	const ellipsis = `...`;
+	// Need to also check if the truncation would be longer than the original string
+	if (isString(str) && str.length > (targetLength + ellipsis.length)) {
+		return str.substring(0, targetLength) + ellipsis;
 	}
 
 	return str;

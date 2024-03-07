@@ -1,5 +1,10 @@
 # Changelog
 
+## 6.2.1
+
+- Refactor `truncate` utility function logic to fix issue where output string could
+	potentially be longer than input string due to trailing ellipsis.
+
 ## 6.2.0
 
 - Add `Config` class to allow for global configuration of `LogEvent` serialization
