@@ -1,9 +1,7 @@
 import { LogLevelNameMap } from '../src';
 
 describe('LogLevelNameMap', () => {
-
-	it('accepts a customizer function for unknown log levels', () => {
-
+	it('should accept a customizer function for unknown log levels', () => {
 		const map = new LogLevelNameMap();
 		const defaultCustomizer = map.customizer;
 		const newCustomizer = (level: number) => `FANCY-${level}`;
@@ -15,8 +13,7 @@ describe('LogLevelNameMap', () => {
 		expect(map.customizer).toBe(defaultCustomizer);
 	});
 
-	it('accepts a custom initial config', () => {
-
+	it('should accept a custom initial config', () => {
 		const testLevels = [
 			'POTATO',
 			'BANANA',

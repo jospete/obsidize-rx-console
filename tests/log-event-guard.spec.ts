@@ -1,9 +1,7 @@
 import { LogEvent, LogEventLike, LogEventGuard, LogEventGuardMode, LogLevel } from '../src';
 
 describe('LogEventGuard', () => {
-
-	it('has several modes that can be swapped between while leaving the filter in-tact', () => {
-
+	it('should have several modes that can be swapped between while leaving the filter in-tact', () => {
 		const guard = new LogEventGuard();
 		expect(guard.mode).toBe(LogEventGuardMode.DEFAULT);
 

@@ -7,9 +7,7 @@ import {
 } from '../src';
 
 describe('Logger', () => {
-
-	it('is the standard way to perform context-based logging in this module', () => {
-
+	it('should be the standard way to perform context-based logging in this module', () => {
 		const transport = new LoggerTransport();
 		const logger = new Logger('TestLogger', transport);
 		const eventSpy = jasmine.createSpy('eventSpy');
@@ -21,8 +19,7 @@ describe('Logger', () => {
 		expect(eventSpy).toHaveBeenCalled();
 	});
 
-	it('uses getDefaultSink() as the default aggregator', () => {
-
+	it('should use getDefaultSink() as the default aggregator', () => {
 		const logger = new Logger('TestLogger2');
 		const eventSpy = jasmine.createSpy('eventSpy');
 		const transport = getPrimaryLoggerTransport();
@@ -36,8 +33,7 @@ describe('Logger', () => {
 		transport.events().removeListener(eventSpy);
 	});
 
-	it('implements the ConsoleLike interface', () => {
-
+	it('should implement the ConsoleLike interface', () => {
 		const transport = new LoggerTransport();
 		const logger = new Logger('TestLogger', transport);
 		const spy = jasmine.createSpy('sinkListener');
@@ -56,8 +52,7 @@ describe('Logger', () => {
 		expect(spy).toHaveBeenCalledTimes(8);
 	});
 
-	it('can swap out its transport after creation', () => {
-
+	it('should allow for swapping out its transport after creation', () => {
 		const transport = new LoggerTransport();
 		const transport2 = new LoggerTransport();
 		const logger = new Logger('TestLogger', transport);
@@ -66,8 +61,7 @@ describe('Logger', () => {
 		expect(logger.transport).toBe(transport2);
 	});
 
-	it('can have a custom filter applied', () => {
-
+	it('should allow having a custom filter applied', () => {
 		const spy = jasmine.createSpy('sinkListener');
 		const transport = new LoggerTransport();
 		const logger = new Logger('TestLogger', transport)
@@ -82,8 +76,7 @@ describe('Logger', () => {
 		expect(spy).toHaveBeenCalledTimes(2);
 	});
 
-	it('can have a custom timestamp specified when emitting raw event data', () => {
-
+	it('should allow having a custom timestamp specified when emitting raw event data', () => {
 		const transport = new LoggerTransport();
 		const logger = new Logger('TestLogger', transport);
 		const fixedTimestamp = 1697220318412;

@@ -1,20 +1,19 @@
 import { EventEmitter } from '../src';
 
 describe('EventEmitter', () => {
-
-	it('starts with no listeners attached', () => {
+	it('should start with no listeners attached', () => {
 		const emitter = new EventEmitter<any>();
 		expect(emitter.listenerCount).toBe(0);
 	});
 
-	it('can add a listener', () => {
+	it('should add a listener', () => {
 		const emitter = new EventEmitter<any>();
 		const listener = () => { };
 		emitter.addListener(listener);
 		expect(emitter.listenerCount).toBe(1);
 	});
 
-	it('does not add duplicate listeners', () => {
+	it('should not add duplicate listeners', () => {
 		const emitter = new EventEmitter<any>();
 		const listener = () => { };
 		emitter.addListener(listener);
@@ -22,7 +21,7 @@ describe('EventEmitter', () => {
 		expect(emitter.listenerCount).toBe(1);
 	});
 
-	it('can remove a listener', () => {
+	it('should remove a listener', () => {
 		const emitter = new EventEmitter<any>();
 		const listener = () => { };
 		emitter.addListener(listener);
@@ -31,7 +30,7 @@ describe('EventEmitter', () => {
 		expect(emitter.listenerCount).toBe(0);
 	});
 
-	it('does nothing when removing a listener that does not exist', () => {
+	it('should do nothing when removing a listener that does not exist', () => {
 		const emitter = new EventEmitter<any>();
 		const listener = () => { };
 		emitter.addListener(listener);
@@ -41,7 +40,7 @@ describe('EventEmitter', () => {
 		expect(emitter.listenerCount).toBe(0);
 	});
 
-	it('does not add listener values which are not a function', () => {
+	it('should not add listener values which are not a function', () => {
 		const emitter = new EventEmitter<any>();
 		emitter.addListener(null as any);
 		emitter.addListener('' as any);
@@ -52,8 +51,7 @@ describe('EventEmitter', () => {
 		expect(emitter.listenerCount).toBe(0);
 	});
 
-	it('emits to all listeners exactly once per emit() call', () => {
-
+	it('should emit to all listeners exactly once per emit() call', () => {
 		const spyCount = 4;
 		const emitter = new EventEmitter<any>();
 		const spies: jasmine.Spy<jasmine.Func>[] = [];
@@ -71,8 +69,7 @@ describe('EventEmitter', () => {
 		}
 	});
 
-	it('can remove all listeners at once', () => {
-
+	it('should remove all listeners at once', () => {
 		const spyCount = 3;
 		const emitter = new EventEmitter<any>();
 

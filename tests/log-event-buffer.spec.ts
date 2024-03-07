@@ -1,9 +1,7 @@
 import { LogEventBuffer, LogEvent } from '../src';
 
 describe('LogEventBuffer', () => {
-
-	it('ensures the capacity is always a positive integer', () => {
-
+	it('should ensure the capacity is always a positive integer', () => {
 		const buffer = new LogEventBuffer();
 
 		buffer.capacity = null as any;
@@ -13,8 +11,7 @@ describe('LogEventBuffer', () => {
 		expect(buffer.capacity).toBe(3);
 	});
 
-	it('has a default capacity of 1, and re-uses the same event object for each call to get()', () => {
-
+	it('should have a default capacity of 1, and re-uses the same event object for each call to get()', () => {
 		const buffer = new LogEventBuffer();
 		expect(buffer.capacity).toBe(1);
 
@@ -23,8 +20,7 @@ describe('LogEventBuffer', () => {
 		expect(ev1).toBe(ev2);
 	});
 
-	it('can have caching disabled by setting the capacity to zero', () => {
-
+	it('should have caching disabled when setting the capacity to zero', () => {
 		const buffer = new LogEventBuffer();
 		buffer.capacity = 0;
 
@@ -33,17 +29,16 @@ describe('LogEventBuffer', () => {
 		expect(ev1).not.toBe(ev2);
 	});
 
-	it('can have a custom creator function assigned', () => {
-
+	it('should allow for a custom creator function assigned', () => {
 		class MyLogEvent extends LogEvent { }
 
-		function createCustomEvent(level: number, context: string, message: string, params: any[]): MyLogEvent {
+		function createCustomEvent(level: number, context: string, message: string, params: any[] | undefined): MyLogEvent {
 			return new MyLogEvent(level, context, message, params);
 		}
 
 		const buffer = new LogEventBuffer();
 		buffer.capacity = 3;
-		
+
 		const ev1 = buffer.get(0, 'test', 'message', []);
 		expect(ev1 instanceof MyLogEvent).toBe(false);
 
@@ -58,8 +53,7 @@ describe('LogEventBuffer', () => {
 		expect(ev3 instanceof MyLogEvent).toBe(false);
 	});
 
-	it('can be cleared', () => {
-		
+	it('should be able to be cleared', () => {
 		const buffer = new LogEventBuffer();
 		buffer.capacity = 2;
 
@@ -77,7 +71,7 @@ describe('LogEventBuffer', () => {
 
 		const ev5 = buffer.get(0, 'test', 'another message', []);
 		const ev6 = buffer.get(0, 'test', 'another message', []);
-		
+
 		expect(ev5).not.toBe(ev1);
 		expect(ev5).not.toBe(ev2);
 		expect(ev5).not.toBe(ev6);

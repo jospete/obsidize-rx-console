@@ -11,15 +11,12 @@ import {
 } from '../src';
 
 describe('LogEvent', () => {
-
 	describe('stringifyLogEventBaseValues()', () => {
-
-		it('can operate on any value without blowing up', () => {
+		it('should be able to operate on any value without blowing up', () => {
 			expect(() => stringifyLogEventBaseValues(null as any)).not.toThrowError();
 		});
 
-		it('dumps the event data using standard formatting defaults, omitting the params from the result', () => {
-
+		it('should dump the event data using standard formatting defaults, omitting the params from the result', () => {
 			const now = new Date();
 
 			const sampleEvent1 = new LogEvent(LogLevel.DEBUG, 'custom-tag', 'test message', [], now.getTime());
@@ -31,8 +28,7 @@ describe('LogEvent', () => {
 			expect(stringifyLogEventBaseValues(sampleEvent2)).toBe(logMessage2);
 		});
 
-		it('can accept a custom LogLevelNameMap instance', () => {
-
+		it('should be able to accept a custom LogLevelNameMap instance', () => {
 			const now = new Date();
 			const map = new LogLevelNameMap();
 			const ev = new LogEvent(2, 'custom-tag', 'test message', [], now.getTime());
@@ -43,13 +39,11 @@ describe('LogEvent', () => {
 	});
 
 	describe('stringifyLogEvent()', () => {
-
-		it('can operate on any value without blowing up', () => {
+		it('should be able to operate on any value without blowing up', () => {
 			expect(() => stringifyLogEvent(null as any)).not.toThrowError();
 		});
 
-		it('dumps the event data using standard formatting defaults', () => {
-
+		it('should dump the event data using standard formatting defaults', () => {
 			const now = new Date();
 
 			const sampleEvent1 = new LogEvent(LogLevel.DEBUG, 'custom-tag', 'test message', [], now.getTime());
@@ -63,23 +57,20 @@ describe('LogEvent', () => {
 	});
 
 	describe('stringify()', () => {
-
 		const now = new Date();
 		const sampleEvent1 = new LogEvent(LogLevel.DEBUG, 'custom-tag', 'test message', [{ test: true }], now.getTime());
 
-		it('uses stringifyLogEvent', () => {
+		it('should use stringifyLogEvent when ignoreParams is falsy', () => {
 			expect(LogEvent.stringify(sampleEvent1)).toEqual(stringifyLogEvent(sampleEvent1));
 		});
 
-		it('uses stringifyLogEventBaseValues', () => {
+		it('should use stringifyLogEventBaseValues when ignoreParams is true', () => {
 			expect(LogEvent.stringify(sampleEvent1, true)).toEqual(stringifyLogEventBaseValues(sampleEvent1));
 		});
 	});
 
 	describe('broadcastLogEvent()', () => {
-
-		it('can accept a custom console-like target and serializer', () => {
-
+		it('should be able to accept a custom console-like target and serializer', () => {
 			const mockConsole = new Logger('Mocked', new LoggerTransport());
 			const ev = new LogEvent(LogLevel.DEBUG, 'custom-tag', 'some sample info');
 
@@ -94,9 +85,7 @@ describe('LogEvent', () => {
 	});
 
 	describe('clone()', () => {
-
-		it('makes an exact copy of an instance', () => {
-
+		it('should make an exact copy of an instance', () => {
 			const ev = new LogEvent(LogLevel.DEBUG, 'custom-tag', 'some sample info');
 			const cloned = ev.clone();
 
@@ -106,8 +95,7 @@ describe('LogEvent', () => {
 	});
 
 	describe('getMessageWithParams()', () => {
-
-		it('generates a string with the message and parameters combined', () => {
+		it('should generate a string with the message and parameters combined', () => {
 			const ev = new LogEvent(LogLevel.DEBUG, 'custom-tag', 'some sample info', [{ test: true }]);
 			expect(ev.getMessageWithParams()).toEqual('some sample info :: {"test":true}');
 		});

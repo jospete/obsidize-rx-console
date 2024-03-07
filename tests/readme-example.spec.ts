@@ -11,9 +11,7 @@ import {
 } from '../src';
 
 describe('README Examples', () => {
-
-	it('can execute the vanilla JS example', () => {
-
+	it('should execute the vanilla JS example', () => {
 		// get a reference to the root log event transport
 		getPrimaryLoggerTransport()
 			// set custom filter for what events get emitted
@@ -46,8 +44,7 @@ describe('README Examples', () => {
 		// Does not log anything because VERBOSE < DEBUG
 	});
 
-	it('can execute the typescript example', () => {
-
+	it('should execute the typescript example', () => {
 		// NOTE: this only needs to be done once, as a part of your app's main setup routine
 		getPrimaryLoggerTransport()
 			.setFilter(ev => ev.level >= LogLevel.DEBUG)
@@ -67,8 +64,7 @@ describe('README Examples', () => {
 		service.test(); // 2021-02-16T00:42:20.777Z [DEBUG] [MyServiceThing] test!
 	});
 
-	it('can execute the event filtering example', () => {
-
+	it('should execute the event filtering example', () => {
 		getPrimaryLoggerTransport()
 			.setFilter(ev => ev.level >= LogLevel.DEBUG);
 
@@ -91,8 +87,7 @@ describe('README Examples', () => {
 			.setFilter(null); // reset the primary transport's filter to not break other tests
 	});
 
-	it('can execute the rxjs example', () => {
-
+	it('should execute the rxjs example', () => {
 		// no-op function for example purposes
 		const writeToFile = (..._args: any[]) => { };
 
@@ -130,8 +125,7 @@ describe('README Examples', () => {
 		});
 	});
 
-	it('can execute the customization example', () => {
-
+	it('should execute the customization example', () => {
 		// Create a custom event type
 		class CustomLogEvent extends LogEvent {
 

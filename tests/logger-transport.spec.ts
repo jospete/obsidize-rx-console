@@ -2,9 +2,7 @@ import { fromEventPattern, lastValueFrom, Observable, take } from 'rxjs';
 import { getPrimaryLoggerTransport, LogEvent, Logger, LoggerTransport, LogLevel } from '../src';
 
 describe('LoggerTransport', () => {
-
-	it('has convenience accessors for event listeners', () => {
-
+	it('should have convenience accessors for event listeners', () => {
 		const transport = new LoggerTransport();
 		const emitter = transport.events();
 		const noop = () => { };
@@ -22,8 +20,7 @@ describe('LoggerTransport', () => {
 		expect(emitter.removeAllListeners).toHaveBeenCalled();
 	});
 
-	it('can have event caching disabled', () => {
-
+	it('should allow for event caching to be disabled', () => {
 		const transport = new LoggerTransport();
 
 		const ev1 = transport.createEvent(0, 'test', 'message', []);
@@ -40,8 +37,7 @@ describe('LoggerTransport', () => {
 		expect(ev3).not.toBe(ev4);
 	});
 
-	it('can use setFilter() and setEnabled() to customize acceptance behavior', () => {
-
+	it('should allow for using setFilter() and setEnabled() to customize acceptance behavior', () => {
 		const transport = new LoggerTransport()
 			.setFilter(ev => ev.level >= LogLevel.INFO)
 			.setEnabled(false);
@@ -60,9 +56,7 @@ describe('LoggerTransport', () => {
 	});
 
 	describe('setDefaultBroadcastEnabled()', () => {
-
-		it('registers the default window.console broadcast function', async () => {
-
+		it('should register the default window.console broadcast function', async () => {
 			const transport = new LoggerTransport();
 			expect(transport.isDefaultBroadcastEnabled()).toBe(false);
 
@@ -75,9 +69,7 @@ describe('LoggerTransport', () => {
 	});
 
 	describe('pipeTo()', () => {
-
-		it('can route events to other instances', async () => {
-
+		it('should allow for routing events to other instances', async () => {
 			const transport = new LoggerTransport();
 			const transport2 = new LoggerTransport();
 			const testMessage = 'a sample log message';
@@ -95,8 +87,7 @@ describe('LoggerTransport', () => {
 			expect(ev.message).toBe(testMessage);
 		});
 
-		it('does nothing when passed a reference to itself (help avoid infinite loops)', async () => {
-
+		it('should do nothing when passed a reference to itself (help avoid infinite loops)', async () => {
 			const transport = new LoggerTransport();
 			const testMessage = 'a sample log message';
 			const logger = new Logger('MyCustomLogger', transport);
@@ -108,7 +99,6 @@ describe('LoggerTransport', () => {
 	});
 
 	describe('getPrimaryLoggerTransport()', () => {
-
 		it('should return a valid instance', () => {
 			const transport = getPrimaryLoggerTransport();
 			expect(transport instanceof LoggerTransport).toBe(true);

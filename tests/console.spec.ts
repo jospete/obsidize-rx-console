@@ -5,11 +5,8 @@ function createMockConsole(): ConsoleLike {
 }
 
 describe('ConsoleLike', () => {
-
 	describe('callConsoleDynamic()', () => {
-
-		it('calls error on levels that meet or exceed "error" value', () => {
-
+		it('should call error on levels that meet or exceed "error" value', () => {
 			const mockConsole = createMockConsole();
 			spyOn(mockConsole, 'error').and.callThrough();
 
@@ -29,8 +26,7 @@ describe('ConsoleLike', () => {
 			expect(mockConsole.error).toHaveBeenCalledTimes(3);
 		});
 
-		it('calls warn on levels inbetween "warn" and "error"', () => {
-
+		it('should call warn on levels inbetween "warn" and "error"', () => {
 			const mockConsole = createMockConsole();
 			spyOn(mockConsole, 'warn').and.callThrough();
 
@@ -50,8 +46,7 @@ describe('ConsoleLike', () => {
 			expect(mockConsole.warn).toHaveBeenCalledTimes(2);
 		});
 
-		it('calls log on levels below "warn"', () => {
-
+		it('should call log on levels below "warn"', () => {
 			const mockConsole = createMockConsole();
 			spyOn(mockConsole, 'log').and.callThrough();
 
