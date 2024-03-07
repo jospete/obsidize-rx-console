@@ -73,3 +73,21 @@ export function stringifyAndJoin(
 
 	return '';
 }
+
+export interface ClassConstructor<T> {
+	new(...args: any[]): T;
+}
+
+declare var global: any;
+
+export function getGlobalInstance<T>(key: string, Ctor: ClassConstructor<T>): T {
+	const target: any = window || global;
+	const globalKey = `__obsidize_rx-console_${key}`;
+	let value = target[globalKey];
+
+	if (!(value && (value instanceof Ctor))) {
+		value = target[globalKey] = new Ctor();
+	}
+
+	return value;
+}

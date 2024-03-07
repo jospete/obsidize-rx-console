@@ -2,6 +2,7 @@ import { EventEmitter, EventEmitterDelegate } from './event-emitter';
 import { LogEvent, LogEventAction, broadcastLogEvent } from './log-event';
 import { LogEventGuardContext } from './log-event-guard-context';
 import { LogEventBuffer } from './log-event-buffer';
+import { getGlobalInstance } from './utility';
 
 /**
  * Core mechanism that allows many `Logger` instances to report back to a shared resource.
@@ -108,8 +109,6 @@ export class LoggerTransport extends LogEventGuardContext {
 	}
 }
 
-declare var global: any;
-
 /**
  * Root level transport used by all `Logger` instances by default.
  * 
@@ -117,13 +116,5 @@ declare var global: any;
  * to avoid potential conflicts with static members in sub-classes of `LoggerTransport`.
  */
 export function getPrimaryLoggerTransport(): LoggerTransport {
-	const target: any = window || global;
-	const key = `__obsidize_rx-console_LoggerTransport_MAIN`;
-	let value = target[key];
-
-	if (!(value && (value instanceof LoggerTransport))) {
-		value = target[key] = new LoggerTransport();
-	}
-
-	return value;
+	return getGlobalInstance('LoggerTransport_MAIN', LoggerTransport);
 }
